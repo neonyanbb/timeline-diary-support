@@ -7,6 +7,7 @@
 <title>时线日记 · Snapline Diary</title>
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="apple-touch-icon" href="images/logo.png">
+<link rel="preload" as="image" href="images/logo.png" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -480,7 +481,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
 <nav id="main-nav">
   <div class="nav-inner">
     <a class="nav-logo" onclick="goTop()">
-      <img src="images/logo.png" alt="Logo">
+      <img src="images/logo.png" alt="Logo" width="34" height="34" loading="eager" decoding="async" fetchpriority="high">
       <span class="nav-brand" data-i18n="appName">时线日记</span>
     </a>
     <button type="button" class="nav-toggle" id="nav-toggle" aria-label="打开菜单" aria-expanded="false" onclick="toggleNav()">☰</button>
@@ -1376,6 +1377,10 @@ window.addEventListener('resize',()=>{
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape') closeNav();
+});
+document.getElementById('nav-links')?.addEventListener('click',e=>{
+  // 手机上点击菜单空白区域时收起导航
+  if(e.target === e.currentTarget) closeNav();
 });
 
 // SCROLL REVEAL
