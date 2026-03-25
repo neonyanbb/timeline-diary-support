@@ -55,17 +55,6 @@ body.nav-no-scroll{overflow:hidden}
 .nav-cta{background:var(--accent)!important;color:#080500!important;padding:8px 20px;
   border-radius:100px;font-weight:500!important;transition:opacity .2s!important}
 .nav-cta:hover{opacity:.82}
-/* App Store 未正式上架：弱化下载类按钮 */
-body.app-soon .btn-p{background:var(--surface);color:var(--accent2);border:1px solid rgba(232,150,60,.32)}
-body.app-soon .btn-p::before{opacity:.4}
-body.app-soon .btn-p:hover{transform:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-body.app-soon .nav-cta{background:var(--surface)!important;color:var(--accent2)!important;border:1px solid rgba(232,150,60,.32)!important}
-body.app-soon .nav-cta:hover{opacity:1}
-body.app-soon .plan-cta.s,body.app-soon .plan-cta.p{background:var(--surface);color:var(--accent2);border:1px solid rgba(232,150,60,.32)}
-body.app-soon .plan-cta.s:hover,body.app-soon .plan-cta.p:hover{transform:none;opacity:.95}
-.soon-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(120%);max-width:min(420px,calc(100% - 40px));padding:14px 22px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-size:14px;line-height:1.55;text-align:center;z-index:500;box-shadow:0 12px 40px rgba(0,0,0,.45);transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .38s ease;opacity:0;pointer-events:none}
-.soon-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.soon-toast{font-size:13px;padding:12px 18px;bottom:20px}}
 
 /* LANG SWITCHER */
 .lang-sw{position:relative}
@@ -322,49 +311,19 @@ body.app-soon .plan-cta.s:hover,body.app-soon .plan-cta.p:hover{transform:none;o
   color:var(--accent);font-size:13.5px;text-decoration:none;transition:opacity .2s}
 .faq-link:hover{opacity:.75}
 
-/* PRIVACY OVERLAY — 自下而上浮层 + 背后主页略可见 */
-#priv-pg{
-  display:none;position:fixed;inset:0;z-index:500;
-  align-items:flex-end;justify-content:center;
-  pointer-events:none;
-}
-#priv-pg.show{display:flex;pointer-events:auto}
-#priv-pg .priv-dim{
-  position:absolute;inset:0;
-  background:rgba(8,7,10,.58);
-  opacity:0;transition:opacity .34s ease;
-}
-#priv-pg.show .priv-dim{opacity:1}
-#priv-pg .priv-sheet{
-  position:relative;z-index:2;width:100%;max-width:900px;margin:0 auto;
-  max-height:min(96vh,100%);
-  overflow-y:auto;-webkit-overflow-scrolling:touch;
-  background:var(--bg);
-  border-radius:22px 22px 0 0;
-  border:1px solid rgba(232,150,60,.12);
-  border-bottom:none;
-  box-shadow:0 -28px 72px rgba(0,0,0,.5);
-  transform:translateY(104%);
-  transition:transform .48s cubic-bezier(.25,.82,.25,1);
-}
-#priv-pg.show .priv-sheet{transform:translateY(0)}
-#priv-pg .priv-sheet{display:flex;flex-direction:column}
-.priv-close{
-  align-self:flex-end;position:sticky;top:12px;margin:12px 16px 0;
-  flex-shrink:0;
+/* PRIVACY OVERLAY */
+#priv-pg{display:none;position:fixed;inset:0;z-index:500;background:var(--bg);overflow-y:auto}
+#priv-pg.show{display:block}
+.priv-close{position:fixed;top:16px;
+  right:max(18px,calc((100vw - 780px)/2 - 28px));
   background:rgba(20,17,25,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid rgba(232,150,60,.28);color:var(--text);font-size:22px;
   width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;transition:all .2s;z-index:10;
+  align-items:center;justify-content:center;transition:all .2s;z-index:600;
   box-shadow:0 10px 24px rgba(0,0,0,.45)}
 .priv-close:hover{border-color:var(--accent);color:var(--accent2);transform:scale(1.04)}
 .priv-close:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
-.priv-inner{max-width:780px;margin:0 auto;padding:8px 48px 80px;width:100%}
-@media (prefers-reduced-motion:reduce){
-  #priv-pg .priv-dim,#priv-pg .priv-sheet{transition:none}
-  #priv-pg.show .priv-sheet{transform:translateY(0)}
-  #priv-pg .priv-sheet{transform:translateY(0)}
-}
+.priv-inner{max-width:780px;margin:0 auto;padding:100px 48px 80px}
 .priv-inner h1{font-family:var(--font-serif);font-size:38px;font-weight:300;
   color:var(--text);margin-bottom:8px}
 .priv-inner .upd{font-size:12px;color:var(--text3);margin-bottom:40px;letter-spacing:.04em}
@@ -513,12 +472,9 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
 <body>
 
 <!-- PRIVACY OVERLAY -->
-<div id="priv-pg" aria-hidden="true">
-  <div class="priv-dim" onclick="closePg()" aria-hidden="true"></div>
-  <div class="priv-sheet" role="dialog" aria-modal="true" aria-labelledby="priv-title-h">
-    <button type="button" class="priv-close" onclick="closePg()" aria-label="关闭">✕</button>
-    <div class="priv-inner" id="priv-body"></div>
-  </div>
+<div id="priv-pg">
+  <button class="priv-close" onclick="closePg()">✕</button>
+  <div class="priv-inner" id="priv-body"></div>
 </div>
 
 <!-- NAV -->
@@ -533,7 +489,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
       <li><a onclick="goTo('features')" data-i18n="n_feat">功能</a></li>
       <li><a onclick="goTo('memory')" data-i18n="n_mem">记忆曲线</a></li>
       <li><a onclick="goTo('cases')" data-i18n="n_case">使用场景</a></li>
-      <li><a onclick="goTo('audience')" data-i18n="n_aud">适用人群</a></li>
       <li><a onclick="goTo('pro')" data-i18n="n_pro">Pro 版本</a></li>
       <li><a onclick="goTo('faq')" data-i18n="n_faq">常见问题</a></li>
       <li>
@@ -753,23 +708,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
   </div>
 </section>
 
-<!-- AUDIENCE — 适用人群 / 痛点共鸣 -->
-<section class="sec cases-bg" id="audience">
-  <div class="w">
-    <div style="text-align:center">
-      <span class="sec-eye" data-i18n="aud_eye">适合谁用</span>
-      <h2 class="sec-h" data-i18n-html="aud_h">这些场景，<br><em>是否像极了你？</em></h2>
-      <p class="sec-d reveal" style="margin:0 auto;max-width:560px" data-i18n="aud_d">如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，或许这正是为你准备的一款应用。</p>
-    </div>
-    <div class="cases-grid" style="margin-top:48px">
-      <div class="case-c reveal"><span class="case-em">🖼️</span><h3 class="case-t" data-i18n="aud1t">截图与笔记沉入相册</h3><p class="case-d" data-i18n="aud1d">聊天截屏、小票、收藏的长文截图散落在照片里，想用时翻不到。时间线 + 全文搜索，让每一条记录都能被精准唤回。</p></div>
-      <div class="case-c reveal" style="transition-delay:.08s"><span class="case-em">📉</span><h3 class="case-t" data-i18n="aud2t">学了就忘，缺少复习节奏</h3><p class="case-d" data-i18n="aud2d">备考充电、技能提升都需要「在对的时间再看一眼」。记忆曲线按科学间隔提醒，把短期印象拉成长期记忆。</p></div>
-      <div class="case-c reveal" style="transition-delay:.16s"><span class="case-em">🗂️</span><h3 class="case-t" data-i18n="aud3t">工作信息跨周、跨群、跨文档</h3><p class="case-d" data-i18n="aud3d">会议结论、需求变更、决策过程分散各处。一条可追溯的时间线 + 标签，让关键证据链随手可查。</p></div>
-      <div class="case-c reveal" style="transition-delay:.24s"><span class="case-em">💭</span><h3 class="case-t" data-i18n="aud4t">灵感稍纵即逝</h3><p class="case-d" data-i18n="aud4d">闪过脑子的想法、随手存的图，常常没有下文。快速记录 + 标签归档 + 复习提醒，让灵感有机会在未来被重新点亮。</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- PLATFORM -->
 <section class="sec" id="platform">
   <div class="w">
@@ -871,7 +809,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
         <ul class="fc-links">
           <li><a onclick="goTo('features')" data-i18n="ft_feat">功能介绍</a></li>
           <li><a onclick="goTo('memory')" data-i18n="ft_mem">记忆曲线</a></li>
-          <li><a onclick="goTo('audience')" data-i18n="n_aud">适用人群</a></li>
           <li><a onclick="goTo('pro')" data-i18n="ft_pro">Pro 版本</a></li>
           <li><a onclick="openDownload()" data-i18n="ft_dl">App Store 下载</a></li>
         </ul>
@@ -904,15 +841,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
     </div>
   </div>
 </footer>
-<div id="soon-toast" class="soon-toast" role="status" aria-live="polite"></div>
 
 <script>
-// ─────────────────────────────────────────
-//  App Store 开关：上架后与 archive/index.appstore-ready.html 对齐后，改为 true 并部署
-// ─────────────────────────────────────────
-const APP_STORE_LIVE = false;
-const APP_STORE_URL = "https://apps.apple.com/app/id6746461599";
-
 // ─────────────────────────────────────────
 //  i18n DATA
 // ─────────────────────────────────────────
@@ -1105,7 +1035,7 @@ const TICKER = {
 
 const STR = {
   zh:{
-    appName:"时线日记",n_feat:"功能",n_mem:"记忆曲线",n_case:"使用场景",n_aud:"适用人群",n_pro:"Pro 版本",n_faq:"常见问题",n_dl:"立即下载",
+    appName:"时线日记",n_feat:"功能",n_mem:"记忆曲线",n_case:"使用场景",n_pro:"Pro 版本",n_faq:"常见问题",n_dl:"立即下载",
     h_eye:"现已在 App Store 上架",
     h_title:"把生活记下来<br>让<em>记忆</em>真正<br>沉淀下去",
     h_sub:"时线日记是一款专为<strong>高频记录、长期回看</strong>设计的图文日记应用。截图、照片、文字，按时间线自然串联，科学的记忆曲线帮你不再遗忘重要的一切。",
@@ -1142,23 +1072,14 @@ const STR = {
     pr_f1:"节点数量无限制",pr_f2:"记忆曲线活跃项无限制",pr_f3:"每节点最多 20 张图片",pr_f4:"导出/导入本地备份",pr_f5:"完全去除广告",pr_f6:"支持家庭共享（最多6人）",
     pr_btn:"永久解锁 Pro →",pr_hint:"一次购买 · 非订阅 · 支持家人共享",
     lg_t:"全球五大语言，本地化支持",
-    aud_eye:"适合谁用",aud_h:"这些场景，<br><em>是否像极了你？</em>",aud_d:"如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，或许这正是为你准备的一款应用。",
-    aud1t:"截图与笔记沉入相册",aud1d:"聊天截屏、小票、收藏的长文截图散落在照片里，想用时翻不到。时间线 + 全文搜索，让每一条记录都能被精准唤回。",
-    aud2t:"学了就忘，缺少复习节奏",aud2d:"备考充电、技能提升都需要「在对的时间再看一眼」。记忆曲线按科学间隔提醒，把短期印象拉成长期记忆。",
-    aud3t:"工作信息跨周、跨群、跨文档",aud3d:"会议结论、需求变更、决策过程分散各处。一条可追溯的时间线 + 标签，让关键证据链随手可查。",
-    aud4t:"灵感稍纵即逝",aud4d:"闪过脑子的想法、随手存的图，常常没有下文。快速记录 + 标签归档 + 复习提醒，让灵感有机会在未来被重新点亮。",
     fq_eye:"常见问题",fq_h:"遇到<em>疑惑</em>？<br>这里有答案",fq_d:"如果没有找到你的问题，欢迎通过邮件联系我们，我们会尽快回复。",fq_em:"→ 发送邮件支持",
     ft_desc:"把每天生活与灵感记下来，用科学提醒回看你的高光时刻。",
     ft_prod:"产品",ft_feat:"功能介绍",ft_mem:"记忆曲线",ft_pro:"Pro 版本",ft_dl:"App Store 下载",
     ft_sup:"支持",ft_faq:"常见问题",ft_contact:"联系我们",ft_priv:"隐私政策",ft_lang:"语言",
-    ft_copy:"© 2026 时线日记 (Snapline Diary). All rights reserved.",ft_priv2:"隐私政策",ft_sup2:"技术支持",
-    n_dl_soon:"敬请期待",h_eye_soon:"即将上架 App Store",
-    h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> 敬请期待',
-    fr_btn_soon:"敬请期待",pr_btn_soon:"敬请期待",ft_dl_soon:"敬请期待",
-    toast_coming:"应用尚在 App Store 审核中，通过后将开放下载，感谢关注。"
+    ft_copy:"© 2026 时线日记 (Snapline Diary). All rights reserved.",ft_priv2:"隐私政策",ft_sup2:"技术支持"
   },
   en:{
-    appName:"Snapline Diary",n_feat:"Features",n_mem:"Memory Curve",n_case:"Use Cases",n_aud:"Who it's for",n_pro:"Pro",n_faq:"FAQ",n_dl:"Download",
+    appName:"Snapline Diary",n_feat:"Features",n_mem:"Memory Curve",n_case:"Use Cases",n_pro:"Pro",n_faq:"FAQ",n_dl:"Download",
     h_eye:"Now on the App Store",
     h_title:"Capture your life.<br>Make <em>memories</em> last<br>forever.",
     h_sub:"Snapline Diary is designed for <strong>frequent recording and long-term review</strong>. Connect screenshots, photos and notes in a timeline — let science help you never forget what matters.",
@@ -1195,23 +1116,14 @@ const STR = {
     pr_f1:"Unlimited entries",pr_f2:"Unlimited memory curves",pr_f3:"Up to 20 photos per entry",pr_f4:"Backup export & import",pr_f5:"Completely ad-free",pr_f6:"Family Sharing (up to 6)",
     pr_btn:"Unlock Pro Forever →",pr_hint:"One-time · No subscription · Family Sharing",
     lg_t:"Available in 5 languages",
-    aud_eye:"Who it's for",aud_h:"Does this <em>sound like you?</em>",aud_d:"If your notes and screenshots disappear into chaos—or you learn something and forget it days later—Snapline Diary is built for that daily frustration.",
-    aud1t:"Buried in your camera roll",aud1d:"Chat caps, receipts, posts you meant to revisit—lost among thousands of photos. A timeline plus search brings them back in seconds.",
-    aud2t:"You study, then forget",aud2d:"Exams and self-study need spaced review, not guilt. Memory-curve reminders catch you at the right moment to relearn.",
-    aud3t:"Work sprawls across weeks",aud3d:"Meetings, specs, decisions scattered across apps and chats. One chronological trail with tags keeps evidence one search away.",
-    aud4t:"Ideas slip away",aud4d:"Quick capture, light tagging, and gentle review nudges bring sparks back when they matter.",
     fq_eye:"FAQ",fq_h:"Have <em>questions</em>?<br>We've got answers.",fq_d:"If you can't find your answer, email us and we'll get back to you quickly.",fq_em:"→ Email support",
     ft_desc:"Capture life and inspiration every day — let science help you revisit your highlights.",
     ft_prod:"Product",ft_feat:"Features",ft_mem:"Memory Curve",ft_pro:"Pro",ft_dl:"App Store Download",
     ft_sup:"Support",ft_faq:"FAQ",ft_contact:"Contact Us",ft_priv:"Privacy Policy",ft_lang:"Language",
-    ft_copy:"© 2026 Snapline Diary. All rights reserved.",ft_priv2:"Privacy Policy",ft_sup2:"Support",
-    n_dl_soon:"Coming soon",h_eye_soon:"Coming soon on the App Store",
-    h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Coming soon',
-    fr_btn_soon:"Coming soon",pr_btn_soon:"Coming soon",ft_dl_soon:"Coming soon",
-    toast_coming:"The app is still in App Store review. Downloads will open once it’s approved. Thanks for your patience."
+    ft_copy:"© 2026 Snapline Diary. All rights reserved.",ft_priv2:"Privacy Policy",ft_sup2:"Support"
   },
   es:{
-    appName:"Diario Cronología",n_feat:"Funciones",n_mem:"Curva de memoria",n_case:"Casos de uso",n_aud:"¿Para quién?",n_pro:"Pro",n_faq:"FAQ",n_dl:"Descargar",
+    appName:"Diario Cronología",n_feat:"Funciones",n_mem:"Curva de memoria",n_case:"Casos de uso",n_pro:"Pro",n_faq:"FAQ",n_dl:"Descargar",
     h_eye:"Ya disponible en App Store",h_title:"Registra tu vida.<br>Haz que los <em>recuerdos</em><br>duren para siempre.",
     h_sub:"Diario Cronología está diseñado para <strong>registrar frecuentemente y revisar a largo plazo</strong>. Conecta capturas, fotos y notas en una línea de tiempo.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Descargar en App Store',
@@ -1239,22 +1151,12 @@ const STR = {
     fr_name:"Gratis",fr_desc:"Funciones básicas sin pago.",fr_f1:"5 entradas/día",fr_f2:"Etiquetas básicas",fr_f3:"2 fotos/entrada",fr_f4:"3 curvas activas",fr_f5:"Anuncios Google",fr_f6:"Sin copia de seguridad",fr_btn:"Descargar gratis",
     pr_badge:"✦ Recomendado",pr_desc2:"Compra única, para siempre.",pr_f1:"Entradas ilimitadas",pr_f2:"Curvas ilimitadas",pr_f3:"20 fotos/entrada",pr_f4:"Copia de seguridad",pr_f5:"Sin publicidad",pr_f6:"Compartir en familia",
     pr_btn:"Desbloquear Pro →",pr_hint:"Pago único · Sin suscripción",
-    lg_t:"Disponible en 5 idiomas",
-    aud_eye:"¿Para quién es?",aud_h:"¿Te suena <em>demasiado familiar?</em>",aud_d:"Si guardas capturas que luego no encuentras, o estudiaste algo y al poco ya no recuerdas, esta app puede encajar en tu rutina.",
-    aud1t:"Capturas perdidas en Fotos",aud1d:"Chats, tickets, artículos… mezclados entre miles de imágenes. Cronología y búsqueda te los devuelven al instante.",
-    aud2t:"Olvidas lo que aprendiste",aud2d:"Exámenes y hábitos necesitan repetir en el momento justo. La curva de memoria te avisa cuándo releer.",
-    aud3t:"Trabajo repartido en mil sitios",aud3d:"Reuniones, alcances, decisiones en distintas apps. Un hilo temporal con etiquetas mantiene la evidencia a un toque.",
-    aud4t:"Las ideas se escapan",aud4d:"Anota al vuelo, organiza con etiquetas y deja que los recordatorios las reactiven cuando haga falta.",
-    fq_eye:"FAQ",fq_h:"¿Tienes <em>dudas</em>?<br>Respuestas aquí.",fq_d:"Escríbenos si no encuentras tu respuesta.",fq_em:"→ Enviar email",
+    lg_t:"Disponible en 5 idiomas",fq_eye:"FAQ",fq_h:"¿Tienes <em>dudas</em>?<br>Respuestas aquí.",fq_d:"Escríbenos si no encuentras tu respuesta.",fq_em:"→ Enviar email",
     ft_desc:"Registra tu vida e inspiración.",ft_prod:"Producto",ft_feat:"Funciones",ft_mem:"Curva de memoria",ft_pro:"Pro",ft_dl:"Descargar",ft_sup:"Soporte",ft_faq:"FAQ",ft_contact:"Contacto",ft_priv:"Privacidad",ft_lang:"Idioma",
-    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Privacidad",ft_sup2:"Soporte",
-    n_dl_soon:"Próximamente",h_eye_soon:"Próximamente en App Store",
-    h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Próximamente',
-    fr_btn_soon:"Próximamente",pr_btn_soon:"Próximamente",ft_dl_soon:"Próximamente",
-    toast_coming:"La app está en revisión en el App Store. La descarga estará disponible al aprobarse. Gracias por tu interés."
+    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Privacidad",ft_sup2:"Soporte"
   },
   fr:{
-    appName:"Journal Chronologie",n_feat:"Fonctionnalités",n_mem:"Courbe de mémoire",n_case:"Cas d'usage",n_aud:"Pour qui ?",n_pro:"Pro",n_faq:"FAQ",n_dl:"Télécharger",
+    appName:"Journal Chronologie",n_feat:"Fonctionnalités",n_mem:"Courbe de mémoire",n_case:"Cas d'usage",n_pro:"Pro",n_faq:"FAQ",n_dl:"Télécharger",
     h_eye:"Disponible sur l'App Store",h_title:"Capturez votre vie.<br>Faites durer les <em>souvenirs</em><br>pour toujours.",
     h_sub:"Journal Chronologie est conçu pour <strong>enregistrer fréquemment et réviser à long terme</strong>.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Télécharger',
@@ -1276,22 +1178,12 @@ const STR = {
     fr_name:"Gratuit",fr_desc:"Fonctions de base sans paiement.",fr_f1:"5 entrées/jour",fr_f2:"Étiquettes de base",fr_f3:"2 photos/entrée",fr_f4:"3 courbes actives",fr_f5:"Publicités Google",fr_f6:"Sans sauvegarde",fr_btn:"Télécharger",
     pr_badge:"✦ Recommandé",pr_desc2:"Achat unique, pour toujours.",pr_f1:"Entrées illimitées",pr_f2:"Courbes illimitées",pr_f3:"20 photos/entrée",pr_f4:"Sauvegarde",pr_f5:"Sans pub",pr_f6:"Partage familial",
     pr_btn:"Débloquer Pro →",pr_hint:"Achat unique · Sans abonnement",
-    lg_t:"Disponible en 5 langues",
-    aud_eye:"Pour qui",aud_h:"Est-ce que <em>ça vous parle ?</em>",aud_d:"Si vos captures et notes disparaissent dans le flot, ou si vous oubliez vite ce que vous apprenez, cette app colle à ce quotidien.",
-    aud1t:"Noyé sous les captures",aud1d:"Discussions, tickets, articles… introuvables dans Pellicule. Une chronologie et la recherche les retrouvent vite.",
-    aud2t:"On apprend puis on oublie",aud2d:"Il faut revoir au bon moment. La courbe mémoire vous le rappelle pour ancrer durablement.",
-    aud3t:"Le travail éclaté partout",aud3d:"Réunions, specs, décisions éparses entre apps. Un fil daté et des étiquettes gardent la preuve accessible.",
-    aud4t:"Les idées filent",aud4d:"Notez vite, classez à la légère, laissez les rappels les faire ressurgir au bon moment.",
-    fq_eye:"FAQ",fq_h:"Des <em>questions</em>?<br>Les réponses.",fq_d:"Écrivez-nous si vous ne trouvez pas.",fq_em:"→ Envoyer un email",
+    lg_t:"Disponible en 5 langues",fq_eye:"FAQ",fq_h:"Des <em>questions</em>?<br>Les réponses.",fq_d:"Écrivez-nous si vous ne trouvez pas.",fq_em:"→ Envoyer un email",
     ft_desc:"Capturez votre vie et vos inspirations.",ft_prod:"Produit",ft_feat:"Fonctionnalités",ft_mem:"Courbe",ft_pro:"Pro",ft_dl:"Télécharger",ft_sup:"Support",ft_faq:"FAQ",ft_contact:"Contact",ft_priv:"Confidentialité",ft_lang:"Langue",
-    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Confidentialité",ft_sup2:"Support",
-    n_dl_soon:"Bientôt",h_eye_soon:"Bientôt sur l'App Store",
-    h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Bientôt disponible',
-    fr_btn_soon:"Bientôt disponible",pr_btn_soon:"Bientôt disponible",ft_dl_soon:"Bientôt disponible",
-    toast_coming:"L’application est examinée sur l’App Store. Le téléchargement sera ouvert après validation. Merci pour votre patience."
+    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Confidentialité",ft_sup2:"Support"
   },
   ru:{
-    appName:"Таймлайн Дневник",n_feat:"Функции",n_mem:"Кривая памяти",n_case:"Применение",n_aud:"Кому подойдёт",n_pro:"Pro",n_faq:"FAQ",n_dl:"Скачать",
+    appName:"Таймлайн Дневник",n_feat:"Функции",n_mem:"Кривая памяти",n_case:"Применение",n_pro:"Pro",n_faq:"FAQ",n_dl:"Скачать",
     h_eye:"Доступно в App Store",h_title:"Записывайте жизнь.<br>Пусть <em>воспоминания</em><br>живут вечно.",
     h_sub:"Таймлайн Дневник создан для <strong>частых записей и долгосрочного повторения</strong>. Хронология, наука, память.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Скачать в App Store',
@@ -1313,42 +1205,16 @@ const STR = {
     fr_name:"Бесплатно",fr_desc:"Основные функции без оплаты.",fr_f1:"5 записей/день",fr_f2:"Базовые теги",fr_f3:"2 фото/запись",fr_f4:"3 кривые",fr_f5:"Реклама Google",fr_f6:"Без резервирования",fr_btn:"Скачать",
     pr_badge:"✦ Рекомендуется",pr_desc2:"Разовая покупка, навсегда.",pr_f1:"Безлимит записей",pr_f2:"Безлимит кривых",pr_f3:"20 фото/запись",pr_f4:"Резервирование",pr_f5:"Без рекламы",pr_f6:"Семейный доступ",
     pr_btn:"Разблокировать Pro →",pr_hint:"Разовая покупка · Без подписки",
-    lg_t:"Доступно на 5 языках",
-    aud_eye:"Кому подойдёт",aud_h:"Знакомо <em>до боли?</em>",aud_d:"Если скриншоты и заметки теряются в галерее, а прочитанное через пару дней вылетает из головы — это как раз про вашу повседневность.",
-    aud1t:"Всё тонет в «Фото»",aud1d:"Переписки, чеки, статьи среди тысяч снимков. Хронология и поиск возвращают нужное за секунды.",
-    aud2t:"Учите — и забываете",aud2d:"Нужны повторения вовремя. Кривая памяти напомнит, когда освежить материал.",
-    aud3t:"Рабочее разбросано по чатам",aud3d:"Созвоны, требования, решения в разных местах. Одна лента с тегами держит цепочку под рукой.",
-    aud4t:"Мысли ускользают",aud4d:"Быстрая запись, лёгкие теги и напоминания возвращают идеи, когда они снова важны.",
-    fq_eye:"FAQ",fq_h:"Есть <em>вопросы</em>?<br>Вот ответы.",fq_d:"Напишите нам если не нашли ответ.",fq_em:"→ Написать",
+    lg_t:"Доступно на 5 языках",fq_eye:"FAQ",fq_h:"Есть <em>вопросы</em>?<br>Вот ответы.",fq_d:"Напишите нам если не нашли ответ.",fq_em:"→ Написать",
     ft_desc:"Записывайте жизнь и вдохновение каждый день.",ft_prod:"Продукт",ft_feat:"Функции",ft_mem:"Кривая",ft_pro:"Pro",ft_dl:"Скачать",ft_sup:"Поддержка",ft_faq:"FAQ",ft_contact:"Контакты",ft_priv:"Конфиденц.",ft_lang:"Язык",
-    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Конфиденциальность",ft_sup2:"Поддержка",
-    n_dl_soon:"Скоро",h_eye_soon:"Скоро в App Store",
-    h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Скоро',
-    fr_btn_soon:"Скоро",pr_btn_soon:"Скоро",ft_dl_soon:"Скоро",
-    toast_coming:"Приложение на проверке в App Store. Загрузка откроется после одобрения. Спасибо за интерес."
+    ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Конфиденциальность",ft_sup2:"Поддержка"
   }
 };
 
 // ─────────────────────────────────────────
 //  RUNTIME
 // ─────────────────────────────────────────
-const LANG_KEYS = ['zh','en','es','fr','ru'];
-const LANG_STORE = 'snapline-diary-lang';
-function readStoredLang(){
-  try{
-    const v = localStorage.getItem(LANG_STORE);
-    if(v && LANG_KEYS.includes(v)) return v;
-  }catch(_){}
-  return null;
-}
-function detectBrowserLang(){
-  const raw = (navigator.language || navigator.userLanguage || 'zh').toLowerCase();
-  const base = raw.split('-')[0];
-  if(LANG_KEYS.includes(base)) return base;
-  if(raw.startsWith('zh')) return 'zh';
-  return 'zh';
-}
-let lang = readStoredLang() || detectBrowserLang();
+let lang = 'zh';
 let langSwitching = false;
 
 function setupLangTransitionTargets(){
@@ -1367,40 +1233,17 @@ function setupLangTransitionTargets(){
   });
 }
 
-const SOON_I18N_KEYS = {n_dl:'n_dl_soon',h_eye:'h_eye_soon',h_dl:'h_dl_soon',fr_btn:'fr_btn_soon',pr_btn:'pr_btn_soon',ft_dl:'ft_dl_soon'};
-
-function s(k){
-  const dict = STR[lang]||STR.zh;
-  if(!APP_STORE_LIVE){
-    const alt = SOON_I18N_KEYS[k];
-    if(alt && dict[alt] !== undefined) return dict[alt];
-  }
-  return dict[k] !== undefined ? dict[k] : ((STR.zh)[k] !== undefined ? (STR.zh)[k] : k);
-}
-
-let _soonToastTimer;
-function showSoonToast(){
-  const el = document.getElementById('soon-toast');
-  if(!el) return;
-  el.textContent = s('toast_coming');
-  el.classList.add('show');
-  clearTimeout(_soonToastTimer);
-  _soonToastTimer = setTimeout(()=>el.classList.remove('show'),4200);
-}
+function s(k){ return (STR[lang]||STR.zh)[k] || (STR.zh)[k] || k; }
 
 function applyLang(){
   // text nodes
   document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const key = el.getAttribute('data-i18n');
-    if(!key) return;
-    const v = s(key);
+    const v = s(el.dataset.i18n);
     if(v !== undefined) el.textContent = v;
   });
-  // html nodes（getAttribute 避免 data-i18n-html → dataset 映射在部分环境下的歧义）
+  // html nodes
   document.querySelectorAll('[data-i18n-html]').forEach(el=>{
-    const key = el.getAttribute('data-i18n-html');
-    if(!key) return;
-    const v = s(key);
+    const v = s(el.dataset.i18nHtml);
     if(v !== undefined) el.innerHTML = v;
   });
   // lang chips & options
@@ -1411,7 +1254,6 @@ function applyLang(){
   const labels={zh:'中文',en:'English',es:'Español',fr:'Français',ru:'Русский'};
   document.getElementById('cur-lang-lbl').textContent = labels[lang]||lang;
   document.documentElement.lang = lang==='zh'?'zh-Hans':lang;
-  document.body.classList.toggle('app-soon', !APP_STORE_LIVE);
   buildTicker();
   buildCurveSteps();
   buildFAQ();
@@ -1424,7 +1266,6 @@ function setLang(l){
 
   if(reduceMotion){
     lang = l;
-    try{ localStorage.setItem(LANG_STORE, lang); }catch(_){}
     applyLang();
     window.scrollTo({top:0,behavior:'smooth'});
     langSwitching = false;
@@ -1435,7 +1276,6 @@ function setLang(l){
   document.body.classList.add('lang-switching');
   window.setTimeout(()=>{
     lang = l;
-    try{ localStorage.setItem(LANG_STORE, lang); }catch(_){}
     applyLang();
     window.scrollTo({top:0,behavior:'smooth'});
     requestAnimationFrame(()=>{
@@ -1490,35 +1330,19 @@ function showPrivacy(){
   closeNav();
   const p = PRIVACY[lang]||PRIVACY.zh;
   document.getElementById('priv-body').innerHTML =
-    `<h1 id="priv-title-h">${p.title}</h1><p class="upd">${p.upd}</p>${p.body}`;
-  const pg = document.getElementById('priv-pg');
-  pg.style.display='flex';
-  pg.setAttribute('aria-hidden','false');
+    `<h1>${p.title}</h1><p class="upd">${p.upd}</p>${p.body}`;
+  document.getElementById('priv-pg').classList.add('show');
   document.body.style.overflow='hidden';
-  clearTimeout(pg._privClose);
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=> pg.classList.add('show'));
-  });
 }
 function closePg(){
-  const pg = document.getElementById('priv-pg');
-  if(!pg.classList.contains('show')) return;
-  pg.classList.remove('show');
-  pg.setAttribute('aria-hidden','true');
-  clearTimeout(pg._privClose);
-  pg._privClose = setTimeout(()=>{
-    pg.style.display='none';
-    document.body.style.overflow='';
-  }, 480);
+  document.getElementById('priv-pg').classList.remove('show');
+  document.body.style.overflow='';
 }
 
 // NAV HELPERS
+const APP_STORE_URL = "https://apps.apple.com/app/id6746461599";
 function openDownload(){
   closeNav();
-  if(!APP_STORE_LIVE){
-    showSoonToast();
-    return;
-  }
   window.open(APP_STORE_URL, "_blank", "noopener,noreferrer");
 }
 function closeNav(){
@@ -1555,13 +1379,7 @@ window.addEventListener('resize',()=>{
   if(window.innerWidth>900) closeNav();
 });
 document.addEventListener('keydown',e=>{
-  if(e.key!=='Escape') return;
-  const pg = document.getElementById('priv-pg');
-  if(pg && pg.classList.contains('show')){
-    closePg();
-    return;
-  }
-  closeNav();
+  if(e.key==='Escape') closeNav();
 });
 document.getElementById('nav-links')?.addEventListener('click',e=>{
   // 手机上点击菜单空白区域时收起导航
