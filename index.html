@@ -55,7 +55,6 @@ body.nav-no-scroll{overflow:hidden}
 .nav-cta{background:var(--accent)!important;color:#080500!important;padding:8px 20px;
   border-radius:100px;font-weight:500!important;transition:opacity .2s!important}
 .nav-cta:hover{opacity:.82}
-/* App Store 未正式上架：弱化下载类按钮 */
 body.app-soon .btn-p{background:var(--surface);color:var(--accent2);border:1px solid rgba(232,150,60,.32)}
 body.app-soon .btn-p::before{opacity:.4}
 body.app-soon .btn-p:hover{transform:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
@@ -199,6 +198,30 @@ body.app-soon .plan-cta.s:hover,body.app-soon .plan-cta.p:hover{transform:none;o
 .ph-glow{position:absolute;inset:-24px;
   background:radial-gradient(ellipse at center,rgba(232,150,60,.1) 0%,transparent 70%);
   pointer-events:none;border-radius:50%}
+.ph-carousel{position:relative;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.ph-carousel-viewport--fade{position:relative;width:100%;border-radius:inherit;aspect-ratio:390/844;overflow:hidden}
+.ph-carousel-viewport--fade .ph-carousel-slide{
+  position:absolute;inset:0;opacity:0;z-index:1;
+  transition:opacity .7s ease;pointer-events:none}
+.ph-carousel-viewport--fade .ph-carousel-slide.is-active{opacity:1;z-index:2}
+.ph-carousel-viewport--fade .ph-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.ph-carousel-dots{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:14px}
+.ph-carousel-dot{width:7px;height:7px;border-radius:50%;background:var(--border);border:none;padding:0;cursor:pointer;transition:background .2s,transform .2s}
+.ph-carousel-dot:hover{background:var(--text3)}
+.ph-carousel-dot[aria-current="true"]{background:var(--accent);transform:scale(1.12)}
+
+/* TAG DEMO WIDGET */
+.tag-demo{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:20px}
+.tag-demo-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tag-demo-row:last-child{margin-bottom:0}
+.tag-chip{display:inline-flex;align-items:center;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:500;border:1.5px dashed}
+.tag-chip.blue{color:#4CA8E8;border-color:#4CA8E8;background:rgba(76,168,232,.08)}
+.tag-chip.green{color:#4CC97A;border-color:#4CC97A;background:rgba(76,201,122,.08)}
+.tag-chip.orange{color:#F0923A;border-color:#F0923A;background:rgba(240,146,58,.08)}
+.tag-chip.pink{color:#E864B0;border-color:#E864B0;background:rgba(232,100,176,.08)}
+.tag-chip.red{color:#E85050;border-color:#E85050;background:rgba(232,80,80,.08)}
+.tag-demo-note{font-size:13px;color:var(--text2);line-height:1.7}
+.tag-demo-note a{color:var(--accent);text-decoration:none}
 
 /* MEMORY */
 .mem-bg{background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%)}
@@ -290,6 +313,19 @@ body.app-soon .plan-cta.s:hover,body.app-soon .plan-cta.p:hover{transform:none;o
 .plan-cta.s:hover{border-color:var(--accent3);color:var(--text)}
 .plan-hint{font-size:11.5px;color:var(--text3);text-align:center;margin-top:10px}
 
+/* AUDIENCE */
+.aud-bg{background:var(--bg)}
+.aud-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:60px}
+.aud-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:34px 30px;position:relative;overflow:hidden;cursor:default;transition:all .3s}
+.aud-c:hover{border-color:rgba(232,150,60,.22);transform:translateY(-4px);box-shadow:0 18px 48px rgba(0,0,0,.28)}
+.aud-icon{font-size:30px;margin-bottom:16px;display:block}
+.aud-t{font-family:var(--font-serif);font-size:18px;font-weight:500;color:var(--text);margin-bottom:10px}
+.aud-d{font-size:13.5px;color:var(--text2);line-height:1.8;font-weight:300}
+.aud-resolve{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;
+  color:var(--accent);font-weight:500}
+.aud-resolve::before{content:'→';font-size:11px}
+
 /* LANG BAR */
 .lang-bar{background:var(--bg);padding:56px 0;text-align:center;
   border-top:1px solid var(--border)}
@@ -298,244 +334,139 @@ body.app-soon .plan-cta.s:hover,body.app-soon .plan-cta.p:hover{transform:none;o
 .lchips{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
 .lchip{display:flex;align-items:center;gap:9px;background:var(--surface);
   border:1px solid var(--border);padding:10px 22px;border-radius:100px;
-  font-size:13.5px;color:var(--text2);transition:all .2s;cursor:pointer}
-.lchip:hover,.lchip.active{border-color:var(--accent3);color:var(--text)}
-.lchip.active{border-color:var(--accent);color:var(--accent2)}
+  cursor:pointer;transition:all .2s;font-size:13px;color:var(--text2);text-decoration:none}
+.lchip:hover{border-color:var(--accent3);color:var(--text)}
 
 /* FAQ */
 .faq-bg{background:var(--bg2)}
-.faq-lay{display:grid;grid-template-columns:1fr 2fr;gap:72px;margin-top:60px}
-.faq-list{display:flex;flex-direction:column;gap:2px}
-.faq-item{background:var(--surface);border-radius:var(--radius-sm);
-  overflow:hidden;border:1px solid var(--border)}
-.faq-q{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;
-  cursor:pointer;font-size:14.5px;color:var(--text);gap:14px;
-  transition:background .18s;user-select:none}
-.faq-q:hover{background:var(--card)}
-.faq-arr{color:var(--text3);transition:transform .28s;flex-shrink:0;font-size:17px;line-height:1}
+.faq-lay{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{display:flex;justify-content:space-between;align-items:center;
+  padding:20px 0;cursor:pointer;font-size:15px;color:var(--text2);
+  gap:20px;transition:color .2s;font-weight:400;line-height:1.5}
+.faq-q:hover{color:var(--text)}
+.faq-item.open .faq-q{color:var(--accent)}
+.faq-arr{font-size:20px;color:var(--accent3);transition:transform .3s;flex-shrink:0;line-height:1}
 .faq-item.open .faq-arr{transform:rotate(45deg);color:var(--accent)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.faq-item.open .faq-a{max-height:2000px}
-.faq-a-in{padding:14px 22px 18px;font-size:13.5px;color:var(--text2);
-  line-height:1.82;font-weight:300;border-top:1px solid var(--border)}
-.faq-link{display:inline-flex;align-items:center;gap:6px;margin-top:20px;
-  color:var(--accent);font-size:13.5px;text-decoration:none;transition:opacity .2s}
-.faq-link:hover{opacity:.75}
-
-/* PRIVACY OVERLAY — 自下而上浮层 + 背后主页略可见 */
-#priv-pg{
-  display:none;position:fixed;inset:0;z-index:500;
-  align-items:flex-end;justify-content:center;
-  pointer-events:none;
-}
-#priv-pg.show{display:flex;pointer-events:auto}
-#priv-pg .priv-dim{
-  position:absolute;inset:0;
-  background:rgba(8,7,10,.58);
-  opacity:0;transition:opacity .34s ease;
-}
-#priv-pg.show .priv-dim{opacity:1}
-#priv-pg .priv-sheet{
-  position:relative;z-index:2;width:100%;max-width:900px;margin:0 auto;
-  max-height:min(96vh,100%);
-  overflow-y:auto;-webkit-overflow-scrolling:touch;
-  background:var(--bg);
-  border-radius:22px 22px 0 0;
-  border:1px solid rgba(232,150,60,.12);
-  border-bottom:none;
-  box-shadow:0 -28px 72px rgba(0,0,0,.5);
-  transform:translateY(104%);
-  transition:transform .48s cubic-bezier(.25,.82,.25,1);
-}
-#priv-pg.show .priv-sheet{transform:translateY(0)}
-#priv-pg .priv-sheet{display:flex;flex-direction:column}
-.priv-close{
-  align-self:flex-end;position:sticky;top:12px;margin:12px 16px 0;
-  flex-shrink:0;
-  background:rgba(20,17,25,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(232,150,60,.28);color:var(--text);font-size:22px;
-  width:46px;height:46px;border-radius:50%;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;transition:all .2s;z-index:10;
-  box-shadow:0 10px 24px rgba(0,0,0,.45)}
-.priv-close:hover{border-color:var(--accent);color:var(--accent2);transform:scale(1.04)}
-.priv-close:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
-.priv-inner{max-width:780px;margin:0 auto;padding:8px 48px 80px;width:100%}
-@media (prefers-reduced-motion:reduce){
-  #priv-pg .priv-dim,#priv-pg .priv-sheet{transition:none}
-  #priv-pg.show .priv-sheet{transform:translateY(0)}
-  #priv-pg .priv-sheet{transform:translateY(0)}
-}
-.priv-inner h1{font-family:var(--font-serif);font-size:38px;font-weight:300;
-  color:var(--text);margin-bottom:8px}
-.priv-inner .upd{font-size:12px;color:var(--text3);margin-bottom:40px;letter-spacing:.04em}
-.priv-inner h2{font-family:var(--font-serif);font-size:20px;font-weight:500;
-  color:var(--text);margin:36px 0 12px;border-left:3px solid var(--accent);padding-left:14px}
-.priv-inner p,.priv-inner li{font-size:14.5px;color:var(--text2);line-height:1.85;
-  font-weight:300;margin-bottom:10px}
-.priv-inner ul{padding-left:20px;margin-bottom:10px}
-.priv-inner a{color:var(--accent);text-decoration:none}
-.priv-hl{background:rgba(232,150,60,.07);border:1px solid rgba(232,150,60,.18);
-  border-radius:var(--radius-sm);padding:18px 22px;margin:20px 0;
-  font-size:13.5px;color:var(--text2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1)}
+.faq-item.open .faq-a{max-height:500px}
+.faq-a-in{padding:0 0 20px;font-size:13.5px;color:var(--text3);line-height:1.85;font-weight:300}
+.faq-a-in a,.faq-lay .sec-d a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(232,150,60,.35);transition:color .2s,border-color .2s}
+.faq-a-in a:hover,.faq-lay .sec-d a:hover{color:var(--accent2);border-bottom-color:var(--accent2)}
+.faq-contact{margin-top:32px}
+.faq-em{display:inline-flex;align-items:center;gap:8px;color:var(--text2);
+  font-size:14px;text-decoration:none;padding:11px 22px;border:1px solid var(--border);
+  border-radius:100px;transition:all .2s}
+.faq-em:hover{border-color:var(--accent3);color:var(--text)}
 
 /* FOOTER */
-footer{background:var(--bg);border-top:1px solid var(--border);padding:72px 0 0}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:52px}
-.fb-logo{width:44px;height:44px;border-radius:11px;margin-bottom:14px;object-fit:cover}
-.fb-name{font-family:var(--font-serif);font-size:19px;font-weight:500;color:var(--text);margin-bottom:10px}
-.fb-desc{font-size:13px;color:var(--text3);line-height:1.75;font-weight:300;max-width:220px}
-.fc-title{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--text3);font-weight:500;margin-bottom:18px}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 0 40px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+.fb-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.fb-logo img{width:32px;height:32px;border-radius:8px}
+.fb-name{font-family:var(--font-serif);font-size:16px;font-weight:600;color:var(--text)}
+.fb-desc{font-size:13px;color:var(--text3);line-height:1.8;font-weight:300;max-width:260px}
+.fc-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);font-weight:500;margin-bottom:16px}
 .fc-links{list-style:none;display:flex;flex-direction:column;gap:10px}
-.fc-links a{color:var(--text2);text-decoration:none;font-size:13.5px;
-  font-weight:300;transition:color .2s;cursor:pointer}
+.fc-links a{color:var(--text2);text-decoration:none;font-size:13px;
+  transition:color .2s;cursor:pointer}
 .fc-links a:hover{color:var(--accent)}
 .foot-bot{display:flex;justify-content:space-between;align-items:center;
-  padding:24px 0;border-top:1px solid var(--border)}
+  padding-top:28px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
 .foot-copy{font-size:12.5px;color:var(--text3)}
-.foot-legal{display:flex;gap:18px}
-.foot-legal a{font-size:12px;color:var(--text3);text-decoration:none;
-  transition:color .2s;cursor:pointer}
-.foot-legal a:hover{color:var(--accent)}
+.foot-legal{display:flex;gap:22px}
+.foot-legal a{font-size:12.5px;color:var(--text3);text-decoration:none;
+  cursor:pointer;transition:color .2s}
+.foot-legal a:hover{color:var(--text2)}
 
-/* REVEAL — 文字淡化出现，图片浮现出现；上下滚动都可重复触发 */
-.reveal{opacity:1;transform:none;will-change:opacity,transform}
-.reveal.reveal-text-hidden{
-  opacity:0;
-  transform:translateY(14px);
-  transition:opacity .55s ease,transform .55s ease;
-}
-.reveal.reveal-image-hidden{
-  opacity:0;
-  transform:translateY(18px) scale(.97);
-  transition:opacity .72s ease,transform .72s cubic-bezier(.22,.61,.36,1);
-}
-.reveal.reveal-visible{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  .reveal.reveal-text-hidden,.reveal.reveal-image-hidden{opacity:1;transform:none;transition:none}
-}
+/* PRIVACY PAGE */
+.priv-pg{position:fixed;inset:0;z-index:400;background:rgba(8,7,10,.92);
+  display:none;align-items:center;justify-content:center;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  opacity:0;transition:opacity .42s ease}
+.priv-pg.show{opacity:1}
+.priv-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  width:min(740px,calc(100% - 40px));max-height:86vh;overflow-y:auto;
+  padding:52px 56px;position:relative;
+  box-shadow:0 40px 100px rgba(0,0,0,.7)}
+.priv-close{position:absolute;top:20px;right:24px;background:var(--surface);
+  border:1px solid var(--border);color:var(--text2);width:34px;height:34px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;transition:all .2s;line-height:1}
+.priv-close:hover{border-color:var(--accent3);color:var(--text)}
+#priv-body h1{font-family:var(--font-serif);font-size:32px;font-weight:300;
+  color:var(--text);margin-bottom:8px}
+#priv-body h2{font-family:var(--font-serif);font-size:20px;font-weight:400;
+  color:var(--text);margin:28px 0 10px}
+#priv-body p{font-size:13.5px;color:var(--text2);line-height:1.85;margin-bottom:14px;font-weight:300}
+#priv-body ul{padding-left:20px;margin-bottom:14px}
+#priv-body li{font-size:13.5px;color:var(--text2);line-height:1.85;margin-bottom:5px;font-weight:300}
+#priv-body a{color:var(--accent);text-decoration:none}
+#priv-body .upd{font-size:12px;color:var(--text3);margin-bottom:28px}
+.priv-hl{background:rgba(232,150,60,.07);border:1px solid rgba(232,150,60,.18);
+  border-radius:10px;padding:14px 18px;font-size:13px;color:var(--text2);
+  line-height:1.7;margin:18px 0}
 
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
+/* SCROLL REVEAL */
+.reveal-text-hidden{opacity:0;transform:translateY(28px);transition:opacity .58s ease,transform .58s ease}
+.reveal-image-hidden{opacity:0;transform:translateY(18px) scale(.98);transition:opacity .62s ease,transform .62s cubic-bezier(.22,.61,.36,1)}
+.reveal-visible{opacity:1!important;transform:none!important;filter:none!important}
+
+/* MOBILE NAV */
+@media(max-width:900px){
+  .nav-toggle{display:flex;align-items:center;justify-content:center;
+    background:var(--surface);border:1px solid var(--border);color:var(--text2);
+    width:38px;height:38px;border-radius:10px;font-size:18px;cursor:pointer}
+  .nav-links{position:fixed;top:68px;left:0;right:0;bottom:0;
+    background:rgba(8,7,10,.97);backdrop-filter:blur(24px);
+    flex-direction:column;gap:0;padding:24px 0;
+    transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+    overflow-y:auto;z-index:199}
+  nav.menu-open .nav-links{transform:translateX(0)}
+  .nav-links a,.nav-links .lang-btn{font-size:16px;padding:16px 28px;border-radius:0;width:100%}
+  .nav-links li{width:100%;border-bottom:1px solid var(--border)}
+  .nav-links li:last-child{border-bottom:none}
+  .lang-sw{width:100%}
+  .lang-btn{border-radius:0;border:none;width:100%;justify-content:flex-start;padding:16px 28px;background:transparent}
+  .lang-dd{position:static;box-shadow:none;border:none;border-top:1px solid var(--border);display:block;border-radius:0;background:var(--surface)}
   .nav-inner{padding:0 24px}
-  .hero{grid-template-columns:1fr;text-align:center;padding:52px 0 32px;min-height:auto;gap:28px}
-  .hero-sub{margin:0 auto 36px;max-width:520px}
-  .hero-actions{justify-content:center}
-  .badges{justify-content:center}
-  .hero-vis{
-    display:flex;height:clamp(360px,42vw + 200px,500px);margin:8px auto 0;
-    max-width:100%;align-items:flex-start;padding-top:8px
-  }
-  .phone-stack{width:360px;height:520px;transform:none}
-  .feat-head{grid-template-columns:1fr;gap:16px}
-  .feat-grid{grid-template-columns:1fr}
-  .show-item{grid-template-columns:1fr;gap:36px;margin-bottom:80px}
-  .show-item.rev{direction:ltr}
-  .mem-lay{grid-template-columns:1fr;gap:48px}
-  .cases-grid{grid-template-columns:repeat(2,1fr)}
-  .plat-lay{grid-template-columns:1fr;gap:48px}
-  .pro-grid{grid-template-columns:1fr;max-width:440px}
-  .faq-lay{grid-template-columns:1fr;gap:40px}
-  .foot-grid{grid-template-columns:1fr 1fr;gap:36px}
 }
 @media(max-width:900px){
-  nav{overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
-  .nav-toggle{
-    display:flex;align-items:center;justify-content:center;
-    width:44px;height:44px;flex-shrink:0;position:relative;z-index:260;
-    background:var(--surface);border:1px solid var(--border);
-    border-radius:12px;color:var(--text);font-size:20px;line-height:1;
-    cursor:pointer;transition:border-color .2s,color .2s
-  }
-  .nav-toggle:hover{border-color:var(--accent3);color:var(--accent2)}
-  .nav-inner{position:relative;gap:12px}
-  .nav-links{
-    position:fixed;top:68px;left:0;right:0;bottom:0;height:auto;min-height:0;z-index:250;
-    flex-direction:column;align-items:stretch;justify-content:flex-start;
-    padding:20px 24px max(24px, env(safe-area-inset-bottom));gap:2px;margin:0;
-    background:rgba(8,7,10,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    border-top:1px solid var(--border);
-    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
-    transform:translateY(-12px);opacity:0;visibility:hidden;pointer-events:none;
-    transition:opacity .28s ease,visibility .28s,transform .28s ease
-  }
-  nav.menu-open{backdrop-filter:none;-webkit-backdrop-filter:none}
-  nav.menu-open .nav-links{
-    transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto
-  }
-  .nav-links li{width:100%}
-  .nav-links>li>a:not(.nav-cta){
-    display:block;padding:14px 16px;border-radius:var(--radius-sm);font-size:15px
-  }
-  .nav-links .nav-cta{display:block;text-align:center;padding:14px 20px;margin-top:6px}
-  .nav-links .lang-sw{width:100%}
-  .nav-links .lang-btn{width:100%;justify-content:center}
-  .nav-links .lang-dd{position:static;display:none;width:100%;margin-top:8px;
-    box-shadow:none;border:1px solid var(--border)}
-  .nav-links .lang-sw:focus-within .lang-dd,
-  .nav-links .lang-sw:hover .lang-dd{display:block}
+  .hero{grid-template-columns:1fr;gap:0;min-height:auto;padding:40px 0 56px}
+  .hero-vis{display:none}
+  .hero-title{font-size:clamp(36px,8vw,52px)}
+  .feat-head{grid-template-columns:1fr;gap:20px;margin-bottom:36px}
+  .feat-grid{grid-template-columns:1fr}
+  .show-item,.show-item.rev{grid-template-columns:1fr;gap:40px;direction:ltr}
+  .show-item.rev>*{direction:ltr}
+  .show-ph{order:-1}
+  .mem-lay{grid-template-columns:1fr}
+  .cases-grid{grid-template-columns:repeat(2,1fr)}
+  .plat-lay{grid-template-columns:1fr}
+  .pro-grid{grid-template-columns:1fr}
+  .faq-lay{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .aud-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
 }
-@media(max-width:768px){
-  .sec{padding:88px 0}
-  .hero-vis{height:clamp(320px,40vw + 170px,440px);overflow:visible}
-  .phone-stack{width:320px;height:460px;transform:none}
-  .ph-main{width:236px;top:10px}
-  .ph-l{width:174px;top:66px;left:2px;opacity:.42;filter:blur(1.8px)}
-  .ph-r{width:174px;top:74px;right:2px;opacity:.54;filter:blur(1px)}
-  .fc{padding:36px 28px}
-  .show-item{gap:28px;margin-bottom:64px}
-  .curve-box{padding:28px 22px}
-}
-@media(max-width:640px){
-  .sec{padding:72px 0}
-  .hero{padding:40px 0 28px}
-  .hero-vis{height:clamp(300px,54vw + 100px,390px);overflow:visible}
-  .phone-stack{width:292px;height:420px;transform:none}
-  .ph-main{width:212px;top:8px}
-  .ph-l{width:156px;top:62px;left:4px;opacity:.4;filter:blur(1.7px)}
-  .ph-r{width:156px;top:70px;right:4px;opacity:.52;filter:blur(.95px)}
+@media(max-width:480px){
   .cases-grid{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr}
-  .foot-bot{flex-direction:column;gap:14px;text-align:center}
-  .priv-inner{padding:80px 24px 60px}
-  .priv-close{right:14px;top:14px;width:42px;height:42px;font-size:20px}
-}
-@media(max-width:400px){
-  .hero-vis{height:clamp(280px,52vw + 95px,350px);overflow:visible}
-  .phone-stack{width:258px;height:380px;transform:none}
-  .ph-main{width:188px;top:10px}
-  .ph-l{width:136px;top:58px;left:2px;opacity:.38;filter:blur(1.6px)}
-  .ph-r{width:136px;top:66px;right:2px;opacity:.5;filter:blur(.9px)}
-  .hero-title{font-size:clamp(32px,9vw,44px)}
+  .lchips{flex-direction:column;align-items:center}
+  .foot-bot{flex-direction:column;text-align:center}
+  .foot-legal{justify-content:center}
+  .priv-box{padding:36px 28px}
 }
 </style>
-<!-- Google tag (gtag.js) - GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NXT22LMJ5F"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-NXT22LMJ5F');
-</script>
-<!-- Baidu Analytics -->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?211eccc831448e9e7e691fee321f39ae";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
 </head>
 <body>
 
-<!-- PRIVACY OVERLAY -->
-<div id="priv-pg" aria-hidden="true">
-  <div class="priv-dim" onclick="closePg()" aria-hidden="true"></div>
-  <div class="priv-sheet" role="dialog" aria-modal="true" aria-labelledby="priv-title-h">
-    <button type="button" class="priv-close" onclick="closePg()" aria-label="关闭">✕</button>
-    <div class="priv-inner" id="priv-body"></div>
+<!-- PRIVACY MODAL -->
+<div class="priv-pg" id="priv-pg" role="dialog" aria-modal="true" aria-labelledby="priv-title-h" aria-hidden="true" onclick="if(event.target===this)closePg()">
+  <div class="priv-box">
+    <button class="priv-close" onclick="closePg()" aria-label="Close">✕</button>
+    <div id="priv-body"></div>
   </div>
 </div>
 
@@ -584,8 +515,8 @@ var _hmt = _hmt || [];
     <div class="hero">
       <div class="hero-text">
         <div class="hero-eye" data-i18n="h_eye">现已在 App Store 上架</div>
-        <h1 class="hero-title" data-i18n-html="h_title">把生活记下来<br>让<em>记忆</em>真正<br>沉淀下去</h1>
-        <p class="hero-sub" data-i18n-html="h_sub">时线日记是一款专为<strong>高频记录、长期回看</strong>设计的图文日记应用。截图、照片、文字，按时间线自然串联，科学的记忆曲线帮你不再遗忘重要的一切。</p>
+        <h1 class="hero-title" data-i18n-html="h_title">记下此刻，<br>让<em>重要的事</em><br>真正留下来</h1>
+        <p class="hero-sub" data-i18n-html="h_sub">时线日记是一款专为<strong>图文记录与长期回顾</strong>设计的 iPhone / iPad 应用。截图、照片、文字，按时间线自然串联；彩色标签一触即达；科学记忆曲线让你在最关键的时刻再次回看。</p>
         <div class="hero-actions">
           <a class="btn-p" onclick="openDownload()" data-i18n-html="h_dl">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -619,28 +550,28 @@ var _hmt = _hmt || [];
         <span class="sec-eye" data-i18n="f_eye">核心功能</span>
         <h2 class="sec-h" data-i18n-html="f_h">一套完整的<br><em>记录与回看</em>体系</h2>
       </div>
-      <p class="sec-d reveal" data-i18n="f_d">从快速记录到长期强化，时线日记将截图、标签、搜索、记忆曲线整合在一个流畅体验中，让每一条记录都有意义。</p>
+      <p class="sec-d reveal" data-i18n="f_d">从瞬间截图到半年后仍记得清晰——时线日记将时间线、彩色标签、全文搜索与科学记忆曲线整合在一个原生 iOS 体验中。</p>
     </div>
     <div class="feat-grid">
       <div class="fc reveal">
         <div class="fc-icon">📅</div>
-        <h3 class="fc-t" data-i18n="f1t">时间线记录</h3>
-        <p class="fc-d" data-i18n="f1d">将截图、照片与文字按时间自然串联。每条节点支持多图、备注与标签，自动按日归档，随时回溯任意时刻。</p>
+        <h3 class="fc-t" data-i18n="f1t">时间线主页</h3>
+        <p class="fc-d" data-i18n="f1d">所有记录按日期自动分组，每条显示缩略图、时间戳与内容预览。一眼扫过整天，顶部搜索栏随时全文定位，轻触右下角「＋」即可新建节点。</p>
       </div>
       <div class="fc reveal" style="transition-delay:.07s">
-        <div class="fc-icon">🔍</div>
-        <h3 class="fc-t" data-i18n="f2t">标签与搜索</h3>
-        <p class="fc-d" data-i18n="f2d">自定义标签体系，配合关键词全文搜索。主题过滤与精准召回互为补充，让历史内容触手可及。</p>
+        <div class="fc-icon">#️⃣</div>
+        <h3 class="fc-t" data-i18n="f2t">彩色标签系统</h3>
+        <p class="fc-d" data-i18n="f2d">每个标签自动分配专属颜色，详情页以彩色胶囊直观呈现。支持表情符号标签（如 #✈️），标签列表一页总览全部主题，按标签过滤立即聚焦同类内容。</p>
       </div>
       <div class="fc reveal" style="transition-delay:.14s">
         <div class="fc-icon">🧠</div>
         <h3 class="fc-t" data-i18n="f3t">记忆曲线复习</h3>
-        <p class="fc-d" data-i18n="f3d">基于艾宾浩斯遗忘规律，11 个科学复习周期自动规划时间节点。智能提醒帮你在最关键的时刻回看，让重要信息真正留存于脑中。</p>
+        <p class="fc-d" data-i18n="f3d">基于艾宾浩斯遗忘规律，11 个科学复习节点自动排期——5分钟后、30分钟后、12小时后……直到第 180 天。每次复习时间精准显示在列表中，清晰可见今天/明天/后天到期。</p>
       </div>
       <div class="fc reveal" style="transition-delay:.21s">
-        <div class="fc-icon">💾</div>
-        <h3 class="fc-t" data-i18n="f4t">本地备份与恢复</h3>
-        <p class="fc-d" data-i18n="f4d">数据始终由你掌控。随时导出本地备份文件，换机或重装后一键恢复（Pro 功能）。不依赖云端，真正保护数据隐私。</p>
+        <div class="fc-icon">🔗</div>
+        <h3 class="fc-t" data-i18n="f4t">富文本备注 · 链接直跳</h3>
+        <p class="fc-d" data-i18n="f4d">备注中的网址可直接点击跳转，无需复制粘贴。截图配合链接，原始来源随时可查。支持粘贴剪贴板内容，附加图片最多 20 张（Pro），详情页左右滑动浏览全部图片。</p>
       </div>
     </div>
   </div>
@@ -649,61 +580,108 @@ var _hmt = _hmt || [];
 <!-- SHOWCASE -->
 <section class="sec" id="showcase">
   <div class="w">
+
+    <!-- SHOWCASE 1: Timeline Home -->
     <div class="show-item reveal">
       <div>
-        <span class="show-lbl" data-i18n="s1lbl">时间线记录</span>
-        <h2 class="show-h" data-i18n-html="s1h">生活流动的每一刻<br>都<em>有迹可循</em></h2>
-        <p class="show-b" data-i18n="s1b">一键新建节点，选择图片、输入备注，App 自动按日期整理。支持每节点最多 20 张图片（Pro），时间线将你的记录自然编织成可回看的人生档案。</p>
+        <span class="show-lbl" data-i18n="s1lbl">时间线主页</span>
+        <h2 class="show-h" data-i18n-html="s1h">每一天的记录<br>都<em>清晰可寻</em></h2>
+        <p class="show-b" data-i18n="s1b">主页按日期自动分组，点击日期可展开或折叠当天全部内容。每条节点显示缩略图、精确时间戳与文字预览，一眼判断内容，无需逐条打开。顶部搜索栏支持全文检索，任何备注关键词都能被即时召回。</p>
         <div class="pills">
-          <span class="pill" data-i18n="p1">多图支持（Pro最多20张）</span>
-          <span class="pill" data-i18n="p2">文字备注</span>
-          <span class="pill" data-i18n="p3">按日归档</span>
-          <span class="pill" data-i18n="p4">快速浏览</span>
+          <span class="pill" data-i18n="p1">按日分组归档</span>
+          <span class="pill" data-i18n="p2">缩略图快速预览</span>
+          <span class="pill" data-i18n="p3">全文搜索备注</span>
+          <span class="pill" data-i18n="p4">折叠/展开任意天</span>
         </div>
       </div>
       <div class="show-ph">
         <div class="ph-glow"></div>
-        <div class="ph-d"><img src="images/sharp-webp/iphone3-sm.webp" srcset="images/sharp-webp/iphone3-sm.webp 320w, images/sharp-webp/iphone3-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="Timeline" loading="lazy" decoding="async"></div>
+        <div class="ph-d ph-carousel" data-ph-carousel data-interval="3000" data-fade-min="480" data-fade-max="720">
+          <div class="ph-carousel-viewport ph-carousel-viewport--fade">
+              <div class="ph-carousel-slide is-active">
+                <img src="images/sharp-webp/iphone6-sm.webp" srcset="images/sharp-webp/iphone6-sm.webp 320w, images/sharp-webp/iphone6-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="时间线主页" loading="lazy" decoding="async">
+              </div>
+              <div class="ph-carousel-slide">
+                <img src="images/sharp-webp/iphone7-sm.webp" srcset="images/sharp-webp/iphone7-sm.webp 320w, images/sharp-webp/iphone7-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="时间线主页" loading="lazy" decoding="async">
+              </div>
+          </div>
+          <div class="ph-carousel-dots" role="tablist" aria-label="截图">
+            <button type="button" class="ph-carousel-dot" aria-label="1 / 2" aria-current="true"></button>
+            <button type="button" class="ph-carousel-dot" aria-label="2 / 2" aria-current="false"></button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- SHOWCASE 2: Detail View with tags & links -->
     <div class="show-item rev reveal" style="transition-delay:.1s">
       <div>
-        <span class="show-lbl" data-i18n="s2lbl">标签与搜索</span>
-        <h2 class="show-h" data-i18n-html="s2h">找到任何你<br>曾经记录的<em>一切</em></h2>
-        <p class="show-b" data-i18n="s2b">为节点添加标签，建立个人知识体系。关键词搜索横贯所有内容，无论过了多久，想找的东西永远只需几秒。标签目录一览无余，主题过滤让回溯更聚焦。</p>
+        <span class="show-lbl" data-i18n="s2lbl">详情页 · 彩色标签 · 链接直跳</span>
+        <h2 class="show-h" data-i18n-html="s2h">不只是看图<br>更能读懂<em>每个细节</em></h2>
+        <p class="show-b" data-i18n="s2b">每条节点的详情页展示全幅照片（最多 20 张，Pro），下方彩色 hashtag 标签胶囊一目了然。备注中的网址自动识别为可点击链接，轻触即在 App 内直接跳转——截图来源、参考文章，始终触手可及。左右翻页键在相邻节点间快速切换。</p>
+        <div class="tag-demo">
+          <div class="tag-demo-row">
+            <span class="tag-chip blue">#旅行</span>
+            <span class="tag-chip green">#旅行日记</span>
+            <span class="tag-chip orange">#✈️</span>
+            <span class="tag-chip pink">#笔记</span>
+            <span class="tag-chip red">#日记</span>
+          </div>
+          <div class="tag-demo-note">笔记链接 🔗 <a href="#">https://www.snaplinediary.cn</a> · 可直接跳转</div>
+        </div>
         <div class="pills">
-          <span class="pill" data-i18n="p5">自定义标签</span>
-          <span class="pill" data-i18n="p6">全文搜索</span>
-          <span class="pill" data-i18n="p7">标签目录</span>
-          <span class="pill" data-i18n="p8">主题过滤</span>
+          <span class="pill" data-i18n="p5">彩色 # 标签胶囊</span>
+          <span class="pill" data-i18n="p6">URL 一键直跳</span>
+          <span class="pill" data-i18n="p7">左右翻页浏览</span>
+          <span class="pill" data-i18n="p8">加入记忆曲线</span>
         </div>
       </div>
       <div class="show-ph">
         <div class="ph-glow"></div>
-        <div class="ph-d"><img src="images/sharp-webp/iphone4-sm.webp" srcset="images/sharp-webp/iphone4-sm.webp 320w, images/sharp-webp/iphone4-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="Search" loading="lazy" decoding="async"></div>
+        <div class="ph-d ph-carousel" data-ph-carousel data-interval="4000" data-fade-min="620" data-fade-max="920">
+          <div class="ph-carousel-viewport ph-carousel-viewport--fade">
+              <div class="ph-carousel-slide is-active">
+                <img src="images/sharp-webp/iphone8-sm.webp" srcset="images/sharp-webp/iphone8-sm.webp 320w, images/sharp-webp/iphone8-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="详情页" loading="lazy" decoding="async">
+              </div>
+              <div class="ph-carousel-slide">
+                <img src="images/sharp-webp/iphone9-sm.webp" srcset="images/sharp-webp/iphone9-sm.webp 320w, images/sharp-webp/iphone9-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="详情页" loading="lazy" decoding="async">
+              </div>
+              <div class="ph-carousel-slide">
+                <img src="images/sharp-webp/iphone10-sm.webp" srcset="images/sharp-webp/iphone10-sm.webp 320w, images/sharp-webp/iphone10-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="详情页" loading="lazy" decoding="async">
+              </div>
+          </div>
+          <div class="ph-carousel-dots" role="tablist" aria-label="截图">
+            <button type="button" class="ph-carousel-dot" aria-label="1 / 3" aria-current="true"></button>
+            <button type="button" class="ph-carousel-dot" aria-label="2 / 3" aria-current="false"></button>
+            <button type="button" class="ph-carousel-dot" aria-label="3 / 3" aria-current="false"></button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- SHOWCASE 3: Memory Curve -->
     <div class="show-item reveal" style="transition-delay:.2s">
       <div>
         <span class="show-lbl" data-i18n="s3lbl">记忆曲线</span>
         <h2 class="show-h" data-i18n-html="s3h">记录了，<br>也能真正<em>记住</em></h2>
-        <p class="show-b" data-i18n="s3b">将重要节点加入记忆曲线（免费版最多 3 项，Pro 无限），系统自动按 11 个艾宾浩斯周期安排复习——5分钟、30分钟、12小时、1天、2天……直到 6 个月，每次提醒都恰到好处。</p>
+        <p class="show-b" data-i18n="s3b">将任意节点加入记忆曲线后，系统立即生成包含 11 个节点的复习计划——每一行都列出具体日期、时间和「今天 / 明天 / N 天后」标注。页面底部还显示遗忘曲线走势图，让你直观感受科学间隔复习的效果。免费版最多 3 项，Pro 无限。</p>
         <div class="pills">
-          <span class="pill" data-i18n="p9">科学间隔</span>
-          <span class="pill" data-i18n="p10">智能提醒</span>
-          <span class="pill" data-i18n="p11">复习计划</span>
-          <span class="pill" data-i18n="p12">完成标记</span>
+          <span class="pill" data-i18n="p9">具体日期时间可见</span>
+          <span class="pill" data-i18n="p10">11 步科学排期</span>
+          <span class="pill" data-i18n="p11">遗忘曲线可视化</span>
+          <span class="pill" data-i18n="p12">复习打卡完成标记</span>
         </div>
       </div>
       <div class="show-ph">
         <div class="ph-glow"></div>
-        <div class="ph-d"><img src="images/sharp-webp/iphone5-sm.webp" srcset="images/sharp-webp/iphone5-sm.webp 320w, images/sharp-webp/iphone5-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="Memory Curve" loading="lazy" decoding="async"></div>
+        <div class="ph-d"><img src="images/sharp-webp/iphone12-sm.webp" srcset="images/sharp-webp/iphone12-sm.webp 320w, images/sharp-webp/iphone12-lg.webp 621w" sizes="(max-width: 768px) 78vw, 252px" alt="记忆曲线" loading="lazy" decoding="async"></div>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- MEMORY CURVE -->
+<!-- MEMORY CURVE DEEP DIVE -->
 <section class="sec mem-bg" id="memory">
   <div class="w">
     <div class="mem-lay">
@@ -742,12 +720,24 @@ var _hmt = _hmt || [];
       <div class="reveal" style="transition-delay:.15s">
         <span class="sec-eye" data-i18n="m_eye">记忆曲线系统</span>
         <h2 class="sec-h" data-i18n-html="m_h">科学记住<br>每一件<em>重要的事</em></h2>
-        <p class="sec-d" data-i18n="m_d">基于艾宾浩斯遗忘规律——人类在学习后第一天会遗忘约 70% 的内容。时线日记安排 11 个精确复习时间点，将短期记忆转化为长期资产。黄金时段（08:00–21:00）智能推送，不打扰休息时间。</p>
+        <p class="sec-d" data-i18n="m_d">艾宾浩斯研究表明：不复习的情况下，人在学习后 24 小时内会遗忘约 70% 的内容。时线日记将一条普通记录升级为 11 个科学间隔的复习计划，每次提醒都在遗忘发生的前一刻到达。推送时间限定在黄金时段（08:00–21:00），不打扰睡眠与专注时间。</p>
         <div class="stat-grid">
-          <div class="stat-c reveal" style="transition-delay:.2s"><div class="stat-n">11</div><div class="stat-l" data-i18n-html="st1">个科学复习<br>时间节点</div></div>
-          <div class="stat-c reveal" style="transition-delay:.25s"><div class="stat-n">70%</div><div class="stat-l" data-i18n-html="st2">未复习内容<br>24小时内遗忘</div></div>
-          <div class="stat-c reveal" style="transition-delay:.3s"><div class="stat-n">180</div><div class="stat-l" data-i18n-html="st3">天完整记忆<br>强化周期</div></div>
-          <div class="stat-c reveal" style="transition-delay:.35s"><div class="stat-n">∞</div><div class="stat-l" data-i18n-html="st4">Pro版无限<br>记忆曲线</div></div>
+          <div class="stat-c">
+            <div class="stat-n">11</div>
+            <div class="stat-l" data-i18n="st1">个科学复习<br>时间节点</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-n">70%</div>
+            <div class="stat-l" data-i18n="st2">未复习内容<br>24小时内遗忘</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-n">180</div>
+            <div class="stat-l" data-i18n="st3">天完整记忆<br>强化周期</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-n">∞</div>
+            <div class="stat-l" data-i18n="st4">Pro版无限<br>记忆曲线</div>
+          </div>
         </div>
       </div>
     </div>
@@ -757,33 +747,50 @@ var _hmt = _hmt || [];
 <!-- USE CASES -->
 <section class="sec cases-bg" id="cases">
   <div class="w">
-    <div style="text-align:center">
-      <span class="sec-eye" data-i18n="c_eye">使用场景</span>
-      <h2 class="sec-h" data-i18n-html="c_h">你的生活，<em>全都适用</em></h2>
-      <p class="sec-d" style="margin:0 auto" data-i18n="c_d">无论学习、工作、创作还是生活记录，时线日记都能成为你最得力的记忆伙伴。</p>
-    </div>
+    <span class="sec-eye" data-i18n="c_eye">使用场景</span>
+    <h2 class="sec-h" data-i18n-html="c_h">你的生活，<em>全都适用</em></h2>
+    <p class="sec-d" data-i18n="c_d">无论学习、工作、创作还是日常记录，时线日记都能成为你最得力的记忆伙伴。</p>
     <div class="cases-grid">
-      <div class="case-c reveal"><span class="case-em">📚</span><h3 class="case-t" data-i18n="c1t">学习复盘</h3><p class="case-d" data-i18n="c1d">记录课堂笔记与题目截图，标签归类学科章节，加入记忆曲线按提醒复习，形成"记录—复习—巩固"完整闭环。告别遗忘，让知识真正属于你。</p><div class="case-tags"><span class="case-tag" data-i18n="ct1">错题整理</span><span class="case-tag" data-i18n="ct2">知识点</span><span class="case-tag" data-i18n="ct3">备考</span></div></div>
-      <div class="case-c reveal" style="transition-delay:.07s"><span class="case-em">💼</span><h3 class="case-t" data-i18n="c2t">工作留痕</h3><p class="case-d" data-i18n="c2d">会议重点、需求截图、决策节点集中记录，项目标签组织跨时间信息，搜索功能直达关键证据链。不再翻找聊天记录，一切留痕清晰可查。</p><div class="case-tags"><span class="case-tag" data-i18n="ct4">会议纪要</span><span class="case-tag" data-i18n="ct5">项目管理</span><span class="case-tag" data-i18n="ct6">留痕备查</span></div></div>
-      <div class="case-c reveal" style="transition-delay:.14s"><span class="case-em">✨</span><h3 class="case-t" data-i18n="c3t">创作灵感</h3><p class="case-d" data-i18n="c3d">即时保存灵感图与片段文字，标签建立素材库，复习提醒确保灵感不被遗忘。每一个稍纵即逝的想法，都有机会在未来被重新拾起、发光发热。</p><div class="case-tags"><span class="case-tag" data-i18n="ct7">灵感收集</span><span class="case-tag" data-i18n="ct8">素材积累</span><span class="case-tag" data-i18n="ct9">创作参考</span></div></div>
-      <div class="case-c reveal" style="transition-delay:.21s"><span class="case-em">🌸</span><h3 class="case-t" data-i18n="c4t">生活纪实</h3><p class="case-d" data-i18n="c4d">旅行、美食、健身、亲子日常，在时间线中形成可回看的故事。复习提醒让重要瞬间在时光流逝后依然清晰可感，人生高光时刻永不消散。</p><div class="case-tags"><span class="case-tag" data-i18n="ct10">旅行记录</span><span class="case-tag" data-i18n="ct11">日常生活</span><span class="case-tag" data-i18n="ct12">亲子成长</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- AUDIENCE — 适用人群 / 痛点共鸣 -->
-<section class="sec cases-bg" id="audience">
-  <div class="w">
-    <div style="text-align:center">
-      <span class="sec-eye" data-i18n="aud_eye">适合谁用</span>
-      <h2 class="sec-h" data-i18n-html="aud_h">这些场景，<br><em>是否像极了你？</em></h2>
-      <p class="sec-d reveal" style="margin:0 auto;max-width:560px" data-i18n="aud_d">如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，或许这正是为你准备的一款应用。</p>
-    </div>
-    <div class="cases-grid" style="margin-top:48px">
-      <div class="case-c reveal"><span class="case-em">🖼️</span><h3 class="case-t" data-i18n="aud1t">截图与笔记沉入相册</h3><p class="case-d" data-i18n="aud1d">聊天截屏、小票、收藏的长文截图散落在照片里，想用时翻不到。时间线 + 全文搜索，让每一条记录都能被精准唤回。</p></div>
-      <div class="case-c reveal" style="transition-delay:.08s"><span class="case-em">📉</span><h3 class="case-t" data-i18n="aud2t">学了就忘，缺少复习节奏</h3><p class="case-d" data-i18n="aud2d">备考充电、技能提升都需要「在对的时间再看一眼」。记忆曲线按科学间隔提醒，把短期印象拉成长期记忆。</p></div>
-      <div class="case-c reveal" style="transition-delay:.16s"><span class="case-em">🗂️</span><h3 class="case-t" data-i18n="aud3t">工作信息跨周、跨群、跨文档</h3><p class="case-d" data-i18n="aud3d">会议结论、需求变更、决策过程分散各处。一条可追溯的时间线 + 标签，让关键证据链随手可查。</p></div>
-      <div class="case-c reveal" style="transition-delay:.24s"><span class="case-em">💭</span><h3 class="case-t" data-i18n="aud4t">灵感稍纵即逝</h3><p class="case-d" data-i18n="aud4d">闪过脑子的想法、随手存的图，常常没有下文。快速记录 + 标签归档 + 复习提醒，让灵感有机会在未来被重新点亮。</p></div>
+      <div class="case-c reveal">
+        <span class="case-em">📚</span>
+        <h3 class="case-t" data-i18n="c1t">学习复盘</h3>
+        <p class="case-d" data-i18n="c1d">拍下课堂板书或截图重要知识点，用标签按学科章节分类，加入记忆曲线自动安排复习提醒。形成「记录→标签→复习→记住」完整闭环，告别备考前的临时突击。</p>
+        <div class="case-tags">
+          <span class="case-tag" data-i18n="ct1">错题整理</span>
+          <span class="case-tag" data-i18n="ct2">知识点</span>
+          <span class="case-tag" data-i18n="ct3">备考计划</span>
+        </div>
+      </div>
+      <div class="case-c reveal" style="transition-delay:.08s">
+        <span class="case-em">💼</span>
+        <h3 class="case-t" data-i18n="c2t">工作留痕</h3>
+        <p class="case-d" data-i18n="c2d">截图会议重点、需求变更和决策过程，在备注中附上原始链接随时可跳转核实。项目标签让跨周跨月的工作节点串联可查，关键证据链一秒检索。</p>
+        <div class="case-tags">
+          <span class="case-tag" data-i18n="ct4">会议纪要</span>
+          <span class="case-tag" data-i18n="ct5">项目管理</span>
+          <span class="case-tag" data-i18n="ct6">留痕备查</span>
+        </div>
+      </div>
+      <div class="case-c reveal" style="transition-delay:.16s">
+        <span class="case-em">💡</span>
+        <h3 class="case-t" data-i18n="c3t">创作灵感</h3>
+        <p class="case-d" data-i18n="c3d">随手保存灵感截图与片段文字，配上参考链接，标签建立素材库。记忆曲线复习提醒让灵感在最合适的时机重新浮出，每一个稍纵即逝的想法都有机会成为作品。</p>
+        <div class="case-tags">
+          <span class="case-tag" data-i18n="ct7">灵感收集</span>
+          <span class="case-tag" data-i18n="ct8">素材积累</span>
+          <span class="case-tag" data-i18n="ct9">参考链接</span>
+        </div>
+      </div>
+      <div class="case-c reveal" style="transition-delay:.24s">
+        <span class="case-em">✈️</span>
+        <h3 class="case-t" data-i18n="c4t">生活纪实</h3>
+        <p class="case-d" data-i18n="c4d">旅行、美食、健身、亲子日常，在时间线中形成可回看的故事。每张照片配上彩色标签与文字注解，一年后翻回当天，细节清晰如昨。</p>
+        <div class="case-tags">
+          <span class="case-tag" data-i18n="ct10">旅行记录</span>
+          <span class="case-tag" data-i18n="ct11">日常生活</span>
+          <span class="case-tag" data-i18n="ct12">亲子成长</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -794,53 +801,114 @@ var _hmt = _hmt || [];
     <span class="sec-eye" data-i18n="pl_eye">多设备支持</span>
     <h2 class="sec-h" data-i18n-html="pl_h">iPhone 与 iPad<br><em>双端一致</em>体验</h2>
     <div class="plat-lay">
-      <div class="ipad-wrap reveal"><img src="images/sharp-webp/ipad1-sm.webp" srcset="images/sharp-webp/ipad1-sm.webp 480w, images/sharp-webp/ipad1-lg.webp 900w" sizes="(max-width: 1024px) 92vw, 560px" alt="iPad Screenshot" loading="lazy" decoding="async"></div>
-      <div class="plat-pts">
-        <div class="pt reveal" style="transition-delay:.08s"><div class="pt-ic">📱</div><div><div class="pt-t" data-i18n="pl1t">iPhone · 随时随地记录</div><div class="pt-d" data-i18n="pl1d">纵向主信息流，单手即可完成快速记录。搜索与详情跳转路径清晰，随时随地都能流畅使用。</div></div></div>
-        <div class="pt reveal" style="transition-delay:.16s"><div class="pt-ic">🖥️</div><div><div class="pt-t" data-i18n="pl2t">iPad · 分栏精读模式</div><div class="pt-d" data-i18n="pl2d">左侧时间线 + 右侧详情的分栏视图，信息密度更高，适合长时阅读与深度整理，回顾体验全面升级。</div></div></div>
-        <div class="pt reveal" style="transition-delay:.24s"><div class="pt-ic">🔄</div><div><div class="pt-t" data-i18n="pl3t">无缝备份迁移（Pro）</div><div class="pt-d" data-i18n="pl3d">一键导出备份，在新设备导入即可恢复全部数据。时间线与记忆曲线完整迁移，换机不丢一条记录。</div></div></div>
-        <div class="pt reveal" style="transition-delay:.32s"><div class="pt-ic">👨‍👩‍👧</div><div><div class="pt-t" data-i18n="pl4t">家庭共享（Pro）</div><div class="pt-d" data-i18n="pl4d">Pro 版支持 Apple 家庭共享，一次购买，最多 6 位家庭成员同享专业权益，记录习惯在家庭中延续传承。</div></div></div>
+      <div class="ipad-wrap reveal">
+        <img src="images/sharp-webp/ipad1-sm.webp" srcset="images/sharp-webp/ipad1-sm.webp 320w, images/sharp-webp/ipad1-lg.webp 900w" sizes="(max-width: 768px) 90vw, 50vw" alt="iPad Split View" loading="lazy" decoding="async">
+      </div>
+      <div class="plat-pts reveal" style="transition-delay:.15s">
+        <div class="pt">
+          <div class="pt-ic">📱</div>
+          <div>
+            <div class="pt-t" data-i18n="pl1t">iPhone · 随时随地记录</div>
+            <p class="pt-d" data-i18n="pl1d">纵向主信息流，单手即可完成快速创建。从主页到详情，层级清晰；搜索与标签筛选无需多余操作，路边、会议室、随时随地都能流畅使用。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt-ic">🖥️</div>
+          <div>
+            <div class="pt-t" data-i18n="pl2t">iPad · 分栏精读模式</div>
+            <p class="pt-d" data-i18n="pl2d">左侧时间线 + 右侧详情的分栏布局，信息密度更高，适合长时阅读与深度整理。记忆曲线的 11 步复习计划在大屏上一览无余。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt-ic">💾</div>
+          <div>
+            <div class="pt-t" data-i18n="pl3t">无缝备份迁移（Pro）</div>
+            <p class="pt-d" data-i18n="pl3d">一键导出本地备份包含全部节点、图片与记忆曲线进度；换机或重装后导入即可完整恢复。数据完全由你掌控，不依赖任何云端服务。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt-ic">👨‍👩‍👧</div>
+          <div>
+            <div class="pt-t" data-i18n="pl4t">家庭共享（Pro）</div>
+            <p class="pt-d" data-i18n="pl4d">Pro 版支持 Apple 家庭共享，一次购买最多 6 位家庭成员同时享有全部专业权益，记录习惯可以在家庭中一起延续。</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PRO -->
+<!-- AUDIENCE -->
+<section class="sec aud-bg" id="audience">
+  <div class="w">
+    <span class="sec-eye" data-i18n="aud_eye">适合谁用</span>
+    <h2 class="sec-h" data-i18n-html="aud_h">这些烦恼，<br><em>是否像极了你？</em></h2>
+    <p class="sec-d" data-i18n="aud_d">如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，时线日记正是为你而生的解法。</p>
+    <div class="aud-grid">
+      <div class="aud-c reveal">
+        <span class="aud-icon">📸</span>
+        <div class="aud-t" data-i18n="aud1t">截图与笔记沉入相册，永远找不到</div>
+        <p class="aud-d" data-i18n="aud1d">聊天截屏、小票、收藏的长文截图散落在相册深处，想用时翻半天翻不到，只能重新搜索。时线日记的时间线主页 + 全文备注搜索，让每一条截图都能被精准唤回。</p>
+        <span class="aud-resolve" data-i18n="aud1r">时间线 + 全文搜索解决</span>
+      </div>
+      <div class="aud-c reveal" style="transition-delay:.08s">
+        <span class="aud-icon">😔</span>
+        <div class="aud-t" data-i18n="aud2t">学了就忘，知识留不下来</div>
+        <p class="aud-d" data-i18n="aud2d">备考充电、技能提升都需要「在对的时间再看一眼」。但没有人会记得在第 2 天、第 7 天、第 30 天主动回去复习。记忆曲线帮你在最关键的遗忘节点前推送提醒，把短期印象拉成长期记忆。</p>
+        <span class="aud-resolve" data-i18n="aud2r">11 步记忆曲线解决</span>
+      </div>
+      <div class="aud-c reveal" style="transition-delay:.16s">
+        <span class="aud-icon">🗂️</span>
+        <div class="aud-t" data-i18n="aud3t">工作信息跨周、跨群、跨文档，一片散乱</div>
+        <p class="aud-d" data-i18n="aud3d">会议结论、需求变更、决策过程分散在不同聊天、文档和截图里。一条可追溯的时间线 + 彩色标签 + 备注链接，让关键证据链随手可查、一秒定位。</p>
+        <span class="aud-resolve" data-i18n="aud3r">标签 + 链接直跳解决</span>
+      </div>
+      <div class="aud-c reveal" style="transition-delay:.24s">
+        <span class="aud-icon">⚡</span>
+        <div class="aud-t" data-i18n="aud4t">灵感稍纵即逝，存了等于没存</div>
+        <p class="aud-d" data-i18n="aud4d">闪过脑子的想法、随手存的图，常常没有下文——因为你不会主动想起去看它。快速记录 + 标签归档 + 记忆曲线提醒，让灵感有机会在未来最需要它的时刻重新被点亮。</p>
+        <span class="aud-resolve" data-i18n="aud4r">快速记录 + 复习提醒解决</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO PRICING -->
 <section class="sec pro-bg" id="pro">
   <div class="w">
-    <div style="text-align:center">
+    <div style="text-align:center;max-width:560px;margin:0 auto">
       <span class="sec-eye" data-i18n="pr_eye">版本与定价</span>
       <h2 class="sec-h" data-i18n-html="pr_h">免费开始，<em>一次购买</em>永久解锁</h2>
       <p class="sec-d" style="margin:0 auto" data-i18n="pr_d">免费版即可体验核心记录功能。升级 Pro，一次性付费，永久拥有全部专业权益，支持家庭共享。</p>
     </div>
     <div class="pro-grid">
-      <div class="plan reveal">
+      <div class="plan">
         <div class="plan-name" data-i18n="fr_name">免费版</div>
-        <p class="plan-desc" data-i18n="fr_desc">适合体验核心功能，轻度使用无需付费。</p>
+        <p class="plan-desc" data-i18n="fr_desc">适合轻度使用，体验核心记录功能，无需付费。</p>
         <ul class="plan-feats">
-          <li><span class="ck">✓</span><span data-i18n="fr_f1">时间线记录（每日最多 5 条）</span></li>
-          <li><span class="ck">✓</span><span data-i18n="fr_f2">基础标签与搜索</span></li>
+          <li><span class="ck">✓</span><span data-i18n="fr_f1">每日最多 5 条节点</span></li>
+          <li><span class="ck">✓</span><span data-i18n="fr_f2">基础标签与全文搜索</span></li>
           <li><span class="ck">✓</span><span data-i18n="fr_f3">每节点最多 2 张图片</span></li>
           <li><span class="ck">✓</span><span data-i18n="fr_f4">最多 3 个活跃记忆曲线</span></li>
-          <li class="dim"><span class="ck">·</span><span data-i18n="fr_f5">含 Google 广告展示</span></li>
-          <li class="dim"><span class="ck">·</span><span data-i18n="fr_f6">不支持备份导出/导入</span></li>
+          <li class="dim"><span class="ck">✗</span><span data-i18n="fr_f5">主界面展示广告</span></li>
+          <li class="dim"><span class="ck">✗</span><span data-i18n="fr_f6">不支持备份导出 / 导入</span></li>
         </ul>
         <a class="plan-cta s" onclick="openDownload()" data-i18n="fr_btn">免费下载</a>
       </div>
-      <div class="plan feat reveal" style="transition-delay:.08s">
+      <div class="plan feat">
         <div class="plan-badge" data-i18n="pr_badge">✦ 推荐</div>
         <div class="plan-name">Pro</div>
-        <p class="plan-desc" data-i18n="pr_desc2">一次购买，永久解锁。适合高频使用、学习备考、工作留痕的专业用户。</p>
+        <p class="plan-desc" data-i18n="pr_desc2">一次买断，永久解锁。适合高频记录、学习备考、工作留痕的用户。</p>
         <ul class="plan-feats">
           <li><span class="ck">✓</span><span data-i18n="pr_f1">节点数量无限制</span></li>
           <li><span class="ck">✓</span><span data-i18n="pr_f2">记忆曲线活跃项无限制</span></li>
           <li><span class="ck">✓</span><span data-i18n="pr_f3">每节点最多 20 张图片</span></li>
-          <li><span class="ck">✓</span><span data-i18n="pr_f4">导出/导入本地备份</span></li>
+          <li><span class="ck">✓</span><span data-i18n="pr_f4">导出 / 导入本地备份</span></li>
           <li><span class="ck">✓</span><span data-i18n="pr_f5">完全去除广告</span></li>
-          <li><span class="ck">✓</span><span data-i18n="pr_f6">支持家庭共享（最多6人）</span></li>
+          <li><span class="ck">✓</span><span data-i18n="pr_f6">支持家庭共享（最多 6 人）</span></li>
         </ul>
         <a class="plan-cta p" onclick="openDownload()" data-i18n="pr_btn">永久解锁 Pro →</a>
-        <div class="plan-hint" data-i18n="pr_hint">一次购买 · 非订阅 · 支持家人共享</div>
+        <p class="plan-hint" data-i18n="pr_hint">一次购买 · 非订阅 · 支持家人共享</p>
       </div>
     </div>
   </div>
@@ -849,13 +917,13 @@ var _hmt = _hmt || [];
 <!-- LANG BAR -->
 <div class="lang-bar">
   <div class="w">
-    <h3 class="lang-bar-t" data-i18n="lg_t">全球五大语言，本地化支持</h3>
+    <p class="lang-bar-t" data-i18n="lg_t">全球五大语言，本地化支持</p>
     <div class="lchips">
-      <div class="lchip active" onclick="setLang('zh')" data-lang="zh">🇨🇳 简体中文</div>
-      <div class="lchip" onclick="setLang('en')" data-lang="en">🇺🇸 English</div>
-      <div class="lchip" onclick="setLang('es')" data-lang="es">🇪🇸 Español</div>
-      <div class="lchip" onclick="setLang('fr')" data-lang="fr">🇫🇷 Français</div>
-      <div class="lchip" onclick="setLang('ru')" data-lang="ru">🇷🇺 Русский</div>
+      <a class="lchip" onclick="setLang('zh')">🇨🇳 中文</a>
+      <a class="lchip" onclick="setLang('en')">🇺🇸 English</a>
+      <a class="lchip" onclick="setLang('es')">🇪🇸 Español</a>
+      <a class="lchip" onclick="setLang('fr')">🇫🇷 Français</a>
+      <a class="lchip" onclick="setLang('ru')">🇷🇺 Русский</a>
     </div>
   </div>
 </div>
@@ -864,13 +932,15 @@ var _hmt = _hmt || [];
 <section class="sec faq-bg" id="faq">
   <div class="w">
     <div class="faq-lay">
-      <div>
+      <div class="reveal">
         <span class="sec-eye" data-i18n="fq_eye">常见问题</span>
-        <h2 class="sec-h" style="font-size:clamp(26px,3vw,40px)" data-i18n-html="fq_h">遇到<em>疑惑</em>？<br>这里有答案</h2>
-        <p class="sec-d" style="font-size:13.5px;margin-top:14px" data-i18n="fq_d">如果没有找到你的问题，欢迎通过邮件联系我们，我们会尽快回复。</p>
-        <a class="faq-link" href="mailto:neonyanbb@gmail.com" data-i18n="fq_em">→ 发送邮件支持</a>
+        <h2 class="sec-h" data-i18n-html="fq_h">遇到<em>疑惑</em>？<br>这里有答案</h2>
+        <p class="sec-d" data-i18n-html="fq_d">如果没有找到你的问题，欢迎<a href="mailto:neonyanbb@gmail.com">联系我们</a>，我们会尽快回复。</p>
+        <div class="faq-contact">
+          <a class="faq-em" href="mailto:neonyanbb@gmail.com" data-i18n="fq_em">→ 发送邮件支持</a>
+        </div>
       </div>
-      <div class="faq-list" id="faq-list"></div>
+      <div id="faq-list" class="reveal" style="transition-delay:.1s"></div>
     </div>
   </div>
 </section>
@@ -880,16 +950,17 @@ var _hmt = _hmt || [];
   <div class="w">
     <div class="foot-grid">
       <div>
-        <img class="fb-logo" src="images/sharp-webp/logo-68.webp" alt="Logo" loading="lazy" decoding="async">
-        <div class="fb-name" data-i18n="appName">时线日记</div>
-        <p class="fb-desc" data-i18n="ft_desc">把每天生活与灵感记下来，用科学提醒回看你的高光时刻。</p>
+        <div class="fb-logo">
+          <img src="images/sharp-webp/logo-68.webp" alt="Logo" width="32" height="32">
+          <div class="fb-name" data-i18n="appName">时线日记</div>
+        </div>
+        <p class="fb-desc" data-i18n="ft_desc">把每天的生活与灵感记录下来，用科学提醒回看你的高光时刻。</p>
       </div>
       <div>
         <div class="fc-title" data-i18n="ft_prod">产品</div>
         <ul class="fc-links">
           <li><a onclick="goTo('features')" data-i18n="ft_feat">功能介绍</a></li>
           <li><a onclick="goTo('memory')" data-i18n="ft_mem">记忆曲线</a></li>
-          <li><a onclick="goTo('audience')" data-i18n="n_aud">适用人群</a></li>
           <li><a onclick="goTo('pro')" data-i18n="ft_pro">Pro 版本</a></li>
           <li><a onclick="openDownload()" data-i18n="ft_dl">App Store 下载</a></li>
         </ul>
@@ -922,14 +993,15 @@ var _hmt = _hmt || [];
     </div>
   </div>
 </footer>
+
 <div id="soon-toast" class="soon-toast" role="status" aria-live="polite"></div>
 
 <script>
 // ─────────────────────────────────────────
-//  App Store 开关：上架后与 archive/index.appstore-ready.html 对齐后，改为 true 并部署
+//  App Store 开关
 // ─────────────────────────────────────────
-const APP_STORE_LIVE = false;
-const APP_STORE_URL = "https://apps.apple.com/app/id6746461599";
+const APP_STORE_LIVE = true;
+const APP_STORE_URL = "https://apps.apple.com/app/%E6%97%B6%E7%BA%BF%E6%97%A5%E8%AE%B0/id6760802186";
 
 // ─────────────────────────────────────────
 //  i18n DATA
@@ -1004,41 +1076,44 @@ const CURVE_STEPS = {
 
 const FAQS = {
   zh:[
-    {q:"Pro 是订阅制吗？",a:"不是。Pro 是一次性买断，永久有效，非订阅制。购买后无需续费，所有权益终身享有，支持家庭共享（最多 6 人）。"},
-    {q:"购买 Pro 后没有生效怎么办？",a:"请先重启应用，然后在设置页面点击「恢复购买」。确认使用的 Apple ID 与购买时一致。"},
-    {q:"提醒通知没有按时发送？",a:"请检查：① 系统通知权限是否为时线日记开启；② 是否开启了专注模式或勿扰模式；③ 复习计划的触发时间是否已到。注意：复习提醒仅在黄金时段（08:00–21:00）内推送。"},
-    {q:"如何备份并迁移数据到新设备？",a:"备份是 Pro 专属功能。在旧设备设置页导出备份文件，通过 AirDrop 或文件 App 传到新设备后，打开应用 → 设置 → 导入备份，选择文件即可。"},
-    {q:"我的数据会上传到服务器吗？",a:"不会。时线日记采用本地优先策略，日记内容默认存储在设备本地，不会自动上传服务器。免费版广告由 Google AdMob 提供，详见隐私政策。"},
-    {q:"免费版有哪些限制？",a:"免费版：每日最多 5 条节点、每节点最多 2 张图片、最多 3 个活跃记忆曲线、主界面展示广告、不支持备份导出/导入。升级 Pro 后所有限制全部解除。"}
+    {q:"Pro 是订阅制吗？",a:"不是。Pro 是一次性买断，永久有效，非订阅制。购买后无需续费，所有权益终身享有，并支持 Apple 家庭共享（最多 6 人同享）。"},
+    {q:"购买 Pro 后没有立即生效怎么办？",a:"请先重启应用，然后在「设置」页面点击「恢复购买」。确认所使用的 Apple ID 与购买时一致。若仍有问题，请<a href='mailto:neonyanbb@gmail.com'>联系我们</a>。"},
+    {q:"记忆曲线的复习提醒没有按时推送？",a:"请依次检查：① 系统「通知」权限是否已为时线日记开启；② 是否处于专注模式或勿扰模式；③ 复习提醒仅在黄金时段（08:00–21:00）推送，若触发时间在此范围外会顺延至次日 08:00。"},
+    {q:"如何将数据备份并迁移到新设备？",a:"备份是 Pro 专属功能。在旧设备「设置 → 导出备份」导出文件，通过 AirDrop 或「文件」App 传送到新设备后，在新设备打开时线日记 → 设置 → 导入备份，选择文件即可完整恢复所有节点、图片与记忆曲线进度。"},
+    {q:"我的日记内容会被上传到服务器吗？",a:"不会。时线日记采用本地优先策略，你的所有日记内容、图片、标签与记忆曲线数据均存储在设备本地，不会自动上传服务器，开发者无法访问。免费版广告由 Google AdMob 提供，可能收集设备标识符用于广告投放，详见隐私政策。"},
+    {q:"免费版和 Pro 版具体有哪些区别？",a:"免费版：每日最多 5 条节点、每节点最多 2 张图片、最多 3 个活跃记忆曲线、主界面展示广告、不支持备份导出/导入。升级 Pro 后：节点数与记忆曲线均无限制、每节点最多 20 张图片、完全无广告、支持本地备份与导入、支持家庭共享（最多 6 人）。"}
   ],
   en:[
-    {q:"Is Pro a subscription?",a:"No. Pro is a one-time purchase — pay once, own it forever. No renewals needed. Family Sharing supported (up to 6 members)."},
-    {q:"Pro didn't activate after purchase?",a:"Restart the app, then tap 'Restore Purchase' in Settings. Make sure you're using the same Apple ID."},
-    {q:"Review notifications aren't arriving?",a:"Check: ① Notification permission is enabled. ② Focus Mode / Do Not Disturb isn't blocking. ③ The review time has passed. Note: reminders only fire during golden hours (08:00–21:00)."},
-    {q:"How do I migrate to a new device?",a:"Backup is a Pro feature. Export backup on your old device, transfer via AirDrop or Files app, then import in Snapline Diary settings on your new device."},
-    {q:"Is my data uploaded to any server?",a:"No. Your diary content stays on-device. The free version uses Google AdMob for ads, which may collect device identifiers. See our privacy policy for details."},
-    {q:"What are the free version limits?",a:"Free: 5 entries/day, 2 photos/entry, 3 active memory curves, ads shown, no backup. Pro removes all limits."}
+    {q:"Is Pro a subscription?",a:"No. Pro is a one-time purchase — pay once, own it forever. No renewals, no expiry. Apple Family Sharing is supported (up to 6 members share one purchase)."},
+    {q:"Pro didn't activate after purchase — what should I do?",a:"Restart the app, then go to Settings and tap 'Restore Purchase'. Make sure you're signed into the same Apple ID you used to purchase. If the issue persists, <a href='mailto:neonyanbb@gmail.com'>contact us</a> and we'll sort it out."},
+    {q:"Review reminders aren't arriving on time?",a:"Check: ① Notification permission is enabled for Snapline Diary in iOS Settings. ② Focus Mode or Do Not Disturb isn't blocking notifications. ③ Reminders only fire during golden hours (08:00–21:00) — if a scheduled time falls outside this window it's delivered the next day at 08:00."},
+    {q:"How do I migrate all my data to a new device?",a:"Backup is a Pro feature. On your old device go to Settings → Export Backup. Transfer the file via AirDrop or the Files app to your new device, then in Snapline Diary go to Settings → Import Backup and select the file. All entries, photos, and memory curve progress are fully restored."},
+    {q:"Is my diary content uploaded to any server?",a:"No. All your diary entries, images, tags, and memory curve data are stored locally on your device and never automatically uploaded anywhere. The developer cannot access your content. The free version uses Google AdMob for ads, which may collect device identifiers — see our privacy policy for details."},
+    {q:"What exactly are the free vs Pro differences?",a:"Free: 5 entries/day, 2 photos/entry, 3 active memory curves, ads shown, no backup. Pro: unlimited entries, unlimited memory curves, 20 photos/entry, completely ad-free, local backup export & import, Family Sharing up to 6 people."}
   ],
   es:[
-    {q:"¿Pro es una suscripción?",a:"No. Pro es una compra única, paga una vez y es tuyo para siempre. Se admite Compartir en familia (hasta 6 miembros)."},
-    {q:"¿Qué hago si Pro no se activa después de comprar?",a:"Reinicia la aplicación y, en Ajustes, toca «Restaurar compras». Asegúrate de usar el mismo Apple ID que al comprar."},
-    {q:"¿Mis datos se suben a algún servidor?",a:"No. Tu contenido permanece en tu dispositivo. La versión gratuita usa Google AdMob para anuncios. Consulta nuestra política de privacidad."},
-    {q:"¿Cuáles son los límites de la versión gratuita?",a:"Gratis: 5 entradas/día, 2 fotos/entrada, 3 curvas activas, anuncios, sin copia de seguridad. Pro elimina todos los límites."},
-    {q:"¿Cómo migro mis datos a un nuevo dispositivo?",a:"La copia de seguridad es una función Pro. Exporta en el dispositivo antiguo e importa en el nuevo desde Ajustes."}
+    {q:"¿Pro es una suscripción?",a:"No. Pro es una compra única y permanente — pagas una vez y es tuyo para siempre. Compatible con Compartir en familia de Apple (hasta 6 miembros)."},
+    {q:"¿Qué hago si Pro no se activa tras la compra?",a:"Reinicia la app y en Ajustes toca «Restaurar compras». Asegúrate de usar el mismo Apple ID. Si el problema persiste, <a href='mailto:neonyanbb@gmail.com'>escríbenos</a>."},
+    {q:"¿Los recordatorios de repaso no llegan a tiempo?",a:"Comprueba: ① Permiso de notificaciones habilitado para la app. ② No estar en Modo Concentración o No Molestar. ③ Los recordatorios solo se envían en horas doradas (08:00–21:00); si el horario programado cae fuera, se pospone al siguiente día a las 08:00."},
+    {q:"¿Cómo migro mis datos a un dispositivo nuevo?",a:"La copia de seguridad es una función Pro. Exporta en el dispositivo antiguo (Ajustes → Exportar copia) y transfiérela con AirDrop o la app Archivos. Luego importa desde Ajustes en el nuevo dispositivo — se restauran todas las entradas, fotos y el progreso de la curva de memoria."},
+    {q:"¿Mis datos se suben a algún servidor?",a:"No. Todo tu contenido (entradas, imágenes, etiquetas, curvas) se almacena localmente en tu dispositivo. La versión gratuita usa Google AdMob; consulta nuestra política de privacidad para más detalles."},
+    {q:"¿Cuáles son las diferencias exactas entre gratis y Pro?",a:"Gratis: 5 entradas/día, 2 fotos/entrada, 3 curvas activas, anuncios, sin copia. Pro: entradas y curvas ilimitadas, 20 fotos/entrada, sin anuncios, copia de seguridad local, Compartir en familia (hasta 6 personas)."}
   ],
   fr:[
-    {q:"Pro est-il un abonnement?",a:"Non. Pro est un achat unique. Payez une fois et c'est pour toujours. Partage familial pris en charge (jusqu'à 6 membres)."},
-    {q:"Pro ne s'active pas après l'achat ?",a:"Redémarrez l'app, puis touchez « Restaurer les achats » dans Réglages. Vérifiez que vous utilisez le même identifiant Apple."},
-    {q:"Mes données sont-elles téléchargées?",a:"Non. Votre contenu reste sur votre appareil. La version gratuite utilise Google AdMob pour les publicités. Consultez notre politique de confidentialité."},
-    {q:"Quelles sont les limites de la version gratuite?",a:"Gratuit: 5 entrées/jour, 2 photos/entrée, 3 courbes actives, publicités, sans sauvegarde. Pro supprime toutes les limites."},
-    {q:"Comment migrer vers un nouvel appareil?",a:"La sauvegarde est une fonctionnalité Pro. Exportez sur l'ancien appareil et importez sur le nouveau depuis les Paramètres."}
+    {q:"Pro est-il un abonnement ?",a:"Non. Pro est un achat unique et permanent — vous payez une fois et c'est pour toujours. Partage familial Apple pris en charge (jusqu'à 6 membres pour un seul achat)."},
+    {q:"Pro ne s'est pas activé après l'achat ?",a:"Redémarrez l'app, puis dans Réglages touchez « Restaurer les achats ». Assurez-vous d'utiliser le même identifiant Apple. Si le problème persiste, <a href='mailto:neonyanbb@gmail.com'>contactez-nous</a>."},
+    {q:"Les rappels de révision n'arrivent pas à l'heure ?",a:"Vérifiez : ① La permission de notifications est activée. ② Le Mode Concentration ou Ne pas déranger ne bloque pas les notifications. ③ Les rappels ne s'envoient qu'en heures dorées (08:00–21:00) ; si l'heure prévue est hors de ce créneau, il est reporté au lendemain à 08:00."},
+    {q:"Comment migrer vers un nouvel appareil ?",a:"La sauvegarde est une fonctionnalité Pro. Exportez depuis Réglages → Exporter la sauvegarde, transférez via AirDrop ou l'app Fichiers, puis importez dans les Réglages du nouvel appareil. Toutes les entrées, photos et progressions de courbe mémoire sont restaurées."},
+    {q:"Mes données sont-elles envoyées à un serveur ?",a:"Non. Tout votre contenu est stocké localement sur votre appareil. La version gratuite utilise Google AdMob pour les publicités — consultez notre politique de confidentialité pour les détails."},
+    {q:"Quelles sont les différences exactes entre Gratuit et Pro ?",a:"Gratuit : 5 entrées/jour, 2 photos/entrée, 3 courbes actives, publicités, sans sauvegarde. Pro : entrées et courbes illimitées, 20 photos/entrée, sans pub, sauvegarde locale, Partage familial jusqu'à 6 personnes."}
   ],
   ru:[
-    {q:"Pro — это подписка?",a:"Нет. Pro — единоразовая покупка навсегда. Семейный доступ поддерживается (до 6 человек)."},
-    {q:"Pro не активировался после покупки?",a:"Перезапустите приложение, затем в настройках нажмите «Восстановить покупки». Убедитесь, что используете тот же Apple ID."},
-    {q:"Мои данные загружаются на сервер?",a:"Нет. Ваш контент хранится локально. Бесплатная версия использует Google AdMob для рекламы. Подробнее в политике конфиденциальности."},
-    {q:"Каковы ограничения бесплатной версии?",a:"Бесплатно: 5 записей/день, 2 фото/запись, 3 активные кривые, реклама, без резервирования. Pro снимает все ограничения."},
-    {q:"Как перенести данные на новое устройство?",a:"Резервирование — функция Pro. Экспортируйте на старом устройстве, импортируйте на новом через Настройки."}
+    {q:"Pro — это подписка?",a:"Нет. Pro — единоразовая покупка навсегда. Никаких продлений. Поддерживается семейный доступ Apple (до 6 человек с одной покупки)."},
+    {q:"Pro не активировался после покупки?",a:"Перезапустите приложение, затем в Настройках нажмите «Восстановить покупки». Убедитесь, что используете тот же Apple ID. Если проблема не решена — <a href='mailto:neonyanbb@gmail.com'>напишите нам</a>."},
+    {q:"Напоминания о повторении не приходят вовремя?",a:"Проверьте: ① Разрешение на уведомления включено. ② Режим фокусировки или Не беспокоить не блокирует уведомления. ③ Напоминания приходят только в золотые часы (08:00–21:00); если запланированное время выпадает за этот диапазон, оно переносится на следующий день в 08:00."},
+    {q:"Как перенести данные на новое устройство?",a:"Резервирование — функция Pro. На старом устройстве: Настройки → Экспорт резервной копии. Передайте файл через AirDrop или приложение «Файлы», затем импортируйте в Настройках нового устройства. Все записи, фото и прогресс кривой памяти восстанавливаются полностью."},
+    {q:"Мои данные загружаются на сервер?",a:"Нет. Весь ваш контент хранится локально на устройстве. Бесплатная версия использует Google AdMob для рекламы — подробнее в политике конфиденциальности."},
+    {q:"В чём конкретные различия бесплатной версии и Pro?",a:"Бесплатно: 5 записей/день, 2 фото/запись, 3 активные кривые, реклама, без резервирования. Pro: неограниченные записи и кривые, 20 фото/запись, без рекламы, локальное резервирование, семейный доступ до 6 человек."}
   ]
 };
 
@@ -1052,29 +1127,15 @@ const PRIVACY = {
 <h2>2. 我们不收集的信息</h2>
 <p>本应用<strong>不主动收集</strong>任何可识别个人身份的信息，包括：姓名、邮箱、电话号码、精确位置信息、联系人等。以下数据仅存储于设备本地：你创建的时间线节点（文字、图片、标签）、记忆曲线复习计划与进度、应用设置。</p>
 <h2>3. 广告服务（Google AdMob）</h2>
-<p>免费版本中，本应用使用 <strong>Google AdMob</strong> 提供广告服务。Google AdMob 是一项由 Google LLC 运营的广告平台，可能会收集以下信息用于广告个性化与投放：</p>
-<ul>
-  <li>设备广告标识符（IDFA / Advertising ID）</li>
-  <li>设备类型、操作系统及版本信息</li>
-  <li>应用使用数据（广告展示次数、点击行为）</li>
-  <li>基于 IP 地址的大致地理位置</li>
-</ul>
-<p>根据苹果 ATT（App Tracking Transparency）政策，应用首次运行时会请求跟踪授权。你可以选择拒绝，拒绝后广告仍会展示，但将不再根据你的个人数据进行个性化。</p>
-<p>你可以随时在 iPhone「设置」→「隐私与安全性」→「跟踪」中管理或撤销跟踪授权。</p>
-<p>Google 隐私政策详见：<a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p>
-<p><strong>Pro 版本</strong>完全去除广告，AdMob SDK 在 Pro 状态下不进行任何广告请求或数据收集。</p>
+<p>免费版本中，本应用使用 <strong>Google AdMob</strong> 提供广告服务。AdMob 可能收集设备广告标识符（IDFA）、设备类型、操作系统版本、应用使用数据及基于 IP 的大致地理位置。根据苹果 ATT 政策，应用首次运行时会请求跟踪授权，你可选择拒绝。<strong>Pro 版本</strong>完全去除广告。Google 隐私政策：<a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p>
 <h2>4. 内购与支付</h2>
-<p>Pro 版本的升级购买完全通过 <strong>Apple App Store</strong> 处理。本应用不接触、不存储任何支付信息或银行卡数据。购买记录由 Apple 管理，适用 Apple 隐私政策。</p>
-<h2>5. 通知权限</h2>
-<p>记忆曲线复习提醒需要通知权限。你可随时在设备「设置」中开启或关闭通知，关闭后记录功能不受影响，仅停止复习提醒推送。</p>
-<h2>6. 相册权限</h2>
-<p>添加图片节点时，应用需要访问相册以选取图片；<strong>不会使用相机</strong>。图片仅在你主动选择时添加，应用不会在后台扫描或访问你的相册。</p>
-<h2>7. 备份数据（Pro）</h2>
-<p>Pro 版本支持导出本地备份文件。备份文件存储在你指定的位置（如「文件」App），由你完全掌控。应用不会将备份内容自动上传至任何云端服务。</p>
-<h2>8. 数据删除</h2>
-<p>删除本应用将同时删除设备本地存储的所有数据。如需清除与 AdMob 广告相关的设备标识符，可在「设置」→「隐私与安全性」→「Apple 广告」中重置广告标识符。</p>
-<h2>9. 联系我们</h2>
-<p>如有任何隐私相关问题，请通过邮件联系我们。</p>`
+<p>Pro 版本升级完全通过 <strong>Apple App Store</strong> 处理，本应用不接触任何支付信息。</p>
+<h2>5. 通知与相册权限</h2>
+<p>记忆曲线复习提醒需要通知权限；添加图片需要访问相册权限（仅在你主动选择图片时使用，不会后台扫描）。两者均可在设备设置中随时关闭。</p>
+<h2>6. 备份数据（Pro）</h2>
+<p>备份文件存储在你指定的位置，由你完全掌控，应用不会将备份内容上传至任何云端服务。</p>
+<h2>7. 联系我们</h2>
+<p>如有隐私相关问题，请通过邮件<a href="mailto:neonyanbb@gmail.com">联系我们</a>。</p>`
   },
   en:{
     title:"Privacy Policy",
@@ -1083,90 +1144,80 @@ const PRIVACY = {
 <p>Snapline Diary is built with a <strong>local-first</strong> philosophy. All your diary content, photos, tags, and memory curve data are stored on your device by default and are never automatically uploaded to any server.</p>
 <div class="priv-hl">📍 <strong>Core principle:</strong> Your personal records (diary text, images, tags) always stay on your device. We cannot access this content.</div>
 <h2>2. Information We Do Not Collect</h2>
-<p>The app does <strong>not</strong> collect any personally identifiable information such as name, email, phone number, precise location, or contacts. The following data is stored locally on your device only: timeline entries, memory curve plans and progress, and app settings.</p>
+<p>The app does <strong>not</strong> collect any personally identifiable information such as name, email, phone number, precise location, or contacts. Timeline entries, memory curve plans/progress, and app settings are stored locally on your device only.</p>
 <h2>3. Advertising — Google AdMob</h2>
-<p>The <strong>free version</strong> uses Google AdMob (operated by Google LLC) to display advertisements. AdMob may collect the following for ad personalization and delivery:</p>
-<ul>
-  <li>Device advertising identifier (IDFA / Advertising ID)</li>
-  <li>Device type, OS version</li>
-  <li>App usage data (impressions, click behavior)</li>
-  <li>Approximate location based on IP address</li>
-</ul>
-<p>Per Apple's ATT framework, the app will request tracking permission on first launch. You may decline — ads will still appear but won't be personalized. Manage tracking anytime at iPhone Settings → Privacy & Security → Tracking.</p>
-<p>Google Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p>
-<p>The <strong>Pro version</strong> removes all ads. The AdMob SDK makes no ad requests or data collection while Pro is active.</p>
+<p>The <strong>free version</strong> uses Google AdMob (by Google LLC) to display ads. AdMob may collect: device advertising identifier (IDFA), device type, OS version, app usage data, and approximate location from IP. Per Apple's ATT framework, the app requests tracking permission on first launch — you may decline. The <strong>Pro version</strong> removes all ads and AdMob makes no data requests. Google Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p>
 <h2>4. Purchases</h2>
-<p>Pro upgrade purchases are processed entirely by <strong>Apple App Store</strong>. We do not handle or store any payment information. Purchase records are managed by Apple under Apple's privacy policy.</p>
-<h2>5. Notifications</h2>
-<p>Memory curve review reminders require notification permission. You can enable or disable this in device Settings anytime. Disabling won't affect recording; only review reminders will stop.</p>
-<h2>6. Photo Library</h2>
-<p>Adding images requires access to your photo library to pick images. <strong>The camera is not used.</strong> Images are only added when you explicitly select them. The app does not scan your library in the background.</p>
-<h2>7. Backup (Pro)</h2>
-<p>Pro users can export local backup files to a location of their choice (e.g., Files app). The app does not automatically upload backups to any cloud service.</p>
-<h2>8. Data Deletion</h2>
-<p>Deleting the app removes all locally stored data. To reset AdMob-related device identifiers, go to Settings → Privacy & Security → Apple Advertising and reset your Advertising Identifier.</p>
-<h2>9. Contact</h2>
-<p>For privacy-related questions, please contact us by email.</p>`
+<p>Pro purchases are processed entirely by <strong>Apple App Store</strong>. We do not handle or store any payment information.</p>
+<h2>5. Notifications & Photo Library</h2>
+<p>Memory curve reminders require notification permission. Adding images requires photo library access (only when you explicitly select photos — no background scanning). Both can be revoked in iOS Settings at any time.</p>
+<h2>6. Backup (Pro)</h2>
+<p>Backup files are stored where you choose (e.g., Files app). The app does not upload backups to any cloud service.</p>
+<h2>7. Contact</h2>
+<p>For privacy questions, please <a href="mailto:neonyanbb@gmail.com">contact us by email</a>.</p>`
   },
-  es:{title:"Política de privacidad",upd:"Actualizado: marzo 2026",body:`<h2>1. Resumen</h2><p>Diario Cronología almacena todos tus datos localmente en tu dispositivo con una filosofía <strong>local-first</strong>. No subimos tu contenido personal a ningún servidor.</p><div class="priv-hl">📍 <strong>Principio fundamental:</strong> Tus registros personales siempre permanecen en tu dispositivo.</div><h2>2. Publicidad (Google AdMob)</h2><p>La versión gratuita usa <strong>Google AdMob</strong> para mostrar anuncios. AdMob puede recopilar el identificador publicitario del dispositivo (IDFA), tipo de dispositivo, versión del SO y datos de uso para personalizar anuncios. La versión Pro elimina completamente los anuncios y AdMob no recopila datos. Política de privacidad de Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Compras</h2><p>Las compras se procesan a través de Apple App Store. No manejamos datos de pago.</p><h2>4. Contacto</h2><p>Si tiene alguna pregunta sobre privacidad, contáctenos por correo electrónico.</p>`},
-  fr:{title:"Politique de confidentialité",upd:"Mis à jour: mars 2026",body:`<h2>1. Résumé</h2><p>Journal Chronologie adopte une philosophie <strong>local-first</strong>. Toutes vos données sont stockées sur votre appareil et ne sont jamais téléchargées automatiquement sur un serveur.</p><div class="priv-hl">📍 <strong>Principe fondamental:</strong> Vos enregistrements restent toujours sur votre appareil.</div><h2>2. Publicité (Google AdMob)</h2><p>La version gratuite utilise <strong>Google AdMob</strong> pour les publicités. AdMob peut collecter l'identifiant publicitaire, le type d'appareil, la version du système et les données d'utilisation. La version Pro supprime complètement les publicités. Politique de confidentialité Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Achats</h2><p>Les achats sont traités via l'App Store d'Apple. Nous ne gérons aucune donnée de paiement.</p><h2>4. Contact</h2><p>Pour toute question relative à la confidentialité, contactez-nous par e-mail.</p>`},
-  ru:{title:"Политика конфиденциальности",upd:"Обновлено: март 2026",body:`<h2>1. Обзор</h2><p>Таймлайн Дневник придерживается принципа <strong>local-first</strong>: все данные хранятся локально на вашем устройстве и никогда не передаются на сервер автоматически.</p><div class="priv-hl">📍 <strong>Основной принцип:</strong> Ваши личные записи всегда остаются на вашем устройстве.</div><h2>2. Реклама (Google AdMob)</h2><p>Бесплатная версия использует <strong>Google AdMob</strong> для рекламы. AdMob может собирать рекламный идентификатор устройства, тип устройства, версию ОС и данные использования. Версия Pro полностью убирает рекламу и не передаёт данные в AdMob. Политика конфиденциальности Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Покупки</h2><p>Покупки обрабатываются через App Store Apple. Мы не обрабатываем платёжные данные.</p><h2>4. Контакты</h2><p>По вопросам конфиденциальности свяжитесь с нами по электронной почте.</p>`}
+  es:{title:"Política de privacidad",upd:"Actualizado: marzo 2026",body:`<h2>1. Resumen</h2><p>Diario Cronología almacena todos tus datos localmente con filosofía <strong>local-first</strong>. No subimos tu contenido personal a ningún servidor.</p><div class="priv-hl">📍 Tus registros personales siempre permanecen en tu dispositivo.</div><h2>2. Publicidad (Google AdMob)</h2><p>La versión gratuita usa <strong>Google AdMob</strong>. AdMob puede recopilar el IDFA, tipo de dispositivo, versión del SO y datos de uso. La versión Pro elimina todos los anuncios. Política de Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Compras</h2><p>Las compras se procesan a través de Apple App Store. No manejamos datos de pago.</p><h2>4. Contacto</h2><p>Para consultas de privacidad, <a href="mailto:neonyanbb@gmail.com">contáctanos</a>.</p>`},
+  fr:{title:"Politique de confidentialité",upd:"Mis à jour: mars 2026",body:`<h2>1. Résumé</h2><p>Journal Chronologie adopte une philosophie <strong>local-first</strong>. Vos données ne sont jamais téléchargées automatiquement.</p><div class="priv-hl">📍 Vos enregistrements restent toujours sur votre appareil.</div><h2>2. Publicité (Google AdMob)</h2><p>La version gratuite utilise <strong>Google AdMob</strong>. AdMob peut collecter l'IDFA, le type d'appareil, la version du système et les données d'utilisation. La version Pro supprime entièrement les publicités. Politique de Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Achats</h2><p>Les achats sont traités via l'App Store d'Apple. Nous ne gérons aucune donnée de paiement.</p><h2>4. Contact</h2><p>Pour les questions de confidentialité, <a href="mailto:neonyanbb@gmail.com">contactez-nous</a>.</p>`},
+  ru:{title:"Политика конфиденциальности",upd:"Обновлено: март 2026",body:`<h2>1. Обзор</h2><p>Таймлайн Дневник придерживается принципа <strong>local-first</strong>. Данные хранятся локально и никогда не передаются на сервер автоматически.</p><div class="priv-hl">📍 Ваши личные записи всегда остаются на вашем устройстве.</div><h2>2. Реклама (Google AdMob)</h2><p>Бесплатная версия использует <strong>Google AdMob</strong>. AdMob может собирать IDFA, тип устройства, версию ОС и данные использования. Версия Pro полностью убирает рекламу. Политика Google: <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></p><h2>3. Покупки</h2><p>Покупки обрабатываются через App Store Apple. Мы не обрабатываем платёжные данные.</p><h2>4. Контакты</h2><p>По вопросам конфиденциальности <a href="mailto:neonyanbb@gmail.com">напишите нам</a>.</p>`}
 };
 
 const TICKER = {
-  zh:["时间线记录","标签与搜索","记忆曲线复习","本地备份","iPhone + iPad","五国语言支持","一次购买永久有效","Snapline Diary"],
-  en:["Timeline Recording","Tags & Search","Memory Curve","Local Backup","iPhone + iPad","5 Languages","One-time Purchase","Snapline Diary"],
-  es:["Línea de tiempo","Etiquetas y búsqueda","Curva de memoria","Copia de seguridad","iPhone + iPad","5 idiomas","Compra única","Snapline Diary"],
-  fr:["Chronologie","Étiquettes & recherche","Courbe de mémoire","Sauvegarde locale","iPhone + iPad","5 langues","Achat unique","Snapline Diary"],
-  ru:["Хронология","Теги и поиск","Кривая памяти","Резервирование","iPhone + iPad","5 языков","Разовая покупка","Snapline Diary"]
+  zh:["时间线主页","彩色标签","全文搜索","链接直跳","记忆曲线复习","本地备份","iPhone + iPad","五国语言支持","一次购买永久有效","Snapline Diary"],
+  en:["Timeline Home","Color-coded Tags","Full-text Search","Tap-to-Open Links","Memory Curve","Local Backup","iPhone + iPad","5 Languages","One-time Purchase","Snapline Diary"],
+  es:["Línea de tiempo","Etiquetas de colores","Búsqueda completa","Links directos","Curva de memoria","Copia de seguridad","iPhone + iPad","5 idiomas","Compra única","Snapline Diary"],
+  fr:["Chronologie","Étiquettes colorées","Recherche complète","Liens directs","Courbe de mémoire","Sauvegarde locale","iPhone + iPad","5 langues","Achat unique","Snapline Diary"],
+  ru:["Хронология","Цветные теги","Полнотекстовый поиск","Ссылки по клику","Кривая памяти","Резервирование","iPhone + iPad","5 языков","Разовая покупка","Snapline Diary"]
 };
 
 const STR = {
   zh:{
     appName:"时线日记",n_feat:"功能",n_mem:"记忆曲线",n_case:"使用场景",n_aud:"适用人群",n_pro:"Pro 版本",n_faq:"常见问题",n_dl:"立即下载",
     h_eye:"现已在 App Store 上架",
-    h_title:"把生活记下来<br>让<em>记忆</em>真正<br>沉淀下去",
-    h_sub:"时线日记是一款专为<strong>高频记录、长期回看</strong>设计的图文日记应用。截图、照片、文字，按时间线自然串联，科学的记忆曲线帮你不再遗忘重要的一切。",
+    h_title:"记下此刻，<br>让<em>重要的事</em><br>真正留下来",
+    h_sub:"时线日记是一款专为<strong>图文记录与长期回顾</strong>设计的 iPhone / iPad 应用。截图、照片、文字，按时间线自然串联；彩色标签一触即达；科学记忆曲线让你在最关键的时刻再次回看。",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> App Store 下载',
     h_more:"了解更多功能 →",b1:"iPhone & iPad",b2:"5 种语言",b3:"本地优先",b4:"一次购买永久有效",
-    f_eye:"核心功能",f_h:"一套完整的<br><em>记录与回看</em>体系",f_d:"从快速记录到长期强化，时线日记将截图、标签、搜索、记忆曲线整合在一个流畅体验中，让每一条记录都有意义。",
-    f1t:"时间线记录",f1d:"将截图、照片与文字按时间自然串联。每条节点支持多图、备注与标签，自动按日归档，随时回溯任意时刻。",
-    f2t:"标签与搜索",f2d:"自定义标签体系，配合关键词全文搜索。主题过滤与精准召回互为补充，让历史内容触手可及。",
-    f3t:"记忆曲线复习",f3d:"基于艾宾浩斯遗忘规律，11 个科学复习周期自动规划时间节点。智能提醒帮你在最关键的时刻回看，让重要信息真正留存于脑中。",
-    f4t:"本地备份与恢复",f4d:"数据始终由你掌控。随时导出本地备份文件，换机或重装后一键恢复（Pro 功能）。不依赖云端，真正保护数据隐私。",
-    s1lbl:"时间线记录",s1h:"生活流动的每一刻<br>都<em>有迹可循</em>",s1b:"一键新建节点，选择图片、输入备注，App 自动按日期整理。支持每节点最多 20 张图片（Pro），时间线将你的记录自然编织成可回看的人生档案。",
-    s2lbl:"标签与搜索",s2h:"找到任何你<br>曾经记录的<em>一切</em>",s2b:"为节点添加标签，建立个人知识体系。关键词搜索横贯所有内容，无论过了多久，想找的东西永远只需几秒。标签目录一览无余，主题过滤让回溯更聚焦。",
-    s3lbl:"记忆曲线",s3h:"记录了，<br>也能真正<em>记住</em>",s3b:"将重要节点加入记忆曲线（免费版最多 3 项，Pro 无限），系统自动按 11 个艾宾浩斯周期安排复习——5分钟、30分钟、12小时、1天、2天……直到 6 个月，每次提醒都恰到好处。",
-    p1:"多图支持（Pro最多20张）",p2:"文字备注",p3:"按日归档",p4:"快速浏览",p5:"自定义标签",p6:"全文搜索",p7:"标签目录",p8:"主题过滤",p9:"科学间隔",p10:"智能提醒",p11:"复习计划",p12:"完成标记",
-    m_eye:"记忆曲线系统",m_h:"科学记住<br>每一件<em>重要的事</em>",m_d:"基于艾宾浩斯遗忘规律——人类在学习后第一天会遗忘约 70% 的内容。时线日记安排 11 个精确复习时间点，将短期记忆转化为长期资产。黄金时段（08:00–21:00）智能推送，不打扰休息时间。",
+    f_eye:"核心功能",f_h:"一套完整的<br><em>记录与回看</em>体系",f_d:"从瞬间截图到半年后仍记得清晰——时线日记将时间线、彩色标签、全文搜索与科学记忆曲线整合在一个原生 iOS 体验中。",
+    f1t:"时间线主页",f1d:"所有记录按日期自动分组，每条显示缩略图、时间戳与内容预览。一眼扫过整天，顶部搜索栏随时全文定位，轻触右下角「＋」即可新建节点。",
+    f2t:"彩色标签系统",f2d:"每个标签自动分配专属颜色，详情页以彩色胶囊直观呈现。支持表情符号标签（如 #✈️），标签列表一页总览全部主题，按标签过滤立即聚焦同类内容。",
+    f3t:"记忆曲线复习",f3d:"基于艾宾浩斯遗忘规律，11 个科学复习节点自动排期——5分钟后、30分钟后……直到第 180 天。每次复习时间精准显示在列表中，清晰可见今天/明天/后天到期。",
+    f4t:"富文本备注 · 链接直跳",f4d:"备注中的网址可直接点击跳转，无需复制粘贴。截图配合链接，原始来源随时可查。支持粘贴剪贴板内容，附加图片最多 20 张（Pro）。",
+    s1lbl:"时间线主页",s1h:"每一天的记录<br>都<em>清晰可寻</em>",s1b:"主页按日期自动分组，点击日期可展开或折叠当天全部内容。每条节点显示缩略图、精确时间戳与文字预览，一眼判断内容，无需逐条打开。顶部搜索栏支持全文检索，任何备注关键词都能被即时召回。",
+    s2lbl:"详情页 · 彩色标签 · 链接",s2h:"不只是看图<br>更能读懂<em>每个细节</em>",s2b:"每条节点的详情页展示全幅照片（最多 20 张，Pro），下方彩色 hashtag 标签胶囊一目了然。备注中的网址自动识别为可点击链接，轻触即在 App 内直接跳转——截图来源、参考文章，始终触手可及。左右翻页键在相邻节点间快速切换。",
+    s3lbl:"记忆曲线",s3h:"记录了，<br>也能真正<em>记住</em>",s3b:"将任意节点加入记忆曲线后，系统立即生成包含 11 个节点的复习计划——每一行都列出具体日期、时间和「今天 / 明天 / N 天后」标注。页面底部还显示遗忘曲线走势图，让你直观感受科学间隔复习的效果。免费版最多 3 项，Pro 无限。",
+    p1:"按日分组归档",p2:"缩略图快速预览",p3:"全文搜索备注",p4:"折叠/展开任意天",
+    p5:"彩色 # 标签胶囊",p6:"URL 一键直跳",p7:"左右翻页浏览",p8:"加入记忆曲线",
+    p9:"具体日期时间可见",p10:"11 步科学排期",p11:"遗忘曲线可视化",p12:"复习打卡完成标记",
+    m_eye:"记忆曲线系统",m_h:"科学记住<br>每一件<em>重要的事</em>",m_d:"艾宾浩斯研究表明：不复习的情况下，人在学习后 24 小时内会遗忘约 70% 的内容。时线日记将一条普通记录升级为 11 个科学间隔的复习计划，每次提醒都在遗忘发生的前一刻到达。推送时间限定在黄金时段（08:00–21:00），不打扰睡眠与专注时间。",
     st1:"个科学复习<br>时间节点",st2:"未复习内容<br>24小时内遗忘",st3:"天完整记忆<br>强化周期",st4:"Pro版无限<br>记忆曲线",
     svg_label:"记忆保留率",svg_forget:"未复习（遗忘）",
-    c_eye:"使用场景",c_h:"你的生活，<em>全都适用</em>",c_d:"无论学习、工作、创作还是生活记录，时线日记都能成为你最得力的记忆伙伴。",
-    c1t:"学习复盘",c1d:"记录课堂笔记与题目截图，标签归类学科章节，加入记忆曲线按提醒复习，形成\"记录—复习—巩固\"完整闭环。告别遗忘，让知识真正属于你。",
-    c2t:"工作留痕",c2d:"会议重点、需求截图、决策节点集中记录，项目标签组织跨时间信息，搜索功能直达关键证据链。不再翻找聊天记录，一切留痕清晰可查。",
-    c3t:"创作灵感",c3d:"即时保存灵感图与片段文字，标签建立素材库，复习提醒确保灵感不被遗忘。每一个稍纵即逝的想法，都有机会在未来被重新拾起、发光发热。",
-    c4t:"生活纪实",c4d:"旅行、美食、健身、亲子日常，在时间线中形成可回看的故事。复习提醒让重要瞬间在时光流逝后依然清晰可感，人生高光时刻永不消散。",
-    ct1:"错题整理",ct2:"知识点",ct3:"备考",ct4:"会议纪要",ct5:"项目管理",ct6:"留痕备查",ct7:"灵感收集",ct8:"素材积累",ct9:"创作参考",ct10:"旅行记录",ct11:"日常生活",ct12:"亲子成长",
+    c_eye:"使用场景",c_h:"你的生活，<em>全都适用</em>",c_d:"无论学习、工作、创作还是日常记录，时线日记都能成为你最得力的记忆伙伴。",
+    c1t:"学习复盘",c1d:"拍下课堂板书或截图重要知识点，用标签按学科章节分类，加入记忆曲线自动安排复习提醒。形成「记录→标签→复习→记住」完整闭环，告别备考前的临时突击。",
+    c2t:"工作留痕",c2d:"截图会议重点、需求变更和决策过程，在备注中附上原始链接随时可跳转核实。项目标签让跨周跨月的工作节点串联可查，关键证据链一秒检索。",
+    c3t:"创作灵感",c3d:"随手保存灵感截图与片段文字，配上参考链接，标签建立素材库。记忆曲线复习提醒让灵感在最合适的时机重新浮出，每一个稍纵即逝的想法都有机会成为作品。",
+    c4t:"生活纪实",c4d:"旅行、美食、健身、亲子日常，在时间线中形成可回看的故事。每张照片配上彩色标签与文字注解，一年后翻回当天，细节清晰如昨。",
+    ct1:"错题整理",ct2:"知识点",ct3:"备考计划",ct4:"会议纪要",ct5:"项目管理",ct6:"留痕备查",ct7:"灵感收集",ct8:"素材积累",ct9:"参考链接",ct10:"旅行记录",ct11:"日常生活",ct12:"亲子成长",
     pl_eye:"多设备支持",pl_h:"iPhone 与 iPad<br><em>双端一致</em>体验",
-    pl1t:"iPhone · 随时随地记录",pl1d:"纵向主信息流，单手即可完成快速记录。搜索与详情跳转路径清晰，随时随地都能流畅使用。",
-    pl2t:"iPad · 分栏精读模式",pl2d:"左侧时间线 + 右侧详情的分栏视图，信息密度更高，适合长时阅读与深度整理，回顾体验全面升级。",
-    pl3t:"无缝备份迁移（Pro）",pl3d:"一键导出备份，在新设备导入即可恢复全部数据。时间线与记忆曲线完整迁移，换机不丢一条记录。",
-    pl4t:"家庭共享（Pro）",pl4d:"Pro 版支持 Apple 家庭共享，一次购买，最多 6 位家庭成员同享专业权益，记录习惯在家庭中延续传承。",
+    pl1t:"iPhone · 随时随地记录",pl1d:"纵向主信息流，单手即可完成快速创建。从主页到详情，层级清晰；搜索与标签筛选无需多余操作，路边、会议室、随时随地都能流畅使用。",
+    pl2t:"iPad · 分栏精读模式",pl2d:"左侧时间线 + 右侧详情的分栏布局，信息密度更高，适合长时阅读与深度整理。记忆曲线的 11 步复习计划在大屏上一览无余。",
+    pl3t:"无缝备份迁移（Pro）",pl3d:"一键导出本地备份包含全部节点、图片与记忆曲线进度；换机或重装后导入即可完整恢复。数据完全由你掌控，不依赖任何云端服务。",
+    pl4t:"家庭共享（Pro）",pl4d:"Pro 版支持 Apple 家庭共享，一次购买最多 6 位家庭成员同时享有全部专业权益，记录习惯可以在家庭中一起延续。",
+    aud_eye:"适合谁用",aud_h:"这些烦恼，<br><em>是否像极了你？</em>",aud_d:"如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，时线日记正是为你而生的解法。",
+    aud1t:"截图与笔记沉入相册，永远找不到",aud1d:"聊天截屏、小票、收藏的长文截图散落在相册深处，想用时翻半天翻不到，只能重新搜索。时线日记的时间线主页 + 全文备注搜索，让每一条截图都能被精准唤回。",
+    aud2t:"学了就忘，知识留不下来",aud2d:"备考充电、技能提升都需要「在对的时间再看一眼」。但没有人会记得在第 2 天、第 7 天主动回去复习。记忆曲线帮你在最关键的遗忘节点前推送提醒，把短期印象拉成长期记忆。",
+    aud3t:"工作信息跨周、跨群、跨文档，一片散乱",aud3d:"会议结论、需求变更、决策过程分散在不同聊天和截图里。一条可追溯的时间线 + 彩色标签 + 备注链接，让关键证据链随手可查、一秒定位。",
+    aud4t:"灵感稍纵即逝，存了等于没存",aud4d:"闪过脑子的想法、随手存的图，常常没有下文。快速记录 + 标签归档 + 记忆曲线提醒，让灵感有机会在未来最需要它的时刻重新被点亮。",
+    aud1r:"时间线 + 全文搜索解决",aud2r:"11 步记忆曲线解决",aud3r:"标签 + 链接直跳解决",aud4r:"快速记录 + 复习提醒解决",
     pr_eye:"版本与定价",pr_h:"免费开始，<em>一次购买</em>永久解锁",pr_d:"免费版即可体验核心记录功能。升级 Pro，一次性付费，永久拥有全部专业权益，支持家庭共享。",
-    fr_name:"免费版",fr_desc:"适合体验核心功能，轻度使用无需付费。",
-    fr_f1:"时间线记录（每日最多 5 条）",fr_f2:"基础标签与搜索",fr_f3:"每节点最多 2 张图片",fr_f4:"最多 3 个活跃记忆曲线",fr_f5:"含 Google 广告展示",fr_f6:"不支持备份导出/导入",
+    fr_name:"免费版",fr_desc:"适合轻度使用，体验核心记录功能，无需付费。",
+    fr_f1:"每日最多 5 条节点",fr_f2:"基础标签与全文搜索",fr_f3:"每节点最多 2 张图片",fr_f4:"最多 3 个活跃记忆曲线",fr_f5:"主界面展示广告",fr_f6:"不支持备份导出 / 导入",
     fr_btn:"免费下载",
-    pr_badge:"✦ 推荐",pr_desc2:"一次购买，永久解锁。适合高频使用、学习备考、工作留痕的专业用户。",
-    pr_f1:"节点数量无限制",pr_f2:"记忆曲线活跃项无限制",pr_f3:"每节点最多 20 张图片",pr_f4:"导出/导入本地备份",pr_f5:"完全去除广告",pr_f6:"支持家庭共享（最多6人）",
+    pr_badge:"✦ 推荐",pr_desc2:"一次买断，永久解锁。适合高频记录、学习备考、工作留痕的用户。",
+    pr_f1:"节点数量无限制",pr_f2:"记忆曲线活跃项无限制",pr_f3:"每节点最多 20 张图片",pr_f4:"导出 / 导入本地备份",pr_f5:"完全去除广告",pr_f6:"支持家庭共享（最多 6 人）",
     pr_btn:"永久解锁 Pro →",pr_hint:"一次购买 · 非订阅 · 支持家人共享",
     lg_t:"全球五大语言，本地化支持",
-    aud_eye:"适合谁用",aud_h:"这些场景，<br><em>是否像极了你？</em>",aud_d:"如果你也受困于「记了一大堆，却再也找不到」「明明学过，过几天就忘」，或许这正是为你准备的一款应用。",
-    aud1t:"截图与笔记沉入相册",aud1d:"聊天截屏、小票、收藏的长文截图散落在照片里，想用时翻不到。时间线 + 全文搜索，让每一条记录都能被精准唤回。",
-    aud2t:"学了就忘，缺少复习节奏",aud2d:"备考充电、技能提升都需要「在对的时间再看一眼」。记忆曲线按科学间隔提醒，把短期印象拉成长期记忆。",
-    aud3t:"工作信息跨周、跨群、跨文档",aud3d:"会议结论、需求变更、决策过程分散各处。一条可追溯的时间线 + 标签，让关键证据链随手可查。",
-    aud4t:"灵感稍纵即逝",aud4d:"闪过脑子的想法、随手存的图，常常没有下文。快速记录 + 标签归档 + 复习提醒，让灵感有机会在未来被重新点亮。",
-    fq_eye:"常见问题",fq_h:"遇到<em>疑惑</em>？<br>这里有答案",fq_d:"如果没有找到你的问题，欢迎通过邮件联系我们，我们会尽快回复。",fq_em:"→ 发送邮件支持",
-    ft_desc:"把每天生活与灵感记下来，用科学提醒回看你的高光时刻。",
+    fq_eye:"常见问题",fq_h:"遇到<em>疑惑</em>？<br>这里有答案",fq_d:"如果没有找到你的问题，欢迎<a href='mailto:neonyanbb@gmail.com'>联系我们</a>，我们会尽快回复。",fq_em:"→ 发送邮件支持",
+    ft_desc:"把每天的生活与灵感记录下来，用科学提醒回看你的高光时刻。",
     ft_prod:"产品",ft_feat:"功能介绍",ft_mem:"记忆曲线",ft_pro:"Pro 版本",ft_dl:"App Store 下载",
     ft_sup:"支持",ft_faq:"常见问题",ft_contact:"联系我们",ft_priv:"隐私政策",ft_lang:"语言",
     ft_copy:"© 2026 时线日记 (Snapline Diary). All rights reserved.",ft_priv2:"隐私政策",ft_sup2:"技术支持",
@@ -1178,47 +1229,50 @@ const STR = {
   en:{
     appName:"Snapline Diary",n_feat:"Features",n_mem:"Memory Curve",n_case:"Use Cases",n_aud:"Who it's for",n_pro:"Pro",n_faq:"FAQ",n_dl:"Download",
     h_eye:"Now on the App Store",
-    h_title:"Capture your life.<br>Make <em>memories</em> last<br>forever.",
-    h_sub:"Snapline Diary is designed for <strong>frequent recording and long-term review</strong>. Connect screenshots, photos and notes in a timeline — let science help you never forget what matters.",
+    h_title:"Capture the moment.<br>Make <em>what matters</em><br>truly stick.",
+    h_sub:"Snapline Diary is built for <strong>photo-and-text capture with long-term recall</strong>. Connect screenshots, photos, and notes on a timeline — color-coded hashtag tags organize everything, and a science-based memory curve makes sure you never forget what's important.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Download on App Store',
     h_more:"Explore Features →",b1:"iPhone & iPad",b2:"5 Languages",b3:"Privacy First",b4:"One-time Purchase",
-    f_eye:"Core Features",f_h:"A complete system for<br><em>capture & recall</em>",f_d:"Screenshots, tags, search, and memory curves — all integrated into one seamless experience.",
-    f1t:"Timeline Recording",f1d:"Connect screenshots, photos, and text naturally by time. Each entry supports multiple images, notes, and tags — auto-archived by day.",
-    f2t:"Tags & Search",f2d:"Build your own tag system with full-text keyword search. Filter by topic or search across everything.",
-    f3t:"Memory Curve Review",f3d:"Based on the Ebbinghaus forgetting curve, 11 scientifically-timed review checkpoints are auto-scheduled. Smart reminders trigger at exactly the right moment.",
-    f4t:"Local Backup & Restore",f4d:"Your data stays on your device. Export a backup anytime and restore on a new device (Pro feature). No cloud dependency.",
-    s1lbl:"Timeline",s1h:"Every moment<br>in perfect <em>sequence</em>",s1b:"Tap to create an entry, pick photos, add notes. Up to 20 photos per entry with Pro. Your timeline becomes a living archive you can always revisit.",
-    s2lbl:"Tags & Search",s2h:"Find anything you've<br>ever <em>recorded</em>",s2b:"Tag entries and build a personal knowledge system. Full-text search works across all content — no matter how long ago you recorded it.",
-    s3lbl:"Memory Curve",s3h:"Record it — and<br>truly <em>remember</em> it",s3b:"Add entries to your memory curve (3 free, unlimited with Pro). 11 review checkpoints across 180 days: 5 min, 30 min, 12h, 1d, 2d, 4d, 7d, 15d, 30d, 90d, 180d.",
-    p1:"Multi-photo (20 with Pro)",p2:"Text Notes",p3:"Auto-archived",p4:"Quick Browse",p5:"Custom Tags",p6:"Full-text Search",p7:"Tag Directory",p8:"Topic Filter",p9:"Scientific Intervals",p10:"Smart Reminders",p11:"Review Schedule",p12:"Mark Complete",
-    m_eye:"Memory Curve System",m_h:"Scientifically<br>remember what <em>matters</em>",m_d:"Based on the Ebbinghaus forgetting curve — humans forget ~70% within 24 hours. Snapline Diary schedules 11 precise review moments. Smart push during golden hours (08:00–21:00) only.",
-    st1:"scientific review<br>checkpoints",st2:"forgotten within<br>24h without review",st3:"days to complete<br>the full cycle",st4:"Pro: unlimited<br>memory curves",
+    f_eye:"Core Features",f_h:"A complete system for<br><em>capture & recall</em>",f_d:"From a quick screenshot to remembering it clearly six months later — Snapline Diary integrates a timeline, color-coded tags, full-text search, and a scientific memory curve into one native iOS experience.",
+    f1t:"Timeline Home",f1d:"All entries auto-grouped by date. Each shows a thumbnail, precise timestamp, and text preview. A top search bar finds any note in seconds. Tap + to create a new entry instantly.",
+    f2t:"Color-Coded Tag System",f2d:"Each tag gets its own color — displayed as vivid hashtag capsules on every detail page. Supports emoji tags (like #✈️). The tag directory gives you a complete bird's-eye view with one-tap filtering.",
+    f3t:"Memory Curve Reviews",f3d:"Based on the Ebbinghaus forgetting curve, 11 scientifically-spaced review points are auto-scheduled — 5 min, 30 min, 12 h… all the way to Day 180. Each review date appears clearly in the list with Today / Tomorrow / N Days labels.",
+    f4t:"Rich Notes · Tap-to-Open Links",f4d:"URLs in your notes are auto-detected as tappable links — open the source article or reference directly in-app, no copy-paste needed. Attach up to 20 photos per entry (Pro) and swipe to browse them all.",
+    s1lbl:"Timeline Home",s1h:"Every entry,<br><em>perfectly organized</em> by day",s1b:"The home screen groups all your entries by date — tap any date header to expand or collapse that day. Each entry card shows a thumbnail, exact timestamp, and a text preview so you instantly know what's inside without opening it. The search bar at the top runs full-text across all your notes.",
+    s2lbl:"Detail View · Tags · Links",s2h:"Not just photos —<br>every <em>detail</em> at a glance",s2b:"The detail page opens your full-size photos (up to 20 with Pro). Below, colorful hashtag tag capsules make categorization visual and immediate. Any URL in your notes becomes a tappable link that opens right inside the app. Use the navigation arrows to jump between adjacent entries without going back to the home screen.",
+    s3lbl:"Memory Curve",s3h:"Record it — and<br>truly <em>remember</em> it",s3b:"Add any entry to the memory curve and the app instantly builds an 11-step review schedule. Every row shows the exact date, time, and a label — Today / Tomorrow / In N Days — so you always know what's coming. A forgetting curve chart at the bottom makes the science tangible. Free plan: 3 active curves; Pro: unlimited.",
+    p1:"Auto-grouped by date",p2:"Thumbnail + text preview",p3:"Full-text note search",p4:"Collapse / expand any day",
+    p5:"Color hashtag capsules",p6:"URLs tap to open in-app",p7:"Swipe between entries",p8:"Add to memory curve",
+    p9:"Exact dates shown in list",p10:"11-step scientific schedule",p11:"Forgetting curve chart",p12:"Check off each review",
+    m_eye:"Memory Curve System",m_h:"Scientifically<br>remember what <em>matters</em>",m_d:"Ebbinghaus found that without review, humans forget roughly 70% of what they learned within 24 hours. Snapline Diary turns a saved entry into a 11-checkpoint review plan — each reminder fires right before the forgetting curve drops. Push notifications are limited to golden hours (08:00–21:00) so they never interrupt sleep.",
+    st1:"scientific review<br>checkpoints",st2:"forgotten within<br>24 h without review",st3:"days to complete<br>the full cycle",st4:"Pro: unlimited<br>memory curves",
     svg_label:"Memory retention",svg_forget:"Without review (forgetting)",
-    c_eye:"Use Cases",c_h:"Whatever your goal,<br><em>it fits</em>",c_d:"Whether studying, working, creating, or living — Snapline Diary becomes your most powerful memory partner.",
-    c1t:"Study & Review",c1d:"Capture lecture notes and exercises. Tag by subject, add to memory curve, review on schedule. Build the complete loop: record → review → retain.",
-    c2t:"Work Records",c2d:"Log meeting highlights, requirement screenshots, and decision points. Project tags organize cross-time info. Search brings you to key evidence instantly.",
-    c3t:"Creative Inspiration",c3d:"Instantly save inspiration images and text. Tags build your material library. Review reminders ensure no creative spark is ever lost.",
-    c4t:"Life Journal",c4d:"Travel, food, fitness, family — form a reviewable story on your timeline. Review reminders keep important moments vivid long after they pass.",
+    c_eye:"Use Cases",c_h:"Whatever your goal,<br><em>it fits</em>",c_d:"Studying, working, creating, or documenting everyday life — Snapline Diary becomes your most powerful memory partner.",
+    c1t:"Study & Review",c1d:"Photograph class notes or screenshot key concepts. Tag by subject, add to the memory curve, and the app schedules review reminders automatically. Build the complete loop: capture → tag → review → retain.",
+    c2t:"Work Records",c2d:"Screenshot meeting highlights, requirement changes, and decisions. Add the source link in the notes so you can jump directly to the original. Project tags connect entries across weeks and months — key evidence one search away.",
+    c3t:"Creative Inspiration",c3d:"Instantly save inspiration images and text fragments with a reference link. Tags build your material library. Memory curve reminders surface your best ideas right when you need them most.",
+    c4t:"Life Journal",c4d:"Travel, food, fitness, family milestones — form a reviewable story on your timeline. Color tags and notes mean that a year later, you'll open a photo and remember every detail.",
     ct1:"Error log",ct2:"Key concepts",ct3:"Exam prep",ct4:"Meeting notes",ct5:"Project mgmt",ct6:"Evidence trail",ct7:"Inspiration",ct8:"Materials",ct9:"References",ct10:"Travel",ct11:"Daily life",ct12:"Family",
-    pl_eye:"Multi-device",pl_h:"iPhone & iPad<br><em>seamlessly</em> in sync",
-    pl1t:"iPhone · Record anywhere",pl1d:"Vertical main feed optimized for one-handed use. Clear navigation for search and detail views.",
-    pl2t:"iPad · Split-view mode",pl2d:"Timeline on the left, detail on the right. Higher density for deep reading and organizing.",
-    pl3t:"Backup & Migration (Pro)",pl3d:"Export a backup, import on your new device. Timeline and memory curves migrate completely.",
-    pl4t:"Family Sharing (Pro)",pl4d:"Pro supports Apple Family Sharing — one purchase, up to 6 family members enjoy Pro.",
-    pr_eye:"Pricing",pr_h:"Start free. <em>Own it</em> forever.",pr_d:"The free version covers core recording. Upgrade to Pro with a one-time payment — unlock everything permanently.",
-    fr_name:"Free",fr_desc:"Experience core features with no payment required.",
-    fr_f1:"Timeline (5 entries/day)",fr_f2:"Basic tags & search",fr_f3:"Up to 2 photos per entry",fr_f4:"Up to 3 active memory curves",fr_f5:"Google Ads displayed",fr_f6:"No backup export/import",
+    pl_eye:"Multi-device",pl_h:"iPhone & iPad —<br><em>seamlessly</em> in sync",
+    pl1t:"iPhone · Record anywhere",pl1d:"Vertical main feed, optimized for one-handed use. Home → detail navigation is crystal clear. Search and tag filtering need zero extra steps — use it standing in line, in a meeting, anywhere.",
+    pl2t:"iPad · Split-view mode",pl2d:"Timeline on the left, detail on the right. Higher information density for deep reading and organizing. The 11-step memory curve schedule is visible in full without scrolling.",
+    pl3t:"Seamless Backup & Migration (Pro)",pl3d:"Export a complete backup — all entries, photos, and memory curve progress. Import on a new device to restore everything. Your data stays under your control, never dependent on any cloud service.",
+    pl4t:"Family Sharing (Pro)",pl4d:"Pro supports Apple Family Sharing — one purchase shared by up to 6 family members. Everyone gets full Pro benefits. Build a family culture of capturing and remembering.",
+    aud_eye:"Who it's for",aud_h:"Does this<br><em>sound familiar?</em>",aud_d:"If your notes and screenshots disappear into the chaos — or you study something and forget it days later — Snapline Diary is built for exactly that daily frustration.",
+    aud1t:"Screenshots buried in your camera roll, never to be found",aud1d:"Chat caps, receipts, long articles you saved for later — lost among thousands of photos. Snapline Diary's timeline home plus full-text note search brings any entry back in seconds.",
+    aud2t:"You study it, then forget it",aud2d:"Exams and skill-building both need reviewing at exactly the right time. Nobody naturally remembers to revisit notes on Day 2 or Day 7. The memory curve fires a reminder right before the forgetting curve drops — turning short-term impressions into long-term knowledge.",
+    aud3t:"Work information sprawls across weeks, chats, and documents",aud3d:"Meeting conclusions, requirement changes, decisions — scattered across different chats and screenshots. One chronological trail with color tags and note links keeps key evidence one search away.",
+    aud4t:"Ideas flash by and vanish",aud4d:"Quick thoughts and randomly-saved images usually go nowhere — you never think to look at them again. Rapid capture + tag filing + memory curve nudges bring sparks back exactly when you need them.",
+    aud1r:"Timeline + full-text search",aud2r:"11-step memory curve",aud3r:"Tags + tap-to-open links",aud4r:"Rapid capture + review reminders",
+    pr_eye:"Pricing",pr_h:"Start free. <em>Own it</em> forever.",pr_d:"The free version covers core recording. Upgrade to Pro with a one-time payment — unlock everything permanently, family sharing included.",
+    fr_name:"Free",fr_desc:"Experience core features at no cost. Perfect for light use.",
+    fr_f1:"5 entries per day",fr_f2:"Basic tags & full-text search",fr_f3:"Up to 2 photos per entry",fr_f4:"Up to 3 active memory curves",fr_f5:"Google Ads displayed",fr_f6:"No backup export / import",
     fr_btn:"Download Free",
-    pr_badge:"✦ Recommended",pr_desc2:"One-time purchase, forever unlocked. Perfect for power users, students, and professionals.",
-    pr_f1:"Unlimited entries",pr_f2:"Unlimited memory curves",pr_f3:"Up to 20 photos per entry",pr_f4:"Backup export & import",pr_f5:"Completely ad-free",pr_f6:"Family Sharing (up to 6)",
+    pr_badge:"✦ Recommended",pr_desc2:"One-time purchase, forever unlocked. Built for power users, students, and professionals.",
+    pr_f1:"Unlimited entries",pr_f2:"Unlimited memory curves",pr_f3:"Up to 20 photos per entry",pr_f4:"Backup export & import",pr_f5:"Completely ad-free",pr_f6:"Family Sharing (up to 6 people)",
     pr_btn:"Unlock Pro Forever →",pr_hint:"One-time · No subscription · Family Sharing",
-    lg_t:"Available in 5 languages",
-    aud_eye:"Who it's for",aud_h:"Does this <em>sound like you?</em>",aud_d:"If your notes and screenshots disappear into chaos—or you learn something and forget it days later—Snapline Diary is built for that daily frustration.",
-    aud1t:"Buried in your camera roll",aud1d:"Chat caps, receipts, posts you meant to revisit—lost among thousands of photos. A timeline plus search brings them back in seconds.",
-    aud2t:"You study, then forget",aud2d:"Exams and self-study need spaced review, not guilt. Memory-curve reminders catch you at the right moment to relearn.",
-    aud3t:"Work sprawls across weeks",aud3d:"Meetings, specs, decisions scattered across apps and chats. One chronological trail with tags keeps evidence one search away.",
-    aud4t:"Ideas slip away",aud4d:"Quick capture, light tagging, and gentle review nudges bring sparks back when they matter.",
-    fq_eye:"FAQ",fq_h:"Have <em>questions</em>?<br>We've got answers.",fq_d:"If you can't find your answer, email us and we'll get back to you quickly.",fq_em:"→ Email support",
+    lg_t:"Available in 5 languages worldwide",
+    fq_eye:"FAQ",fq_h:"Have <em>questions?</em><br>We've got answers.",fq_d:"If you can't find your answer here, <a href='mailto:neonyanbb@gmail.com'>send us an email</a> — we'll get back to you quickly.",fq_em:"→ Email support",
     ft_desc:"Capture life and inspiration every day — let science help you revisit your highlights.",
     ft_prod:"Product",ft_feat:"Features",ft_mem:"Memory Curve",ft_pro:"Pro",ft_dl:"App Store Download",
     ft_sup:"Support",ft_faq:"FAQ",ft_contact:"Contact Us",ft_priv:"Privacy Policy",ft_lang:"Language",
@@ -1226,45 +1280,54 @@ const STR = {
     n_dl_soon:"Coming soon",h_eye_soon:"Coming soon on the App Store",
     h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Coming soon',
     fr_btn_soon:"Coming soon",pr_btn_soon:"Coming soon",ft_dl_soon:"Coming soon",
-    toast_coming:"The app is still in App Store review. Downloads will open once it’s approved. Thanks for your patience."
+    toast_coming:"The app is still in App Store review. Downloads will open once approved. Thanks for your patience."
   },
   es:{
     appName:"Diario Cronología",n_feat:"Funciones",n_mem:"Curva de memoria",n_case:"Casos de uso",n_aud:"¿Para quién?",n_pro:"Pro",n_faq:"FAQ",n_dl:"Descargar",
-    h_eye:"Ya disponible en App Store",h_title:"Registra tu vida.<br>Haz que los <em>recuerdos</em><br>duren para siempre.",
-    h_sub:"Diario Cronología está diseñado para <strong>registrar frecuentemente y revisar a largo plazo</strong>. Conecta capturas, fotos y notas en una línea de tiempo.",
+    h_eye:"Ya disponible en App Store",h_title:"Captura el momento.<br>Haz que <em>lo importante</em><br>dure para siempre.",
+    h_sub:"Diario Cronología está diseñado para <strong>registrar fotos y texto con revisión a largo plazo</strong>. Conecta capturas, fotos y notas en una línea de tiempo — etiquetas de colores para organizarlo todo, y una curva de memoria científica para que nunca olvides lo que importa.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Descargar en App Store',
     h_more:"Ver funciones →",b1:"iPhone y iPad",b2:"5 idiomas",b3:"Datos locales",b4:"Compra única",
-    f_eye:"Funciones principales",f_h:"Sistema completo de<br><em>captura y repaso</em>",f_d:"Capturas, etiquetas, búsqueda y curva de memoria integrados.",
-    f1t:"Línea de tiempo",f1d:"Conecta capturas, fotos y texto por orden. Múltiples imágenes, notas y etiquetas por entrada.",
-    f2t:"Etiquetas y búsqueda",f2d:"Crea tu sistema de etiquetas con búsqueda de texto completo. Filtra por tema.",
-    f3t:"Curva de memoria",f3d:"11 puntos de repaso científicos en 180 días. Notificaciones inteligentes.",
-    f4t:"Copia de seguridad local",f4d:"Tus datos en tu dispositivo. Exporta e importa (función Pro).",
-    s1lbl:"Línea de tiempo",s1h:"Cada momento<br>en <em>orden perfecto</em>",s1b:"Crea entradas, elige fotos, añade notas. Hasta 20 fotos por entrada con Pro.",
-    s2lbl:"Etiquetas y búsqueda",s2h:"Encuentra todo lo que<br>has <em>registrado</em>",s2b:"Etiqueta entradas y construye un sistema de conocimiento. Búsqueda de texto completo.",
-    s3lbl:"Curva de memoria",s3h:"Regístralo — y<br>realmente <em>recuérdalo</em>",s3b:"11 repasos en 180 días: 5 min, 30 min, 12h, 1d, 2d, 4d, 7d, 15d, 30d, 90d, 180d.",
-    p1:"Múltiples fotos (20 con Pro)",p2:"Notas de texto",p3:"Archivado auto",p4:"Vista rápida",p5:"Etiquetas perso.",p6:"Búsqueda completa",p7:"Dir. etiquetas",p8:"Filtro temático",p9:"Intervalos científicos",p10:"Recordatorios",p11:"Plan de repaso",p12:"Marcar listo",
-    m_eye:"Curva de memoria",m_h:"Recuerda<br>lo que <em>importa</em>",m_d:"Los humanos olvidan ~70% en 24h. 11 momentos de repaso precisos. Notificaciones en horario dorado (08:00–21:00).",
-    st1:"puntos de repaso<br>científicos",st2:"olvidado en<br>24h sin repaso",st3:"días ciclo<br>completo",st4:"Pro: curvas<br>ilimitadas",svg_label:"Retención",svg_forget:"Sin repaso",
-    c_eye:"Casos de uso",c_h:"Sea tu objetivo,<br><em>se adapta</em>",c_d:"Estudiar, trabajar, crear o registrar tu vida — Diario Cronología es tu mejor aliado.",
-    c1t:"Estudio",c1d:"Captura apuntes, etiqueta por materia, añade a la curva y repasa según el calendario.",
-    c2t:"Trabajo",c2d:"Reuniones, capturas, decisiones. Etiquetas de proyecto. Búsqueda directa.",
-    c3t:"Inspiración",c3d:"Guarda imágenes e ideas. Biblioteca de materiales. Sin perder chispas creativas.",
-    c4t:"Diario de vida",c4d:"Viajes, comidas, familia. Historia revisable. Recuerdos vivos para siempre.",
-    ct1:"Errores",ct2:"Conceptos",ct3:"Examen",ct4:"Reuniones",ct5:"Proyectos",ct6:"Evidencias",ct7:"Ideas",ct8:"Materiales",ct9:"Referencias",ct10:"Viajes",ct11:"Vida",ct12:"Familia",
-    pl_eye:"Multi-dispositivo",pl_h:"iPhone y iPad<br><em>perfectamente</em> sincronizados",
-    pl1t:"iPhone",pl1d:"Feed vertical, una mano. Navegación clara.",pl2t:"iPad",pl2d:"Pantalla dividida. Alta densidad.",pl3t:"Copia de seguridad (Pro)",pl3d:"Exporta e importa. Migración completa.",pl4t:"Familia (Pro)",pl4d:"Compartir en familia. Hasta 6 miembros.",
-    pr_eye:"Precios",pr_h:"Empieza gratis. <em>Poséelo</em> siempre.",pr_d:"Gratis para funciones básicas. Pro con pago único.",
-    fr_name:"Gratis",fr_desc:"Funciones básicas sin pago.",fr_f1:"5 entradas/día",fr_f2:"Etiquetas básicas",fr_f3:"2 fotos/entrada",fr_f4:"3 curvas activas",fr_f5:"Anuncios Google",fr_f6:"Sin copia de seguridad",fr_btn:"Descargar gratis",
-    pr_badge:"✦ Recomendado",pr_desc2:"Compra única, para siempre.",pr_f1:"Entradas ilimitadas",pr_f2:"Curvas ilimitadas",pr_f3:"20 fotos/entrada",pr_f4:"Copia de seguridad",pr_f5:"Sin publicidad",pr_f6:"Compartir en familia",
-    pr_btn:"Desbloquear Pro →",pr_hint:"Pago único · Sin suscripción",
-    lg_t:"Disponible en 5 idiomas",
-    aud_eye:"¿Para quién es?",aud_h:"¿Te suena <em>demasiado familiar?</em>",aud_d:"Si guardas capturas que luego no encuentras, o estudiaste algo y al poco ya no recuerdas, esta app puede encajar en tu rutina.",
-    aud1t:"Capturas perdidas en Fotos",aud1d:"Chats, tickets, artículos… mezclados entre miles de imágenes. Cronología y búsqueda te los devuelven al instante.",
-    aud2t:"Olvidas lo que aprendiste",aud2d:"Exámenes y hábitos necesitan repetir en el momento justo. La curva de memoria te avisa cuándo releer.",
-    aud3t:"Trabajo repartido en mil sitios",aud3d:"Reuniones, alcances, decisiones en distintas apps. Un hilo temporal con etiquetas mantiene la evidencia a un toque.",
-    aud4t:"Las ideas se escapan",aud4d:"Anota al vuelo, organiza con etiquetas y deja que los recordatorios las reactiven cuando haga falta.",
-    fq_eye:"FAQ",fq_h:"¿Tienes <em>dudas</em>?<br>Respuestas aquí.",fq_d:"Escríbenos si no encuentras tu respuesta.",fq_em:"→ Enviar email",
-    ft_desc:"Registra tu vida e inspiración.",ft_prod:"Producto",ft_feat:"Funciones",ft_mem:"Curva de memoria",ft_pro:"Pro",ft_dl:"Descargar",ft_sup:"Soporte",ft_faq:"FAQ",ft_contact:"Contacto",ft_priv:"Privacidad",ft_lang:"Idioma",
+    f_eye:"Funciones principales",f_h:"Sistema completo de<br><em>captura y repaso</em>",f_d:"De una captura rápida a recordarla con claridad seis meses después — Diario Cronología integra línea de tiempo, etiquetas de colores, búsqueda de texto completo y curva de memoria científica.",
+    f1t:"Página de inicio",f1d:"Todas las entradas agrupadas por fecha. Cada una muestra miniatura, hora exacta y vista previa del texto. Barra de búsqueda en la parte superior para localizar cualquier nota al instante.",
+    f2t:"Sistema de etiquetas de colores",f2d:"Cada etiqueta obtiene su propio color, mostrado como cápsulas hashtag vistosas en cada página de detalle. Compatible con emojis (#✈️). El directorio de etiquetas ofrece una vista completa con filtrado de un toque.",
+    f3t:"Revisiones con curva de memoria",f3d:"Basado en la curva del olvido de Ebbinghaus, 11 puntos de revisión con intervalos científicos se programan automáticamente — desde 5 min hasta el día 180. Cada fecha aparece en la lista con etiquetas Hoy / Mañana / En N días.",
+    f4t:"Notas ricas · Links directos",f4d:"Las URLs en tus notas se detectan automáticamente como links clicables — abre el artículo fuente directamente en la app. Adjunta hasta 20 fotos por entrada (Pro) y desliza para verlas todas.",
+    s1lbl:"Página de inicio",s1h:"Cada entrada,<br><em>perfectamente organizada</em> por día",s1b:"La pantalla de inicio agrupa todas tus entradas por fecha. Cada tarjeta de entrada muestra una miniatura, la hora exacta y una vista previa del texto para saber al instante qué contiene. La barra de búsqueda superior hace una búsqueda de texto completo en todas tus notas.",
+    s2lbl:"Detalle · Etiquetas · Links",s2h:"No solo fotos —<br>cada <em>detalle</em> de un vistazo",s2b:"La página de detalle abre tus fotos a pantalla completa (hasta 20 con Pro). Debajo, las cápsulas hashtag de colores hacen la categorización visual e inmediata. Cualquier URL en tus notas se convierte en un link clicable que se abre dentro de la app. Las flechas de navegación saltan entre entradas adyacentes.",
+    s3lbl:"Curva de memoria",s3h:"Regístralo — y<br>realmente <em>recuérdalo</em>",s3b:"Añade cualquier entrada a la curva de memoria y la app construye instantáneamente un plan de 11 repasos. Cada fila muestra la fecha exacta, la hora y Hoy / Mañana / En N días. Un gráfico de curva del olvido en la parte inferior hace tangible la ciencia. Plan gratuito: 3 curvas; Pro: ilimitadas.",
+    p1:"Agrupado por fecha",p2:"Miniatura + vista previa",p3:"Búsqueda de texto completo",p4:"Contraer / expandir días",
+    p5:"Cápsulas hashtag de colores",p6:"URLs abren en la app",p7:"Navegar entre entradas",p8:"Añadir a curva de memoria",
+    p9:"Fechas exactas visibles",p10:"Plan científico de 11 pasos",p11:"Gráfico de curva del olvido",p12:"Marcar cada repaso",
+    m_eye:"Curva de memoria",m_h:"Recuerda<br>lo que <em>importa</em>",m_d:"Ebbinghaus demostró que sin repaso olvidamos ~70% en 24 horas. Diario Cronología convierte una entrada guardada en un plan de 11 puntos de revisión. Las notificaciones se limitan a horas doradas (08:00–21:00).",
+    st1:"puntos de revisión<br>científicos",st2:"olvidado en<br>24 h sin repaso",st3:"días ciclo<br>completo",st4:"Pro: curvas<br>ilimitadas",svg_label:"Retención",svg_forget:"Sin repaso",
+    c_eye:"Casos de uso",c_h:"Sea cual sea tu objetivo,<br><em>se adapta</em>",c_d:"Estudiar, trabajar, crear o documentar la vida diaria — Diario Cronología es tu mejor aliado de memoria.",
+    c1t:"Estudio y repaso",c1d:"Fotografía apuntes o captura conceptos clave. Etiqueta por materia, añade a la curva de memoria y la app programa recordatorios automáticamente.",
+    c2t:"Registro de trabajo",c2d:"Captura reuniones, cambios de requisitos y decisiones. Añade el link fuente en las notas para acceder directamente. Etiquetas de proyecto conectan entradas a lo largo de semanas y meses.",
+    c3t:"Inspiración creativa",c3d:"Guarda imágenes e ideas con un link de referencia. Las etiquetas crean tu biblioteca de materiales. Los recordatorios de curva de memoria traen tus mejores ideas justo cuando las necesitas.",
+    c4t:"Diario de vida",c4d:"Viajes, gastronomía, deporte, familia — forma una historia revisable en tu línea de tiempo. Un año después abrirás una foto y recordarás cada detalle.",
+    ct1:"Errores",ct2:"Conceptos",ct3:"Preparar examen",ct4:"Notas de reunión",ct5:"Proyectos",ct6:"Evidencias",ct7:"Inspiración",ct8:"Materiales",ct9:"Referencias",ct10:"Viajes",ct11:"Vida",ct12:"Familia",
+    pl_eye:"Multi-dispositivo",pl_h:"iPhone y iPad —<br><em>perfectamente</em> sincronizados",
+    pl1t:"iPhone · Registra en cualquier lugar",pl1d:"Flujo vertical optimizado para uso con una mano. Navegación clara. Búsqueda y filtrado de etiquetas sin pasos extra.",
+    pl2t:"iPad · Modo de pantalla dividida",pl2d:"Línea de tiempo a la izquierda, detalle a la derecha. Mayor densidad de información para lectura profunda.",
+    pl3t:"Copia de seguridad y migración (Pro)",pl3d:"Exporta una copia completa — entradas, fotos y progreso de curva de memoria. Importa en el nuevo dispositivo para restaurar todo.",
+    pl4t:"Familia (Pro)",pl4d:"Pro compatible con Compartir en familia de Apple — una compra para hasta 6 miembros.",
+    aud_eye:"¿Para quién es?",aud_h:"¿Te suena<br><em>demasiado familiar?</em>",aud_d:"Si tus notas y capturas desaparecen en el caos — o estudias algo y lo olvidas días después — esta app es para ti.",
+    aud1t:"Capturas perdidas en el carrete",aud1d:"Chats, tickets, artículos guardados — perdidos entre miles de fotos. La línea de tiempo más búsqueda de texto completo devuelven cualquier entrada en segundos.",
+    aud2t:"Estudias y luego olvidas",aud2d:"Exámenes y desarrollo de habilidades necesitan repasar en el momento exacto. La curva de memoria te avisa justo antes de que el olvido suceda.",
+    aud3t:"El trabajo disperso en semanas y chats",aud3d:"Conclusiones de reuniones, cambios de requisitos, decisiones — dispersas en apps. Una línea de tiempo con etiquetas y links mantiene la evidencia a un toque.",
+    aud4t:"Las ideas se escapan",aud4d:"Captura rápida + etiquetas + recordatorios de curva de memoria hacen que las ideas vuelvan cuando más las necesitas.",
+    aud1r:"Línea de tiempo + búsqueda",aud2r:"Curva de memoria de 11 pasos",aud3r:"Etiquetas + links directos",aud4r:"Captura rápida + recordatorios",
+    pr_eye:"Precios",pr_h:"Empieza gratis. <em>Poséelo</em> siempre.",pr_d:"La versión gratuita cubre el registro básico. Actualiza a Pro con un pago único — desbloquea todo permanentemente.",
+    fr_name:"Gratis",fr_desc:"Funciones básicas sin pago. Perfecto para uso ligero.",
+    fr_f1:"5 entradas por día",fr_f2:"Etiquetas básicas y búsqueda",fr_f3:"Hasta 2 fotos por entrada",fr_f4:"Hasta 3 curvas activas",fr_f5:"Publicidad Google",fr_f6:"Sin copia de seguridad",
+    fr_btn:"Descargar gratis",
+    pr_badge:"✦ Recomendado",pr_desc2:"Compra única, para siempre. Para usuarios intensivos, estudiantes y profesionales.",
+    pr_f1:"Entradas ilimitadas",pr_f2:"Curvas ilimitadas",pr_f3:"Hasta 20 fotos por entrada",pr_f4:"Copia de seguridad y restauración",pr_f5:"Sin publicidad",pr_f6:"Compartir en familia (hasta 6)",
+    pr_btn:"Desbloquear Pro →",pr_hint:"Pago único · Sin suscripción · Compartir en familia",
+    lg_t:"Disponible en 5 idiomas en todo el mundo",
+    fq_eye:"FAQ",fq_h:"¿Tienes <em>dudas?</em><br>Aquí las respuestas.",fq_d:"Si no encuentras tu respuesta, <a href='mailto:neonyanbb@gmail.com'>escríbenos</a> y te responderemos rápidamente.",fq_em:"→ Enviar email",
+    ft_desc:"Registra tu vida e inspiración cada día.",ft_prod:"Producto",ft_feat:"Funciones",ft_mem:"Curva de memoria",ft_pro:"Pro",ft_dl:"Descargar",ft_sup:"Soporte",ft_faq:"FAQ",ft_contact:"Contacto",ft_priv:"Privacidad",ft_lang:"Idioma",
     ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Privacidad",ft_sup2:"Soporte",
     n_dl_soon:"Próximamente",h_eye_soon:"Próximamente en App Store",
     h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Próximamente',
@@ -1273,77 +1336,107 @@ const STR = {
   },
   fr:{
     appName:"Journal Chronologie",n_feat:"Fonctionnalités",n_mem:"Courbe de mémoire",n_case:"Cas d'usage",n_aud:"Pour qui ?",n_pro:"Pro",n_faq:"FAQ",n_dl:"Télécharger",
-    h_eye:"Disponible sur l'App Store",h_title:"Capturez votre vie.<br>Faites durer les <em>souvenirs</em><br>pour toujours.",
-    h_sub:"Journal Chronologie est conçu pour <strong>enregistrer fréquemment et réviser à long terme</strong>.",
-    h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Télécharger',
+    h_eye:"Disponible sur l'App Store",h_title:"Capturez l'instant.<br>Faites durer<br><em>ce qui compte</em>.",
+    h_sub:"Journal Chronologie est conçu pour <strong>la capture photo-texte et la révision à long terme</strong>. Connectez captures, photos et notes sur une chronologie — des étiquettes colorées organisent tout, et une courbe de mémoire scientifique vous assure de ne jamais oublier l'essentiel.",
+    h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Télécharger sur l\'App Store',
     h_more:"Voir les fonctionnalités →",b1:"iPhone & iPad",b2:"5 langues",b3:"Données locales",b4:"Achat unique",
-    f_eye:"Fonctionnalités",f_h:"Système complet de<br><em>capture et révision</em>",f_d:"Captures, étiquettes, recherche et courbe de mémoire intégrés.",
-    f1t:"Chronologie",f1d:"Reliez captures, photos et texte. Archives automatiques par jour.",f2t:"Étiquettes",f2d:"Système d'étiquettes avec recherche plein texte.",f3t:"Courbe de mémoire",f3d:"11 révisions sur 180 jours.",f4t:"Sauvegarde locale",f4d:"Vos données sur votre appareil (Pro).",
-    s1lbl:"Chronologie",s1h:"Chaque moment<br>en <em>ordre parfait</em>",s1b:"Créez une entrée, choisissez des photos, ajoutez des notes. Jusqu'à 20 photos avec Pro.",
-    s2lbl:"Étiquettes",s2h:"Retrouvez tout ce<br>que vous avez <em>noté</em>",s2b:"Étiquettes et recherche plein texte sur tout votre contenu.",
-    s3lbl:"Courbe de mémoire",s3h:"Notez — et<br>vraiment <em>retenez</em>",s3b:"11 révisions: 5 min, 30 min, 12h, 1j, 2j, 4j, 7j, 15j, 30j, 90j, 180j.",
-    p1:"Multi-photos (20 Pro)",p2:"Notes",p3:"Auto-archivé",p4:"Navigation rapide",p5:"Étiquettes",p6:"Recherche",p7:"Répertoire",p8:"Filtre",p9:"Intervalles",p10:"Rappels",p11:"Planning",p12:"Terminé",
-    m_eye:"Courbe de mémoire",m_h:"Retenez<br>ce qui <em>compte</em>",m_d:"70% oublié en 24h. 11 moments de révision. Notifications en heures dorées (08:00–21:00).",
-    st1:"points de révision",st2:"oublié en 24h",st3:"jours cycle",st4:"Pro illimité",svg_label:"Rétention",svg_forget:"Sans révision",
-    c_eye:"Cas d'usage",c_h:"Quel que soit l'objectif,<br><em>ça s'adapte</em>",c_d:"Étudier, travailler, créer ou vivre — Journal Chronologie est votre meilleur allié.",
-    c1t:"Études",c1d:"Notes, étiquettes, courbe de mémoire, révisions programmées.",c2t:"Travail",c2d:"Réunions, captures, décisions. Recherche rapide.",c3t:"Inspiration",c3d:"Sauvegardez idées et images. Rappels créatifs.",c4t:"Journal",c4d:"Voyages, repas, famille. Histoire revisitable.",
+    f_eye:"Fonctionnalités",f_h:"Système complet de<br><em>capture et révision</em>",f_d:"D'une capture rapide à s'en souvenir clairement six mois plus tard — Journal Chronologie intègre chronologie, étiquettes colorées, recherche plein texte et courbe de mémoire scientifique.",
+    f1t:"Accueil chronologique",f1d:"Toutes les entrées regroupées par date. Chacune affiche une miniature, l'heure exacte et un aperçu du texte. La barre de recherche trouve n'importe quelle note en quelques secondes.",
+    f2t:"Système d'étiquettes colorées",f2d:"Chaque étiquette reçoit sa propre couleur, affichée sous forme de capsules hashtag sur chaque page de détail. Compatible avec les emojis (#✈️). L'annuaire des étiquettes offre une vue d'ensemble complète.",
+    f3t:"Révisions avec courbe de mémoire",f3d:"Basé sur la courbe de l'oubli d'Ebbinghaus, 11 points de révision scientifiquement espacés sont programmés automatiquement. Chaque date apparaît dans la liste avec Aujourd'hui / Demain / Dans N jours.",
+    f4t:"Notes riches · Liens directs",f4d:"Les URLs dans vos notes deviennent des liens cliquables — ouvrez l'article source directement dans l'app. Jusqu'à 20 photos par entrée (Pro), glissez pour toutes les voir.",
+    s1lbl:"Accueil",s1h:"Chaque entrée,<br><em>parfaitement organisée</em> par jour",s1b:"L'écran d'accueil regroupe toutes vos entrées par date. Chaque carte affiche une miniature, l'heure exacte et un aperçu du texte. La barre de recherche fait une recherche plein texte dans toutes vos notes.",
+    s2lbl:"Détail · Étiquettes · Liens",s2h:"Pas seulement des photos —<br>chaque <em>détail</em> d'un coup d'œil",s2b:"La page de détail ouvre vos photos en plein écran (jusqu'à 20 avec Pro). En dessous, les capsules hashtag colorées rendent la catégorisation visuelle et immédiate. Toute URL dans vos notes devient un lien cliquable qui s'ouvre dans l'app. Les flèches de navigation passent aux entrées adjacentes.",
+    s3lbl:"Courbe de mémoire",s3h:"Notez — et<br>vraiment <em>retenez</em>",s3b:"Ajoutez n'importe quelle entrée à la courbe de mémoire et l'app crée instantanément un plan de 11 révisions. Chaque ligne montre la date exacte, l'heure et Aujourd'hui / Demain / Dans N jours. Un graphique de courbe de l'oubli en bas rend la science tangible. Gratuit : 3 courbes ; Pro : illimitées.",
+    p1:"Regroupé par date",p2:"Miniature + aperçu texte",p3:"Recherche plein texte",p4:"Réduire / développer les jours",
+    p5:"Capsules hashtag colorées",p6:"URLs cliquables dans l'app",p7:"Navigation entre entrées",p8:"Ajouter à la courbe de mémoire",
+    p9:"Dates exactes visibles",p10:"Plan scientifique 11 étapes",p11:"Graphique courbe de l'oubli",p12:"Cocher chaque révision",
+    m_eye:"Courbe de mémoire",m_h:"Retenez<br>ce qui <em>compte</em>",m_d:"Ebbinghaus a découvert que sans révision, on oublie ~70% en 24 heures. Journal Chronologie transforme une entrée sauvegardée en un plan de 11 révisions. Les notifications sont limitées aux heures dorées (08:00–21:00).",
+    st1:"points de révision<br>scientifiques",st2:"oublié en<br>24 h sans révision",st3:"jours cycle<br>complet",st4:"Pro illimité",svg_label:"Rétention",svg_forget:"Sans révision",
+    c_eye:"Cas d'usage",c_h:"Quel que soit l'objectif,<br><em>ça s'adapte</em>",c_d:"Étudier, travailler, créer ou documenter la vie quotidienne — Journal Chronologie est votre meilleur allié mémoriel.",
+    c1t:"Études et révisions",c1d:"Photographiez des notes ou capturez des concepts clés. Étiquetez par matière, ajoutez à la courbe de mémoire et l'app programme les rappels automatiquement.",
+    c2t:"Traces professionnelles",c2d:"Capturez les réunions, changements d'exigences et décisions. Ajoutez le lien source dans les notes pour accéder directement. Les étiquettes de projet connectent les entrées sur des semaines et des mois.",
+    c3t:"Inspiration créative",c3d:"Sauvegardez images et idées avec un lien de référence. Les étiquettes créent votre bibliothèque de matériaux. Les rappels de courbe de mémoire ramènent vos meilleures idées au bon moment.",
+    c4t:"Journal de vie",c4d:"Voyages, gastronomie, sport, famille — formez une histoire revisitable sur votre chronologie. Un an plus tard, vous ouvrirez une photo et vous souviendrez de chaque détail.",
     ct1:"Erreurs",ct2:"Concepts",ct3:"Examen",ct4:"Réunions",ct5:"Projets",ct6:"Preuves",ct7:"Inspiration",ct8:"Matériaux",ct9:"Références",ct10:"Voyages",ct11:"Vie",ct12:"Famille",
-    pl_eye:"Multi-appareil",pl_h:"iPhone et iPad<br><em>parfaitement</em> synchronisés",
-    pl1t:"iPhone",pl1d:"Flux vertical, utilisation simple.",pl2t:"iPad",pl2d:"Vue partagée, plus de densité.",pl3t:"Sauvegarde (Pro)",pl3d:"Export/import, migration complète.",pl4t:"Famille (Pro)",pl4d:"Partage familial jusqu'à 6.",
-    pr_eye:"Tarifs",pr_h:"Commencez gratuitement. <em>Possédez-le</em>.",pr_d:"Version gratuite ou Pro à achat unique.",
-    fr_name:"Gratuit",fr_desc:"Fonctions de base sans paiement.",fr_f1:"5 entrées/jour",fr_f2:"Étiquettes de base",fr_f3:"2 photos/entrée",fr_f4:"3 courbes actives",fr_f5:"Publicités Google",fr_f6:"Sans sauvegarde",fr_btn:"Télécharger",
-    pr_badge:"✦ Recommandé",pr_desc2:"Achat unique, pour toujours.",pr_f1:"Entrées illimitées",pr_f2:"Courbes illimitées",pr_f3:"20 photos/entrée",pr_f4:"Sauvegarde",pr_f5:"Sans pub",pr_f6:"Partage familial",
-    pr_btn:"Débloquer Pro →",pr_hint:"Achat unique · Sans abonnement",
-    lg_t:"Disponible en 5 langues",
-    aud_eye:"Pour qui",aud_h:"Est-ce que <em>ça vous parle ?</em>",aud_d:"Si vos captures et notes disparaissent dans le flot, ou si vous oubliez vite ce que vous apprenez, cette app colle à ce quotidien.",
-    aud1t:"Noyé sous les captures",aud1d:"Discussions, tickets, articles… introuvables dans Pellicule. Une chronologie et la recherche les retrouvent vite.",
-    aud2t:"On apprend puis on oublie",aud2d:"Il faut revoir au bon moment. La courbe mémoire vous le rappelle pour ancrer durablement.",
-    aud3t:"Le travail éclaté partout",aud3d:"Réunions, specs, décisions éparses entre apps. Un fil daté et des étiquettes gardent la preuve accessible.",
-    aud4t:"Les idées filent",aud4d:"Notez vite, classez à la légère, laissez les rappels les faire ressurgir au bon moment.",
-    fq_eye:"FAQ",fq_h:"Des <em>questions</em>?<br>Les réponses.",fq_d:"Écrivez-nous si vous ne trouvez pas.",fq_em:"→ Envoyer un email",
-    ft_desc:"Capturez votre vie et vos inspirations.",ft_prod:"Produit",ft_feat:"Fonctionnalités",ft_mem:"Courbe",ft_pro:"Pro",ft_dl:"Télécharger",ft_sup:"Support",ft_faq:"FAQ",ft_contact:"Contact",ft_priv:"Confidentialité",ft_lang:"Langue",
+    pl_eye:"Multi-appareil",pl_h:"iPhone et iPad —<br><em>parfaitement</em> synchronisés",
+    pl1t:"iPhone · Enregistrez partout",pl1d:"Flux vertical optimisé pour l'utilisation à une main. Navigation claire. Recherche et filtrage par étiquettes sans étapes supplémentaires.",
+    pl2t:"iPad · Mode vue partagée",pl2d:"Chronologie à gauche, détail à droite. Plus haute densité d'informations pour la lecture approfondie.",
+    pl3t:"Sauvegarde et migration (Pro)",pl3d:"Exportez une sauvegarde complète. Importez sur le nouvel appareil pour tout restaurer.",
+    pl4t:"Famille (Pro)",pl4d:"Pro compatible avec le Partage familial Apple — un achat partagé par jusqu'à 6 membres.",
+    aud_eye:"Pour qui",aud_h:"Est-ce que ça vous<br><em>parle trop bien ?</em>",aud_d:"Si vos notes et captures disparaissent dans le chaos — ou vous apprenez quelque chose et l'oubliez jours après — cette app est faite pour vous.",
+    aud1t:"Captures noyées dans la pellicule",aud1d:"Chats, tickets, articles sauvegardés — perdus parmi des milliers de photos. La chronologie plus la recherche plein texte retrouvent n'importe quelle entrée en secondes.",
+    aud2t:"Vous étudiez puis oubliez",aud2d:"Examens et développement de compétences nécessitent de réviser au bon moment. La courbe de mémoire vous prévient juste avant que l'oubli survienne.",
+    aud3t:"Le travail éparpillé en semaines et chats",aud3d:"Conclusions de réunions, changements, décisions — éparpillés dans différentes apps. Une chronologie avec étiquettes et liens garde les preuves à portée de recherche.",
+    aud4t:"Les idées s'envolent",aud4d:"Capture rapide + étiquettes + rappels de courbe de mémoire ramènent les idées quand vous en avez le plus besoin.",
+    aud1r:"Chronologie + recherche",aud2r:"Courbe de mémoire 11 étapes",aud3r:"Étiquettes + liens directs",aud4r:"Capture rapide + rappels",
+    pr_eye:"Tarifs",pr_h:"Commencez gratuitement. <em>Possédez-le</em>.",pr_d:"La version gratuite couvre l'essentiel. Passez à Pro avec un paiement unique — tout débloqué en permanence.",
+    fr_name:"Gratuit",fr_desc:"Fonctions de base sans paiement. Parfait pour usage léger.",
+    fr_f1:"5 entrées par jour",fr_f2:"Étiquettes de base et recherche",fr_f3:"Jusqu'à 2 photos par entrée",fr_f4:"Jusqu'à 3 courbes actives",fr_f5:"Publicités Google",fr_f6:"Sans sauvegarde",
+    fr_btn:"Télécharger gratuitement",
+    pr_badge:"✦ Recommandé",pr_desc2:"Achat unique, pour toujours. Pour utilisateurs intensifs, étudiants et professionnels.",
+    pr_f1:"Entrées illimitées",pr_f2:"Courbes illimitées",pr_f3:"Jusqu'à 20 photos par entrée",pr_f4:"Sauvegarde et restauration",pr_f5:"Sans publicité",pr_f6:"Partage familial (jusqu'à 6)",
+    pr_btn:"Débloquer Pro →",pr_hint:"Achat unique · Sans abonnement · Partage familial",
+    lg_t:"Disponible en 5 langues dans le monde",
+    fq_eye:"FAQ",fq_h:"Des <em>questions ?</em><br>Les réponses.",fq_d:"Si vous ne trouvez pas votre réponse, <a href='mailto:neonyanbb@gmail.com'>écrivez-nous</a> et nous vous répondrons rapidement.",fq_em:"→ Envoyer un email",
+    ft_desc:"Capturez votre vie et vos inspirations chaque jour.",ft_prod:"Produit",ft_feat:"Fonctionnalités",ft_mem:"Courbe",ft_pro:"Pro",ft_dl:"Télécharger",ft_sup:"Support",ft_faq:"FAQ",ft_contact:"Contact",ft_priv:"Confidentialité",ft_lang:"Langue",
     ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Confidentialité",ft_sup2:"Support",
     n_dl_soon:"Bientôt",h_eye_soon:"Bientôt sur l'App Store",
     h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Bientôt disponible',
-    fr_btn_soon:"Bientôt disponible",pr_btn_soon:"Bientôt disponible",ft_dl_soon:"Bientôt disponible",
-    toast_coming:"L’application est examinée sur l’App Store. Le téléchargement sera ouvert après validation. Merci pour votre patience."
+    fr_btn_soon:"Bientôt",pr_btn_soon:"Bientôt",ft_dl_soon:"Bientôt",
+    toast_coming:"L'application est en cours d'examen sur l'App Store. Le téléchargement sera ouvert après validation."
   },
   ru:{
     appName:"Таймлайн Дневник",n_feat:"Функции",n_mem:"Кривая памяти",n_case:"Применение",n_aud:"Кому подойдёт",n_pro:"Pro",n_faq:"FAQ",n_dl:"Скачать",
-    h_eye:"Доступно в App Store",h_title:"Записывайте жизнь.<br>Пусть <em>воспоминания</em><br>живут вечно.",
-    h_sub:"Таймлайн Дневник создан для <strong>частых записей и долгосрочного повторения</strong>. Хронология, наука, память.",
+    h_eye:"Доступно в App Store",h_title:"Запечатлейте момент.<br>Пусть <em>важное</em><br>остаётся навсегда.",
+    h_sub:"Таймлайн Дневник создан для <strong>записи фото и текста с долгосрочным повторением</strong>. Соединяйте скриншоты, фото и заметки в хронологию — цветные теги организуют всё, а научная кривая памяти гарантирует, что вы не забудете важное.",
     h_dl:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Скачать в App Store',
     h_more:"Изучить функции →",b1:"iPhone и iPad",b2:"5 языков",b3:"Данные локально",b4:"Разовая покупка",
-    f_eye:"Основные функции",f_h:"Полная система<br><em>записи и повторения</em>",f_d:"Скриншоты, теги, поиск, кривая памяти в одном опыте.",
-    f1t:"Хронология",f1d:"Скриншоты, фото, текст по времени. Авто-архив по дням.",f2t:"Теги и поиск",f2d:"Свои теги и полнотекстовый поиск.",f3t:"Кривая памяти",f3d:"11 научных повторений за 180 дней.",f4t:"Резервирование",f4d:"Данные на устройстве. Экспорт/импорт (Pro).",
-    s1lbl:"Хронология",s1h:"Каждый момент<br>в <em>идеальном порядке</em>",s1b:"Создавайте записи, выбирайте фото. До 20 фото с Pro.",
-    s2lbl:"Теги и поиск",s2h:"Найдите всё, что вы<br>когда-либо <em>записали</em>",s2b:"Теги и полнотекстовый поиск по всему контенту.",
-    s3lbl:"Кривая памяти",s3h:"Запишите — и<br>действительно <em>запомните</em>",s3b:"11 повторений: 5 мин, 30 мин, 12ч, 1д, 2д, 4д, 7д, 15д, 30д, 90д, 180д.",
-    p1:"Мультифото (20 Pro)",p2:"Заметки",p3:"Авто-архив",p4:"Просмотр",p5:"Свои теги",p6:"Поиск",p7:"Каталог",p8:"Фильтр",p9:"Интервалы",p10:"Напоминания",p11:"План",p12:"Отмечено",
-    m_eye:"Кривая памяти",m_h:"Научно<br>запоминайте <em>важное</em>",m_d:"70% забывается за 24ч. 11 точных моментов повторения. Уведомления в золотые часы (08:00–21:00).",
-    st1:"научных точек<br>повторения",st2:"забывается за<br>24ч без повторения",st3:"дней полный<br>цикл",st4:"Pro безлимит<br>кривых",svg_label:"Удержание",svg_forget:"Без повторения",
+    f_eye:"Основные функции",f_h:"Полная система<br><em>записи и повторения</em>",f_d:"От быстрого скриншота до чёткого воспоминания через полгода — Таймлайн Дневник объединяет хронологию, цветные теги, полнотекстовый поиск и научную кривую памяти.",
+    f1t:"Главный экран",f1d:"Все записи автоматически сгруппированы по дате. Каждая показывает миниатюру, точное время и предпросмотр текста. Строка поиска вверху находит любую заметку за секунды.",
+    f2t:"Система цветных тегов",f2d:"Каждый тег получает свой цвет, отображаемый как яркие хэштег-капсулы на каждой странице деталей. Поддержка эмодзи-тегов (#✈️). Каталог тегов — полный обзор одним нажатием.",
+    f3t:"Повторения по кривой памяти",f3d:"На основе кривой забывания Эббингауза, 11 научно выверенных точек повторения планируются автоматически. Каждая дата видна в списке с метками Сегодня / Завтра / Через N дней.",
+    f4t:"Богатые заметки · Ссылки по клику",f4d:"URL в заметках автоматически становятся кликабельными ссылками — откройте исходную статью прямо в приложении. До 20 фото на запись (Pro), пролистывайте все.",
+    s1lbl:"Главный экран",s1h:"Каждая запись<br><em>идеально организована</em> по дням",s1b:"Главный экран группирует все записи по датам. Каждая карточка показывает миниатюру, точное время и предпросмотр текста. Строка поиска вверху выполняет полнотекстовый поиск по всем заметкам.",
+    s2lbl:"Детали · Теги · Ссылки",s2h:"Не только фото —<br>каждая <em>деталь</em> с первого взгляда",s2b:"Страница деталей открывает фото в полный экран (до 20 с Pro). Ниже — яркие хэштег-капсулы разных цветов делают категоризацию визуальной. Любой URL в заметках становится кликабельной ссылкой, открывающейся в приложении. Кнопки навигации переключают между соседними записями.",
+    s3lbl:"Кривая памяти",s3h:"Запишите — и<br>действительно <em>запомните</em>",s3b:"Добавьте любую запись в кривую памяти — приложение мгновенно создаёт план из 11 повторений. Каждая строка показывает точную дату, время и метку Сегодня / Завтра / Через N дней. График кривой забывания внизу делает науку наглядной. Бесплатно: 3 кривые; Pro: неограниченно.",
+    p1:"Группировка по датам",p2:"Миниатюра + предпросмотр",p3:"Полнотекстовый поиск",p4:"Свернуть / развернуть дни",
+    p5:"Цветные хэштег-капсулы",p6:"URL открываются в приложении",p7:"Навигация между записями",p8:"Добавить в кривую памяти",
+    p9:"Точные даты в списке",p10:"Научный план 11 шагов",p11:"График кривой забывания",p12:"Отметить каждое повторение",
+    m_eye:"Кривая памяти",m_h:"Научно<br>запоминайте <em>важное</em>",m_d:"Эббингауз обнаружил, что без повторения мы забываем ~70% за 24 часа. Таймлайн Дневник превращает сохранённую запись в план из 11 повторений. Уведомления ограничены золотыми часами (08:00–21:00).",
+    st1:"научных точек<br>повторения",st2:"забывается за<br>24 ч без повторения",st3:"дней полный<br>цикл",st4:"Pro безлимит<br>кривых",svg_label:"Удержание",svg_forget:"Без повторения",
     c_eye:"Применение",c_h:"Какова бы ни была цель,<br><em>подходит</em>",c_d:"Учёба, работа, творчество, жизнь — лучший помощник памяти.",
-    c1t:"Учёба",c1d:"Конспекты, теги, кривая памяти, повторения по расписанию.",c2t:"Работа",c2d:"Совещания, скриншоты, решения. Быстрый поиск.",c3t:"Вдохновение",c3d:"Образы и идеи. Библиотека материалов.",c4t:"Дневник",c4d:"Путешествия, семья. Живые воспоминания.",
-    ct1:"Ошибки",ct2:"Концепции",ct3:"Экзамен",ct4:"Совещания",ct5:"Проекты",ct6:"Доказат.",ct7:"Идеи",ct8:"Материалы",ct9:"Ссылки",ct10:"Путешествия",ct11:"Быт",ct12:"Семья",
-    pl_eye:"Мультиустройство",pl_h:"iPhone и iPad<br><em>идеально</em> синхронизированы",
-    pl1t:"iPhone",pl1d:"Вертикальный поток, одна рука.",pl2t:"iPad",pl2d:"Разделённый экран, высокая плотность.",pl3t:"Резервирование (Pro)",pl3d:"Экспорт и импорт. Полная миграция.",pl4t:"Семья (Pro)",pl4d:"Семейный доступ до 6 человек.",
-    pr_eye:"Цены",pr_h:"Начните бесплатно. <em>Владейте</em> вечно.",pr_d:"Бесплатно или Pro с разовой оплатой.",
-    fr_name:"Бесплатно",fr_desc:"Основные функции без оплаты.",fr_f1:"5 записей/день",fr_f2:"Базовые теги",fr_f3:"2 фото/запись",fr_f4:"3 кривые",fr_f5:"Реклама Google",fr_f6:"Без резервирования",fr_btn:"Скачать",
-    pr_badge:"✦ Рекомендуется",pr_desc2:"Разовая покупка, навсегда.",pr_f1:"Безлимит записей",pr_f2:"Безлимит кривых",pr_f3:"20 фото/запись",pr_f4:"Резервирование",pr_f5:"Без рекламы",pr_f6:"Семейный доступ",
-    pr_btn:"Разблокировать Pro →",pr_hint:"Разовая покупка · Без подписки",
-    lg_t:"Доступно на 5 языках",
-    aud_eye:"Кому подойдёт",aud_h:"Знакомо <em>до боли?</em>",aud_d:"Если скриншоты и заметки теряются в галерее, а прочитанное через пару дней вылетает из головы — это как раз про вашу повседневность.",
-    aud1t:"Всё тонет в «Фото»",aud1d:"Переписки, чеки, статьи среди тысяч снимков. Хронология и поиск возвращают нужное за секунды.",
-    aud2t:"Учите — и забываете",aud2d:"Нужны повторения вовремя. Кривая памяти напомнит, когда освежить материал.",
-    aud3t:"Рабочее разбросано по чатам",aud3d:"Созвоны, требования, решения в разных местах. Одна лента с тегами держит цепочку под рукой.",
-    aud4t:"Мысли ускользают",aud4d:"Быстрая запись, лёгкие теги и напоминания возвращают идеи, когда они снова важны.",
-    fq_eye:"FAQ",fq_h:"Есть <em>вопросы</em>?<br>Вот ответы.",fq_d:"Напишите нам если не нашли ответ.",fq_em:"→ Написать",
-    ft_desc:"Записывайте жизнь и вдохновение каждый день.",ft_prod:"Продукт",ft_feat:"Функции",ft_mem:"Кривая",ft_pro:"Pro",ft_dl:"Скачать",ft_sup:"Поддержка",ft_faq:"FAQ",ft_contact:"Контакты",ft_priv:"Конфиденц.",ft_lang:"Язык",
+    c1t:"Учёба и повторение",c1d:"Фотографируйте конспекты или делайте скриншоты ключевых понятий. Теги по предметам, кривая памяти — и приложение автоматически планирует напоминания.",
+    c2t:"Рабочие записи",c2d:"Скриншоты совещаний, изменений требований, решений. Добавляйте ссылку-источник для мгновенного перехода. Теги проекта связывают записи через недели и месяцы.",
+    c3t:"Творческое вдохновение",c3d:"Сохраняйте образы и идеи со ссылкой-источником. Теги создают библиотеку материалов. Напоминания кривой памяти возвращают лучшие идеи в нужный момент.",
+    c4t:"Личный дневник",c4d:"Путешествия, еда, спорт, семья — создайте пересматриваемую историю. Через год вы откроете фото и вспомните каждую деталь.",
+    ct1:"Ошибки",ct2:"Концепции",ct3:"Подготовка к экзамену",ct4:"Протоколы совещаний",ct5:"Проекты",ct6:"Доказательства",ct7:"Вдохновение",ct8:"Материалы",ct9:"Ссылки",ct10:"Путешествия",ct11:"Быт",ct12:"Семья",
+    pl_eye:"Мультиустройство",pl_h:"iPhone и iPad —<br><em>идеально</em> синхронизированы",
+    pl1t:"iPhone · Записывайте везде",pl1d:"Вертикальный поток, оптимизированный для одной руки. Чёткая навигация. Поиск и фильтрация тегов без лишних шагов.",
+    pl2t:"iPad · Режим разделённого экрана",pl2d:"Хронология слева, детали справа. Высокая плотность информации для глубокого чтения.",
+    pl3t:"Резервирование и миграция (Pro)",pl3d:"Экспортируйте полную резервную копию. Импортируйте на новом устройстве для полного восстановления.",
+    pl4t:"Семья (Pro)",pl4d:"Pro поддерживает семейный доступ Apple — одна покупка для до 6 членов семьи.",
+    aud_eye:"Кому подойдёт",aud_h:"Это звучит<br><em>слишком знакомо?</em>",aud_d:"Если ваши заметки и скриншоты тонут в хаосе — или вы учите что-то и забываете через дни — это приложение для вас.",
+    aud1t:"Скриншоты утонули в фотопленке",aud1d:"Переписки, чеки, статьи — потерянные среди тысяч фото. Хронология плюс полнотекстовый поиск возвращают любую запись за секунды.",
+    aud2t:"Учите — и забываете",aud2d:"Экзамены и развитие навыков требуют повторения в нужный момент. Кривая памяти предупреждает до того, как кривая забывания упадёт.",
+    aud3t:"Работа рассыпана по неделям и чатам",aud3d:"Итоги встреч, изменения, решения — в разных местах. Хронология с тегами и ссылками держит доказательства в одном поиске.",
+    aud4t:"Мысли ускользают",aud4d:"Быстрая запись + теги + напоминания кривой памяти возвращают идеи, когда они нужнее всего.",
+    aud1r:"Хронология + полный поиск",aud2r:"Кривая памяти 11 шагов",aud3r:"Теги + ссылки по клику",aud4r:"Быстрая запись + напоминания",
+    pr_eye:"Цены",pr_h:"Начните бесплатно. <em>Владейте</em> вечно.",pr_d:"Бесплатная версия покрывает основную запись. Pro с единовременной оплатой — всё разблокировано навсегда.",
+    fr_name:"Бесплатно",fr_desc:"Основные функции без оплаты. Идеально для лёгкого использования.",
+    fr_f1:"5 записей в день",fr_f2:"Базовые теги и поиск",fr_f3:"До 2 фото на запись",fr_f4:"До 3 активных кривых",fr_f5:"Реклама Google",fr_f6:"Без резервирования",
+    fr_btn:"Скачать",
+    pr_badge:"✦ Рекомендуется",pr_desc2:"Разовая покупка, навсегда. Для активных пользователей, студентов и профессионалов.",
+    pr_f1:"Безлимит записей",pr_f2:"Безлимит кривых",pr_f3:"До 20 фото на запись",pr_f4:"Резервирование и восстановление",pr_f5:"Без рекламы",pr_f6:"Семейный доступ (до 6 человек)",
+    pr_btn:"Разблокировать Pro →",pr_hint:"Разовая покупка · Без подписки · Семейный доступ",
+    lg_t:"Доступно на 5 языках по всему миру",
+    fq_eye:"FAQ",fq_h:"Есть <em>вопросы?</em><br>Вот ответы.",fq_d:"Если не нашли ответ — <a href='mailto:neonyanbb@gmail.com'>напишите нам</a>, ответим быстро.",fq_em:"→ Написать",
+    ft_desc:"Записывайте жизнь и вдохновение каждый день.",ft_prod:"Продукт",ft_feat:"Функции",ft_mem:"Кривая памяти",ft_pro:"Pro",ft_dl:"Скачать",ft_sup:"Поддержка",ft_faq:"FAQ",ft_contact:"Контакты",ft_priv:"Конфиденциальность",ft_lang:"Язык",
     ft_copy:"© 2026 Snapline Diary.",ft_priv2:"Конфиденциальность",ft_sup2:"Поддержка",
     n_dl_soon:"Скоро",h_eye_soon:"Скоро в App Store",
     h_dl_soon:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg> Скоро',
     fr_btn_soon:"Скоро",pr_btn_soon:"Скоро",ft_dl_soon:"Скоро",
-    toast_coming:"Приложение на проверке в App Store. Загрузка откроется после одобрения. Спасибо за интерес."
+    toast_coming:"Приложение проходит проверку в App Store. Загрузка откроется после одобрения."
   }
 };
 
@@ -1364,7 +1457,7 @@ function detectBrowserLang(){
   const base = raw.split('-')[0];
   if(LANG_KEYS.includes(base)) return base;
   if(raw.startsWith('zh')) return 'zh';
-  return 'zh';
+  return 'en';
 }
 let lang = readStoredLang() || detectBrowserLang();
 let langSwitching = false;
@@ -1407,25 +1500,21 @@ function showSoonToast(){
 }
 
 function applyLang(){
-  // text nodes
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key = el.getAttribute('data-i18n');
     if(!key) return;
     const v = s(key);
     if(v !== undefined) el.textContent = v;
   });
-  // html nodes（getAttribute 避免 data-i18n-html → dataset 映射在部分环境下的歧义）
   document.querySelectorAll('[data-i18n-html]').forEach(el=>{
     const key = el.getAttribute('data-i18n-html');
     if(!key) return;
     const v = s(key);
     if(v !== undefined) el.innerHTML = v;
   });
-  // lang chips & options
   document.querySelectorAll('[data-lang]').forEach(el=>{
     el.classList.toggle('active', el.dataset.lang === lang);
   });
-  // nav label
   const labels={zh:'中文',en:'English',es:'Español',fr:'Français',ru:'Русский'};
   document.getElementById('cur-lang-lbl').textContent = labels[lang]||lang;
   document.documentElement.lang = lang==='zh'?'zh-Hans':lang;
@@ -1467,25 +1556,22 @@ function setLang(l){
   },140);
 }
 
-// TICKER — seamless loop (4 copies, animate -50%)
 function buildTicker(){
   const items = (TICKER[lang]||TICKER.zh);
   const html = items.map(t=>`<span class="t-item">${t}</span>`).join('');
   const track = document.getElementById('ticker');
-  track.innerHTML = html+html+html+html; // 4 copies, animate -50% (= 2 copies)
+  track.innerHTML = html+html+html+html;
   track.style.animation='none';
   track.offsetHeight;
   track.style.animation='tick 32s linear infinite';
 }
 
-// CURVE STEPS
 function buildCurveSteps(){
   const steps = CURVE_STEPS[lang]||CURVE_STEPS.zh;
   document.getElementById('curve-steps').innerHTML =
     steps.map(s=>`<div class="cs"><div class="cs-dot"></div><span class="cs-lbl">${s.l}</span><span class="cs-day">${s.d}</span></div>`).join('');
 }
 
-// FAQ
 function buildFAQ(){
   const faqs = FAQS[lang]||FAQS.zh;
   document.getElementById('faq-list').innerHTML =
@@ -1503,7 +1589,6 @@ function toggleFaq(i){
   if(!was) item.classList.add('open');
 }
 
-// PRIVACY
 function showPrivacy(){
   closeNav();
   const p = PRIVACY[lang]||PRIVACY.zh;
@@ -1530,7 +1615,6 @@ function closePg(){
   }, 480);
 }
 
-// NAV HELPERS
 function openDownload(){
   closeNav();
   if(!APP_STORE_LIVE){
@@ -1564,29 +1648,22 @@ function goTo(id){
   if(el) el.scrollIntoView({behavior:'smooth'});
 }
 
-// NAV SCROLL
 window.addEventListener('scroll',()=>{
   document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>40);
 });
-
 window.addEventListener('resize',()=>{
   if(window.innerWidth>900) closeNav();
 });
 document.addEventListener('keydown',e=>{
   if(e.key!=='Escape') return;
   const pg = document.getElementById('priv-pg');
-  if(pg && pg.classList.contains('show')){
-    closePg();
-    return;
-  }
+  if(pg && pg.classList.contains('show')){ closePg(); return; }
   closeNav();
 });
 document.getElementById('nav-links')?.addEventListener('click',e=>{
-  // 手机上点击菜单空白区域时收起导航
   if(e.target === e.currentTarget) closeNav();
 });
 
-// SCROLL REVEAL
 function setupReveal(){
   const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const items = Array.from(document.querySelectorAll('.reveal'));
@@ -1600,7 +1677,6 @@ function setupReveal(){
     el.classList.remove('reveal-visible');
   };
 
-  // 首屏保持可见，避免初始闪烁；视口外元素标记为待出现
   items.forEach(el=>{
     const r = el.getBoundingClientRect();
     const inViewport = r.top < vh * 0.92 && r.bottom > vh * 0.08;
@@ -1613,7 +1689,6 @@ function setupReveal(){
       if(entry.isIntersecting){
         el.classList.add('reveal-visible');
       }else{
-        // 离开视口后重置，保证上翻和下翻都能再次触发
         markHidden(el);
       }
     });
@@ -1622,10 +1697,127 @@ function setupReveal(){
   items.forEach(el=>obs.observe(el));
 }
 
-// INIT
+function initShowcaseCarousels(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const visHooks = [];
+  document.querySelectorAll('[data-ph-carousel]').forEach(root=>{
+    const vp = root.querySelector('.ph-carousel-viewport--fade');
+    const slides = root.querySelectorAll('.ph-carousel-slide');
+    const dots = root.querySelectorAll('.ph-carousel-dot');
+    const n = slides.length;
+    if(!vp || n < 2) return;
+
+    const interval = Math.max(1800, Number(root.dataset.interval) || 3000);
+    const fadeMin = Number(root.dataset.fadeMin) || 480;
+    const fadeMax = Number(root.dataset.fadeMax) || 880;
+    let idx = 0;
+    let timer = null;
+    let touchStartX = 0;
+    let mouseDown = false;
+    let mouseStartX = 0;
+
+    function fadeMs(){
+      if(reduceMotion) return 0;
+      const lo = Math.min(fadeMin, fadeMax);
+      const hi = Math.max(fadeMin, fadeMax);
+      return Math.round(lo + Math.random() * (hi - lo));
+    }
+
+    function setDots(){
+      dots.forEach((d, j)=>{
+        d.setAttribute('aria-current', j === idx ? 'true' : 'false');
+      });
+    }
+
+    function goTo(i){
+      const nextIdx = ((i % n) + n) % n;
+      const ms = fadeMs();
+      slides.forEach(s=>{
+        s.style.transitionDuration = ms ? (ms + 'ms') : '0ms';
+        s.style.transitionTimingFunction = 'ease';
+      });
+      idx = nextIdx;
+      slides.forEach((s, j)=>{
+        s.classList.toggle('is-active', j === idx);
+      });
+      setDots();
+    }
+
+    function next(){ goTo(idx + 1); }
+    function prev(){ goTo(idx - 1); }
+
+    function startAuto(){
+      if(reduceMotion) return;
+      stopAuto();
+      if(document.hidden) return;
+      timer = setInterval(next, interval);
+    }
+    function stopAuto(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+
+    visHooks.push({ startAuto, stopAuto });
+
+    dots.forEach((d, j)=>{
+      d.addEventListener('click', ()=>{
+        stopAuto();
+        goTo(j);
+        startAuto();
+      });
+    });
+
+    vp.addEventListener('touchstart', e=>{
+      touchStartX = e.touches[0].clientX;
+      stopAuto();
+    }, { passive: true });
+
+    vp.addEventListener('touchend', e=>{
+      const x = e.changedTouches[0].clientX;
+      const dx = x - touchStartX;
+      if(dx > 52) prev();
+      else if(dx < -52) next();
+      startAuto();
+    }, { passive: true });
+
+    vp.addEventListener('pointerdown', e=>{
+      if(e.pointerType !== 'mouse') return;
+      mouseDown = true;
+      mouseStartX = e.clientX;
+      stopAuto();
+    });
+    vp.addEventListener('pointerup', e=>{
+      if(!mouseDown || e.pointerType !== 'mouse') return;
+      mouseDown = false;
+      const dx = e.clientX - mouseStartX;
+      if(dx > 52) prev();
+      else if(dx < -52) next();
+      startAuto();
+    });
+    vp.addEventListener('pointercancel', ()=>{
+      mouseDown = false;
+      startAuto();
+    });
+
+    slides.forEach(s=>{
+      s.style.transitionDuration = reduceMotion ? '0ms' : '680ms';
+    });
+    idx = 0;
+    slides.forEach((s, j)=>{ s.classList.toggle('is-active', j === 0); });
+    setDots();
+    startAuto();
+  });
+  if(visHooks.length){
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden) visHooks.forEach(h=>h.stopAuto());
+      else visHooks.forEach(h=>h.startAuto());
+    });
+  }
+}
+
 setupLangTransitionTargets();
 applyLang();
 setupReveal();
+initShowcaseCarousels();
 </script>
 </body>
 </html>
