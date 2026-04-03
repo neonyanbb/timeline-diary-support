@@ -39,10 +39,12 @@ body.lang-switching-reveal .lang-b3{transition-delay:180ms}
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;
-  background:rgba(8,7,10,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(232,150,60,.08);transition:border-color .3s}
+  background:transparent;border-bottom:1px solid rgba(232,150,60,.08);transition:border-color .3s}
 nav.scrolled{border-bottom-color:rgba(232,150,60,.18)}
-.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 48px;height:100%;
+.nav-backdrop{position:absolute;inset:0;background:rgba(8,7,10,.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  pointer-events:none;z-index:0}
+.nav-inner{position:relative;z-index:1;max-width:var(--max-w);margin:0 auto;padding:0 48px;height:100%;
   display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
 .nav-logo img{width:34px;height:34px;border-radius:8px;object-fit:cover}
@@ -413,24 +415,44 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 0 4
 .reveal-image-hidden{opacity:0;transform:translateY(18px) scale(.98);transition:opacity .62s ease,transform .62s cubic-bezier(.22,.61,.36,1)}
 .reveal-visible{opacity:1!important;transform:none!important;filter:none!important}
 
-/* MOBILE NAV */
+/* MOBILE NAV — 与 backup 一致：自顶栏下方淡入，圆角项、语言下拉按需展开 */
 @media(max-width:900px){
-  .nav-toggle{display:flex;align-items:center;justify-content:center;
-    background:var(--surface);border:1px solid var(--border);color:var(--text2);
-    width:38px;height:38px;border-radius:10px;font-size:18px;cursor:pointer}
-  .nav-links{position:fixed;top:68px;left:0;right:0;bottom:0;
-    background:rgba(8,7,10,.97);backdrop-filter:blur(24px);
-    flex-direction:column;gap:0;padding:24px 0;
-    transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
-    overflow-y:auto;z-index:199}
-  nav.menu-open .nav-links{transform:translateX(0)}
-  .nav-links a,.nav-links .lang-btn{font-size:16px;padding:16px 28px;border-radius:0;width:100%}
-  .nav-links li{width:100%;border-bottom:1px solid var(--border)}
-  .nav-links li:last-child{border-bottom:none}
-  .lang-sw{width:100%}
-  .lang-btn{border-radius:0;border:none;width:100%;justify-content:flex-start;padding:16px 28px;background:transparent}
-  .lang-dd{position:static;box-shadow:none;border:none;border-top:1px solid var(--border);display:block;border-radius:0;background:var(--surface)}
-  .nav-inner{padding:0 24px}
+  nav{overflow:visible}
+  .nav-backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+  nav.menu-open .nav-backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav-toggle{
+    display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;flex-shrink:0;position:relative;z-index:260;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:12px;color:var(--text);font-size:20px;line-height:1;
+    cursor:pointer;transition:border-color .2s,color .2s
+  }
+  .nav-toggle:hover{border-color:var(--accent3);color:var(--accent2)}
+  .nav-inner{gap:12px;padding:0 24px}
+  .nav-links{
+    position:fixed;top:68px;left:0;right:0;bottom:0;height:auto;min-height:0;z-index:250;
+    flex-direction:column;align-items:stretch;justify-content:flex-start;
+    padding:20px 24px max(24px, env(safe-area-inset-bottom));gap:2px;margin:0;
+    background:rgba(8,7,10,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border-top:1px solid var(--border);
+    overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    transform:translateY(-12px);opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .28s ease,visibility .28s,transform .28s ease
+  }
+  nav.menu-open .nav-links{
+    transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto
+  }
+  .nav-links li{width:100%}
+  .nav-links>li>a:not(.nav-cta){
+    display:block;padding:14px 16px;border-radius:var(--radius-sm);font-size:15px
+  }
+  .nav-links .nav-cta{display:block;text-align:center;padding:14px 20px;margin-top:6px}
+  .nav-links .lang-sw{width:100%}
+  .nav-links .lang-btn{width:100%;justify-content:center}
+  .nav-links .lang-dd{position:static;display:none;width:100%;margin-top:8px;
+    box-shadow:none;border:1px solid var(--border)}
+  .nav-links .lang-sw:focus-within .lang-dd,
+  .nav-links .lang-sw:hover .lang-dd{display:block}
 }
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;gap:0;min-height:auto;padding:40px 0 56px}
@@ -472,6 +494,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px 0 4
 
 <!-- NAV -->
 <nav id="main-nav">
+  <div class="nav-backdrop" aria-hidden="true"></div>
   <div class="nav-inner">
     <a class="nav-logo" onclick="goTop()">
       <img src="images/sharp-webp/logo-68.webp" alt="Logo" width="34" height="34" loading="eager" decoding="sync" fetchpriority="high">
